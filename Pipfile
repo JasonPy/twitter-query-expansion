@@ -13,6 +13,8 @@ torch = "*"
 sqlalchemy = "*"
 psycopg2 = "*"
 spacy = "*"
+ipywidgets = "*"
+numba = "*"
 
 [dev-packages]
 ipykernel = "*"
