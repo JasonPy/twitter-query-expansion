@@ -15,6 +15,7 @@ psycopg2 = "*"
 spacy = "*"
 ipywidgets = "*"
 numba = "*"
+matplotlib = "*"
 
 [dev-packages]
 ipykernel = "*"
