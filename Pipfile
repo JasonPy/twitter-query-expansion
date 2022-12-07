@@ -17,6 +17,8 @@ ipywidgets = "*"
 numba = "*"
 matplotlib = "*"
 spacy-transformers = "*"
+elasticsearch = "*"
+tqdm = "*"
 
 [dev-packages]
 ipykernel = "*"
