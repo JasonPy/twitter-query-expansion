@@ -36,6 +36,7 @@ def main():
     parser.add_argument('-t', '--table', required=True, help='Postgres table')
     parser.add_argument('--es_credentials', required=False, default="auth/es-credentials.json", help='Elastic Search credentials file')
     parser.add_argument('--pg_credentials', required=False, default="auth/pg-credentials.json", help='Postgres credentials file')
+    parser.add_argument('--es_config', required=False, default="es-config.conf", help='Settings for new Index')
     parser.add_argument('-wc', '--wordcount', required=False, default=25, help='Minimum number of words per Tweet')
     parser.add_argument('-a', '--attributes', required=False, default=None, help='Comma-separated attributes of Postgres table to be included')
     args = parser.parse_args()                    
@@ -58,8 +59,9 @@ def main():
 
     # create index if it not exists
     if not es_client.indices.exists(index=args.index):
-        print("Creating new index", args.index, "...")
-        es_client.indices.create(index=args.index)
+        print(f"Creating new index {args.index} using {args.es_config} ...")
+        es_conf = json.load(open(file=get_project_root()/args.es_config))
+        es_client.indices.create(index=args.index, settings=es_conf["settings"], mappings=es_conf["mappings"])
 
     # formulate query to add number of words within a tweet text
     word_count_query = (
@@ -88,7 +90,7 @@ def main():
         successes += ok
 
 
-    time.sleep(0.5)
+    time.sleep(2)
     print(f"Finished - ingested {successes} tweets")
 
     es_client.close()
