@@ -36,7 +36,7 @@ def main():
     parser.add_argument('-t', '--table', required=True, help='Postgres table')
     parser.add_argument('--es_credentials', required=False, default="auth/es-credentials.json", help='Elastic Search credentials file')
     parser.add_argument('--pg_credentials', required=False, default="auth/pg-credentials.json", help='Postgres credentials file')
-    parser.add_argument('--es_config', required=False, default="es-config.conf", help='Settings for new Index')
+    parser.add_argument('--es_config', required=False, default="config/es-config.conf", help='Settings for new Index')
     parser.add_argument('-wc', '--wordcount', required=False, default=25, help='Minimum number of words per Tweet')
     parser.add_argument('-a', '--attributes', required=False, default=None, help='Comma-separated attributes of Postgres table to be included')
     args = parser.parse_args()                    
