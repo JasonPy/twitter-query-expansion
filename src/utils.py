@@ -35,5 +35,6 @@ def pg_connect(credentials: json)-> any:
         pg = psycopg2.connect(dbname=credentials["DB"], user=credentials['USER'], password=credentials['PWD'])
     except Exception:
         print("Failed to connect to PostgresQL database ", credentials['URL'])
+        exit(1)
     print("Successfully connected to", credentials['URL'])
     return pg

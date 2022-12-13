@@ -1,6 +1,7 @@
 # Credentials
 *credentials.json
 *.crt
+*credentials.ini
 
 # Datasets
 data
