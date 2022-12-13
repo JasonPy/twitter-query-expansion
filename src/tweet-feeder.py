@@ -1,6 +1,7 @@
 import json
 import argparse
 import time
+import configparser
 
 from elasticsearch.helpers import streaming_bulk
 from utils import es_connect, pg_connect, get_project_root
@@ -37,18 +38,18 @@ def main():
     parser = argparse.ArgumentParser(description='Feed Postgres data into Elastic Search Index')
     parser.add_argument('-i', '--index', required=True, help='Elastic Search index')
     parser.add_argument('-t', '--table', required=True, help='Postgres table')
-    parser.add_argument('--es_credentials', required=False, default="auth/es-credentials.json", help='Elastic Search credentials file')
-    parser.add_argument('--pg_credentials', required=False, default="auth/pg-credentials.json", help='Postgres credentials file')
+    parser.add_argument('--es_credentials', required=False, default="auth/es-credentials.ini", help='Elastic Search credentials file')
+    parser.add_argument('--pg_credentials', required=False, default="auth/pg-credentials.ini", help='Postgres credentials file')
     parser.add_argument('--es_config', required=False, default="config/es-config.conf", help='Settings for new Index')
     parser.add_argument('--wordcount', required=False, default=25, help='Minimum number of words per Tweet')
     args = parser.parse_args()                    
 
     # connect to postgres and elastic search
-    es_cred = json.load(open(file=get_project_root()/args.es_credentials))
-    pg_cred = json.load(open(file=get_project_root()/args.pg_credentials))
+    config = configparser.ConfigParser()
+    config.read([get_project_root()/args.es_credentials, get_project_root()/args.pg_credentials])
 
-    es_client = es_connect(credentials=es_cred)
-    pg_client = pg_connect(credentials=pg_cred)
+    es_client = es_connect(credentials=config["ELASTIC"])
+    pg_client = pg_connect(credentials=config["POSTGRES"])
 
     pg_cursor = pg_client.cursor()
 
