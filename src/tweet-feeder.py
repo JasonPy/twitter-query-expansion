@@ -6,6 +6,9 @@ from elasticsearch.helpers import streaming_bulk
 from utils import es_connect, pg_connect, get_project_root
 from tqdm import tqdm
 
+# mapped attributes
+ATTRIBUTES = ["_id", "retweet_count", "reply_count", "like_count", "created_at", "txt", "hashtags", "word_count"]
+
 
 def iterate(cursor, attributes, size=1000):
     """
@@ -37,8 +40,7 @@ def main():
     parser.add_argument('--es_credentials', required=False, default="auth/es-credentials.json", help='Elastic Search credentials file')
     parser.add_argument('--pg_credentials', required=False, default="auth/pg-credentials.json", help='Postgres credentials file')
     parser.add_argument('--es_config', required=False, default="config/es-config.conf", help='Settings for new Index')
-    parser.add_argument('-wc', '--wordcount', required=False, default=25, help='Minimum number of words per Tweet')
-    parser.add_argument('-a', '--attributes', required=False, default=None, help='Comma-separated attributes of Postgres table to be included')
+    parser.add_argument('--wordcount', required=False, default=25, help='Minimum number of words per Tweet')
     args = parser.parse_args()                    
 
     # connect to postgres and elastic search
@@ -50,47 +52,51 @@ def main():
 
     pg_cursor = pg_client.cursor()
 
-    if args.attributes is None:
-        # obtain all column names
-        pg_cursor.execute(f"SELECT * FROM {args.table} LIMIT 0")
-        args.attributes = [c[0] for c in pg_cursor.description]
-    else:
-        args.attributes = args.attributes.split(",")
-
     # create index if it not exists
     if not es_client.indices.exists(index=args.index):
         print(f"Creating new index {args.index} using {args.es_config} ...")
         es_conf = json.load(open(file=get_project_root()/args.es_config))
         es_client.indices.create(index=args.index, settings=es_conf["settings"], mappings=es_conf["mappings"])
 
-    # formulate query to add number of words within a tweet text
-    word_count_query = (
-        f"SELECT {', '.join(args.attributes)}, array_length(string_to_array(regexp_replace(txt,  '[^\w\s]', '', 'g'), ' '), 1) AS word_count FROM {args.table})"
+    # count entries in data base
+    wordcount_query = (
+        "Select count(*) from ( "
+            f"SELECT array_length(string_to_array(regexp_replace(txt,  '[^\w\s]', '', 'g'), ' '), 1) AS word_count FROM {args.table} "
+        ") as wc "
+        f"where wc.word_count >= {args.wordcount}"
     )
 
-    # compose final query
-    pg_query = (
-        f"SELECT * FROM ( "
-        f"{word_count_query} AS t " 
-        f"WHERE word_count >= {args.wordcount} "
+    pg_cursor.execute(query=wordcount_query)
+    doc_count = pg_cursor.fetchall()[0][0]
+
+    # compose query to retrieve tweets with corresponding hashtags and specified min. number of words
+    query = (
+        "SELECT * FROM ( "
+            "SELECT tw.id, tw.retweet_count, tw.reply_count, tw.like_count, "
+            "tw.created_at, tw.txt, array_agg(ht.txt) AS hashtags, "
+            "array_length(string_to_array(regexp_replace(tw.txt,  '[^\w\s]', '', 'g'), ' '), 1) AS word_count "
+            f"FROM {args.table} tw "
+            "LEFT OUTER JOIN hashtag_posting hp ON hp.tweet_id = tw.id "
+            "LEFT OUTER JOIN hashtag ht ON ht.id = hp.hashtag_id "
+            "GROUP BY tw.id "
+        ") as q "
+        f"WHERE q.word_count >= {args.wordcount} "
     )
 
     # execute the query
     print("Executing Postgres Query...")
-    pg_cursor.execute(query=pg_query)
+    pg_cursor.execute(query=query)
 
     # insert data from Postgres to ES in a lazy manner
-    print("Ingest data from Postgres into Elastic Search...")
+    print(f"Ingesting {doc_count} tweets from Postgres into Elastic Search...")
 
     # feed tweets using streaming API
-    progress= tqdm(unit=" tweets")
+    progress= tqdm(unit=" tweets", total=doc_count)
     successes = 0
-    for ok, action in streaming_bulk(client=es_client, index=args.index ,actions=iterate(cursor=pg_cursor, attributes=args.attributes, size=10000)):
+    for ok, action in streaming_bulk(client=es_client, index=args.index ,actions=iterate(cursor=pg_cursor, attributes=ATTRIBUTES, size=10000)):
         progress.update(1)
         successes += ok
 
-
-    time.sleep(2)
     print(f"Finished - ingested {successes} tweets")
 
     es_client.close()
