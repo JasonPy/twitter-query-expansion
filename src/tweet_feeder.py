@@ -94,7 +94,7 @@ def main():
     # feed tweets using streaming API
     progress= tqdm(unit=" tweets", total=doc_count)
     successes = 0
-    for ok, action in streaming_bulk(client=es_client, index=args.index ,actions=iterate(cursor=pg_cursor, attributes=ATTRIBUTES, size=10000)):
+    for ok, action in streaming_bulk(client=es_client, index=args.index ,actions=iterate(cursor=pg_cursor, attributes=ATTRIBUTES, size=1000)):
         progress.update(1)
         successes += ok
 
