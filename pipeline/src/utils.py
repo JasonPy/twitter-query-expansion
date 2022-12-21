@@ -9,7 +9,7 @@ def get_project_root() -> Path:
     """
     Get the absolute path of the project's directory
     """
-    return Path(__file__).parent.parent
+    return Path(__file__).parent.parent.parent
 
 
 def es_connect(credentials: json) -> Elasticsearch:
