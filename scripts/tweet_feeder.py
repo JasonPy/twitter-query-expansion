@@ -7,7 +7,7 @@ from elasticsearch.helpers import streaming_bulk
 from tqdm import tqdm
 
 sys.path.append("/home/jsonpy/Projects/Practical/twitter-query-expansion")
-from pipeline.src.utils import es_connect, pg_connect, get_project_root
+from pipeline.utils import es_connect, pg_connect, get_project_root
 
 # mapped attributes
 ATTRIBUTES = ["_id", "retweet_count", "reply_count", "like_count", "created_at", "txt", "hashtags", "word_count"]
