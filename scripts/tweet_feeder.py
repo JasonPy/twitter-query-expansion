@@ -2,11 +2,13 @@ import json
 import argparse
 import configparser
 import sys
+import os
 
 from elasticsearch.helpers import streaming_bulk
 from tqdm import tqdm
 
-sys.path.append("/home/jsonpy/Projects/Practical/twitter-query-expansion")
+# add root directory (temporary) to path in order to make imports work
+sys.path.append(os.path.dirname(sys.path[0]))
 from pipeline.utils import es_connect, pg_connect, get_project_root
 
 # mapped attributes
