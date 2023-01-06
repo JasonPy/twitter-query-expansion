@@ -18,7 +18,8 @@ def es_connect(credentials: json) -> Elasticsearch:
     """
     try:
         print("Connecting to Elastic Search...")
-        es = Elasticsearch(credentials['URL'], basic_auth=(credentials['USER'], credentials['PWD']), ca_certs=get_project_root()/"auth"/ credentials['CERT'])
+        es = Elasticsearch(credentials['URL'], basic_auth=(
+            credentials['USER'], credentials['PWD']), ca_certs=get_project_root()/"auth" / credentials['CERT'])
     except Exception:
         print("Unable to connect to", credentials['URL'])
         exit(1)
@@ -26,15 +27,41 @@ def es_connect(credentials: json) -> Elasticsearch:
     return es
 
 
-def pg_connect(credentials: json)-> any:
+def pg_connect(credentials: json) -> any:
     """
     Connect to a PostgreSQL database.
     """
     try:
         print("Connecting to PostgreSQL database...")
-        pg = psycopg2.connect(dbname=credentials["DB"], user=credentials['USER'], password=credentials['PWD'])
+        pg = psycopg2.connect(
+            dbname=credentials["DB"], user=credentials['USER'], password=credentials['PWD'])
     except Exception:
         print("Failed to connect to PostgresQL database ", credentials['URL'])
         exit(1)
     print("Successfully connected to", credentials['URL'])
     return pg
+
+
+def get_expansion_terms(candidate_terms: list, synonyms: dict, aggregations: dict, threshold: float = 0.6):
+    """
+    Given some candidate terms and their related synonyms, check if the synonyms
+    can act es expansion terms. This is done by looking at the co-ocurrence of both terms.
+    """
+    expansion_terms = []
+
+    for term in candidate_terms:
+        if term in aggregations.keys():
+            df = aggregations[term]
+
+            for synonym in synonyms[term]:
+                if f"{synonym}&{term}" in aggregations.keys():
+
+                    tf = aggregations[f"{synonym}&{term}"]
+                    tf_idf = tf / df
+
+                    if tf_idf > threshold:
+                        expansion_terms.append(synonym)
+
+    return expansion_terms
+
+import json

@@ -2,24 +2,30 @@ import re
 from spacy.tokenizer import _get_regex_pattern
 
 
-def add_pattern(nlp, pattern):
+def add_hashtag_pattern(nlp, pattern) -> None:
+    """
+    Add a regex pattern to the tokenizer.
+
+    Parameters
+    ----------
+    nlp : spacy.language.Language
+        The spaCy model to modify.
+    """
+
     # get default pattern for tokens that don't get split
     re_token_match = _get_regex_pattern(nlp.Defaults.token_match)
 
-    # add your patterns (here: hashtags and in-word hyphens)
+    # add your patterns
     re_token_match = f"({re_token_match}|{pattern})"
 
     # overwrite token_match function of the tokenizer
     nlp.tokenizer.token_match = re.compile(re_token_match).match
 
-    return nlp
 
-
-def separate_hashtags(doc):
+def separate_hashtags(text: str) -> str:
     """
     Insert a whitespace if hashtags are missing a gap in between.  
     """
-    text = " ".join(token.text for token in doc)
 
     for i, j in enumerate(text):
         if (text[i] == "#" and i > 0):
