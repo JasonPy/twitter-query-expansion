@@ -6,12 +6,12 @@ import pipeline.matcher.hashtag_matcher
 import pipeline.matcher.user_matcher
 
 
-class Pipeline:
+class TextProcessingPipeline:
     """
     A natural language processing pipeline that uses a spaCy model to process text.
     """
 
-    def __init__(self, model):
+    def __init__(self, model: str) -> None:
         """
         Initialize the pipeline with a spaCy model.
         Add custom tokenization rules and matchers.
@@ -35,7 +35,7 @@ class Pipeline:
 
     
 
-    def invoke(self, text) -> sp.tokens.doc.Doc:
+    def invoke(self, text: str) -> sp.tokens.doc.Doc:
         """
         Process the input text with the pipeline.
 
@@ -54,7 +54,7 @@ class Pipeline:
 
 
 
-    def get_filtered_tokens(self, doc, params) -> list:
+    def get_filtered_tokens(self, doc: sp.tokens.doc.Doc, params: any) -> list[sp.tokens.token.Token]:
         """
         Filter the tokens in the Doc to include only the specified parts of the text.
         Hashtags, entities and users have priority over POS tags. If one of them is false, the token
@@ -81,4 +81,32 @@ class Pipeline:
            
         return tokens
 
-        TODO: remove # and @
+
+    def trim_symbols(self, tokens: sp.tokens.token.Token, symbols = ['#', '@']) -> list[str]:
+        """
+        Truncate specified symbols from tokens and returns them as string list.
+
+        Parameters
+        ----------
+        tokens : spacy.tokens.doc.Token
+            The input tokens.
+        symbols : list
+            The symbols that are truncated from each token.
+
+        Returns
+        -------
+        text : list
+            The truncated tokens as string list.
+
+        """
+        text = []
+         
+        # Iterate over the tokens in the doc
+        for token in tokens:
+            # Check if the token begins with sym
+            if token.text[0] in symbols:
+                # Remove the symbol from the token text
+                text.append(token.text[1:])
+            else:
+                text.append(token.text)
+        return text

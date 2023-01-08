@@ -3,8 +3,9 @@ import fasttext
 
 class WordEmbedding():
     """
-    Base class
+    Base class to handle different Word Embeddings.
     """
+    
     def get_similar_terms(self, terms, n: int):
         """
         TODO:
@@ -26,10 +27,12 @@ class WordEmbedding():
 
 class Word2Vec(WordEmbedding):
     """
+    This class wraps the Word2Vec model and enables load and evaluate them.
     """
 
     def __init__(self, model):
         """
+        Initialize and load specified model from a file.
         """
         self.model = KeyedVectors.load_word2vec_format(fname=model, no_header=False, binary=True)
 
@@ -63,6 +66,7 @@ class FastText(WordEmbedding):
 
     def __init__(self, model):
         """
+        Initialize and load specified model from a file.
         """
         self.model = fasttext.load_model(model)
 

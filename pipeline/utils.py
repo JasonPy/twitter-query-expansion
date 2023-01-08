@@ -12,21 +12,6 @@ def get_project_root() -> Path:
     return Path(__file__).parent.parent
 
 
-def es_connect(credentials: json) -> Elasticsearch:
-    """
-    Connect to an elastic search API.
-    """
-    try:
-        print("Connecting to Elastic Search...")
-        es = Elasticsearch(credentials['URL'], basic_auth=(
-            credentials['USER'], credentials['PWD']), ca_certs=get_project_root()/"auth" / credentials['CERT'])
-    except Exception:
-        print("Unable to connect to", credentials['URL'])
-        exit(1)
-    print("Successfully connected to", credentials['URL'])
-    return es
-
-
 def pg_connect(credentials: json) -> any:
     """
     Connect to a PostgreSQL database.
@@ -64,4 +49,9 @@ def get_expansion_terms(candidate_terms: list, synonyms: dict, aggregations: dic
 
     return expansion_terms
 
-import json
+
+
+def load_queries(path="data/queries.json"):
+    with open(path, 'r') as q:
+        queries = json.load(q)
+    return queries
