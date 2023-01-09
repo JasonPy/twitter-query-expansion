@@ -1,10 +1,11 @@
 import os
 import json
+import logging
 import configparser
 
 from datetime import datetime
 
-def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:json) -> None:
+def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:json) -> json:
     """
     Execute the complete Query Expansion Pipeline. This includes Query pre-processing, the application of Word Embeddings
     to find similar terms and the retrieval of Tweets.
@@ -23,6 +24,11 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
         
     elastic_params:json
         Parameters defining elastic-specific configurations.
+
+    Returns
+    ----------
+    res: json
+        The resulting Tweets.
     """
 
     embedding_model = 'data/word2vec/german.model' if embedding_params["type"] == "word2vec" else 'data/fasttext/cc.de.300.bin'
@@ -41,6 +47,7 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
     # ------------------ TEXT PROCESSING ------------------ 
     from pipeline.text_processor import TextProcessor
 
+    print('Processing text using SpaCy...')
     pipe = TextProcessor(model=spacy_model)
 
     docs = []
@@ -64,6 +71,8 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
     # ------------------ WORD EMBEDDINGS ------------------
     from pipeline.embedding import Word2Vec
     from pipeline.embedding import FastText
+
+    print(f'Loading {embedding_params["type"]} model...')
 
     if embedding_params["type"] == "word2vec":
         model = Word2Vec(embedding_model)
@@ -91,10 +100,13 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
     config = configparser.ConfigParser()
     config.read('auth/es-credentials.ini')
 
+    print('Connecting to Elastic Search...')
+
     # connect to Elastic Search
     es_client = ElasticsearchClient(credentials=config["ELASTIC"], index=elastic_params["index"])
     es_client.connect(config["ELASTIC"]["PWD"])
 
+    print('Retrieving Tweets...')
 
     expansion_terms = []
 
@@ -116,15 +128,25 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
         search["entities"] = pipe.trim_symbols([t for t in query_tokens[i] if t.ent_type_ ])
 
         results.append(es_client.get_tweets(search))
-    log["tweets"] = results
-
+    
 
     # ------------------ LOG RESULTS ------------------
-    out_path = os.path.join("out", embedding_params["type"])
+    now = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
+    out_path = os.path.join("out", embedding_params["type"], now)
+    
+    print(f'Writing results to {out_path}')
 
     if not os.path.exists(out_path):
         os.makedirs(out_path)
 
-    with open(os.path.join(out_path, datetime.now().strftime('%d-%m-%y_%H-%M-%S')+".json"), "w") as outfile:
-        json.dump(log, outfile)
-    outfile.close()
+    with open(os.path.join(out_path, "log.json"), "w") as file:
+        json.dump(log, file, ensure_ascii=False, indent=4)
+    file.close()
+
+    with open(os.path.join(out_path, "results.json"), "w") as file:
+        json.dump(results, file, ensure_ascii=False, indent=4)
+    file.close()
+
+    print('Done!')
+
+    return results
