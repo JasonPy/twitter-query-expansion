@@ -125,6 +125,6 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
     if not os.path.exists(out_path):
         os.makedirs(out_path)
 
-    with open(os.path.join(out_path, datetime.now().strftime('%d-%m-%y_%H:%M:%S')+".log.json"), "w") as outfile:
+    with open(os.path.join(out_path, datetime.now().strftime('%d-%m-%y_%H-%M-%S')+".json"), "w") as outfile:
         json.dump(log, outfile)
     outfile.close()

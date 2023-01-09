@@ -175,7 +175,7 @@ class ElasticsearchClient:
         return agg_query
 
 
-    def get_expansion_terms(self, candidate_terms: list, similar_terms: json, threshold: float = 0.6) -> list:
+    def get_expansion_terms(self, candidate_terms: list, similar_terms: json, threshold: float = 0.01) -> list:
         """
         Given some candidate terms and their corresponding similar terms, check if the terms
         can act as expansion terms. This is done by looking at the co-occurrence of both terms using TF-IDF.
@@ -188,7 +188,7 @@ class ElasticsearchClient:
         similar_terms: json
             The possible expansion terms.
 
-        threshold: float = 0.6
+        threshold: float = 0.1
             The threshold to include a term based on TF-IDF. 
 
         Returns
@@ -213,7 +213,7 @@ class ElasticsearchClient:
                         tf = co_occurrences[f"{synonym}&{term}"]
                         tf_idf = tf / df
 
-                        if tf_idf > threshold:
+                        if tf_idf >= threshold:
                             expansion_terms.append(synonym)
 
         return expansion_terms

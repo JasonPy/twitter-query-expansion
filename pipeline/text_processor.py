@@ -1,5 +1,6 @@
 import spacy as sp
 
+
 from pipeline.tokenizer.tweet_tokenizer import separate_hashtags, add_hashtag_pattern
 
 import pipeline.matcher.hashtag_matcher
@@ -9,18 +10,25 @@ import pipeline.matcher.user_matcher
 class TextProcessor:
     """
     A natural language processing pipeline that uses a spaCy model to process text.
+    This class is a singleton.
     """
 
-    def __init__(self, model: str) -> None:
+    def __new__(cls, model:str):
         """
-        Initialize the pipeline with a spaCy model.
-        Add custom tokenization rules and matchers.
+        Override this method to create singleton pattern.
+        """
+        it = cls.__dict__.get("__it__")
 
-        Parameters
-        ----------
-        model : str, optional
-            The name or path of the spaCy model to use.
-        """
+        if it is not None:
+            return it
+
+        cls.__it__ = it = object.__new__(cls)
+        it.init(model)
+
+        return it
+
+
+    def init(self, model:str):
         self.nlp = sp.load(model)
 
         # Custom tokenization pattern for hashtags
@@ -30,10 +38,9 @@ class TextProcessor:
         add_hashtag_pattern(self.nlp, pattern)
 
         # Add the custom matchers
-        self.nlp.add_pipe("hashtag_matcher") 
+        self.nlp.add_pipe("hashtag_matcher")
         self.nlp.add_pipe("user_matcher") 
-
-    
+           
 
     def invoke(self, text: str) -> sp.tokens.doc.Doc:
         """
