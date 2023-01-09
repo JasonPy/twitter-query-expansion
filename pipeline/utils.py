@@ -27,29 +27,6 @@ def pg_connect(credentials: json) -> any:
     return pg
 
 
-def get_expansion_terms(candidate_terms: list, synonyms: dict, aggregations: dict, threshold: float = 0.6):
-    """
-    Given some candidate terms and their related synonyms, check if the synonyms
-    can act es expansion terms. This is done by looking at the co-ocurrence of both terms.
-    """
-    expansion_terms = []
-
-    for term in candidate_terms:
-        if term in aggregations.keys():
-            df = aggregations[term]
-
-            for synonym in synonyms[term]:
-                if f"{synonym}&{term}" in aggregations.keys():
-
-                    tf = aggregations[f"{synonym}&{term}"]
-                    tf_idf = tf / df
-
-                    if tf_idf > threshold:
-                        expansion_terms.append(synonym)
-
-    return expansion_terms
-
-
 
 def load_queries(path="data/queries.json"):
     with open(path, 'r') as q:

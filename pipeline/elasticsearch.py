@@ -21,7 +21,6 @@ class ElasticsearchClient:
         try:
             self._connection = Elasticsearch(self._host, basic_auth=(self._user, password), ca_certs=f"auth/{self._cert_path}")
             print("Successfully connected to", self._host)
-
         except Exception:
             print("Unable to connect to", self._host)
             exit(1)
@@ -33,10 +32,10 @@ class ElasticsearchClient:
         """
         query = self.compose_search_query('config/es-query.tpl', params)
 
-        #try:
-        res = self._connection.search(index=self._index, size=query["size"], query=query["query"], aggregations=query["aggs"])
-        #except Exception:
-        #    print("Error while executing search query.")
+        try:
+            res = self._connection.search(index=self._index, size=query["size"], query=query["query"], aggregations=query["aggs"])
+        except Exception:
+            print("Error while executing search query for index", self._index)
 
         tweets = {}
 
@@ -83,7 +82,8 @@ class ElasticsearchClient:
 
     def get_co_occurring_terms(self, terms):
         """
-        Execute a search query in order to determine cooccurring terms.
+        Execute search query in order to determine co-occurring terms.
+        Done by using Matrix Aggregation and finding mutual occurrences in a tweet.
         """
 
         agg_query = self.compose_aggregation_query('config/es-adjacency-matrix.tpl', terms)
@@ -91,7 +91,7 @@ class ElasticsearchClient:
         try:
             res = self._connection.search(index=self._index, size=agg_query["size"], aggregations=agg_query["aggs"])
         except Exception:
-            print("Error while executing aggregation query.")
+            print("Error while executing aggregation query for index", self._index)
         
         co_occurrences = {}
         co_occurrences.update((t["key"], t["doc_count"]) for t in res["aggregations"]["interactions"]["buckets"])
@@ -118,3 +118,31 @@ class ElasticsearchClient:
                 filters[synonym] = { "term" : { "txt" : synonym.lower() }}
 
         return agg_query
+
+
+    def get_expansion_terms(self, candidate_terms: list, similar_terms: dict, threshold: float = 0.6):
+        """
+        Given some candidate terms and their corresponding similar terms, check if the terms
+        can act as expansion terms. This is done by looking at the co-occurrence of both terms.
+        """
+        try:
+            co_occurrences = self.get_co_occurring_terms(similar_terms)
+        except Exception:
+            print("Error while executing aggregation query.")
+
+        expansion_terms = []
+
+        for term in candidate_terms:
+            if term in co_occurrences.keys():
+                df = co_occurrences[term]
+
+                for synonym in similar_terms[term]:
+                    if f"{synonym}&{term}" in co_occurrences.keys():
+
+                        tf = co_occurrences[f"{synonym}&{term}"]
+                        tf_idf = tf / df
+
+                        if tf_idf > threshold:
+                            expansion_terms.append(synonym)
+
+        return expansion_terms
