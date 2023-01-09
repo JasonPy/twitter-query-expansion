@@ -6,7 +6,7 @@ import pipeline.matcher.hashtag_matcher
 import pipeline.matcher.user_matcher
 
 
-class TextProcessingPipeline:
+class TextProcessor:
     """
     A natural language processing pipeline that uses a spaCy model to process text.
     """
@@ -70,7 +70,7 @@ class TextProcessingPipeline:
         Returns
         -------
         tokens : list
-            The filtered tokens from the input document.Doc` object
+            The filtered tokens from the input document.Doc object
         """
         tokens = [ token for token in doc 
             if (token._.is_hashtag and params["hashtag"])

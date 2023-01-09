@@ -26,9 +26,3 @@ def pg_connect(credentials: json) -> any:
     print("Successfully connected to", credentials['URL'])
     return pg
 
-
-
-def load_queries(path="data/queries.json"):
-    with open(path, 'r') as q:
-        queries = json.load(q)
-    return queries

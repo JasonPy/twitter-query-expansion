@@ -10,6 +10,9 @@ def add_hashtag_pattern(nlp, pattern) -> None:
     ----------
     nlp : spacy.language.Language
         The spaCy model to modify.
+
+    pattern: str
+        Some regular expression.
     """
 
     # get default pattern for tokens that don't get split
@@ -24,7 +27,17 @@ def add_hashtag_pattern(nlp, pattern) -> None:
 
 def separate_hashtags(text: str) -> str:
     """
-    Insert a whitespace if hashtags are missing a gap in between.  
+    Insert a whitespace if hashtags are missing a gap in between. 
+
+    Parameters 
+    ----------
+    text: str
+        the text to modify.
+
+    Returns
+    ----------
+    text: str
+        The modified text.
     """
 
     for i, j in enumerate(text):
