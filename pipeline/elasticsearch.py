@@ -107,12 +107,15 @@ class ElasticsearchClient:
             search_query = json.load(q)
         query = search_query['query']
 
+        if params["num_of_tweets"]:
+            search_query["size"] = params["num_of_tweets"]
+
         # filter retweets
         if params["retweet"]:
             del query['bool']['must_not']['term']
         
         # boost hashtags
-        if params["hashtag_boost"] is not None:
+        if params["hashtag_boost"]:
             query['bool']['should'][1]['terms']["boost"] = params["hashtag_boost"]
         
         # if present, insert hashtags from query
@@ -122,12 +125,16 @@ class ElasticsearchClient:
             del query['bool']['must']
         
         # set date range for tweets
-        query['bool']['filter'][0]['range']['created_at']['gte'] = params["tweet_range"][0]
-        query['bool']['filter'][1]['range']['created_at']['lte'] = params["tweet_range"][1]
+        if params["tweet_range"]:
+            query['bool']['filter'][0]['range']['created_at']['gte'] = params["tweet_range"][0]
+            query['bool']['filter'][1]['range']['created_at']['lte'] = params["tweet_range"][1]
 
         # insert the query terms
-        query['bool']['should'][0]['match']['txt']['query'] = ' '.join(params["terms"])
-        query['bool']['should'][1]['terms']['hashtags'] = [q.lower() for q in params["hashtags"]]
+        if params["terms"]:
+            query['bool']['should'][0]['match']['txt']['query'] = ' '.join(params["terms"])
+
+        if params["hashtags"]:
+            query['bool']['should'][1]['terms']['hashtags'] = [q.lower() for q in params["hashtags"]]
 
         return search_query
 
