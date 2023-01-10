@@ -30,7 +30,7 @@ class WordEmbedding():
 
 class Word2Vec(WordEmbedding):
     """
-    This class wraps the Word2Vec model and enables load and evaluate them.
+    This class wraps the Word2Vec embedding and enables to load a model and evaluate it.
     """
 
     def __init__(self, model):
@@ -56,8 +56,6 @@ class Word2Vec(WordEmbedding):
         similar_terms : List[str]
             The similar terms.
         """
-
-        # obtain most similar words terms
         if self.model.has_index_for(term):
             similar_terms = self.model.most_similar(term)[:n]
             return [t[0].replace("_"," ") for t in similar_terms]
@@ -65,13 +63,17 @@ class Word2Vec(WordEmbedding):
 
 class FastText(WordEmbedding):
     """
+    This class wraps the FastText embedding and enables to load a model and evaluate it.
     """
 
     def __init__(self, model):
         """
         Initialize and load specified model from a file.
         """
-        self.model = fasttext.load_model(model)
+        self.model = KeyedVectors.load_word2vec_format(fname=model)
+
+        #fasttext.FastText.eprint = lambda x: None
+        #self.model = fasttext.load_model(model)
 
 
     def get_similar(self, term: str, n: int) -> list:
@@ -90,7 +92,6 @@ class FastText(WordEmbedding):
         similar_terms : List[str]
             The similar terms.
         """
-
-        # obtain most similar terms
-        similar_terms = self.model.get_nearest_neighbors(term, k=n)
-        return [n[1] for n in similar_terms]
+        if self.model.has_index_for(term):
+            similar_terms = self.model.most_similar(term)[:n]
+            return [t[0].replace("_"," ") for t in similar_terms]

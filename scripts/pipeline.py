@@ -1,6 +1,5 @@
 import os
 import json
-import logging
 import configparser
 
 from datetime import datetime
@@ -31,7 +30,7 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
         The resulting Tweets.
     """
 
-    embedding_model = 'models/word2vec/german.model' if embedding_params["type"] == "word2vec" else 'models/fasttext/cc.de.300.bin'
+    embedding_model = 'models/word2vec/german.model' if embedding_params["type"] == "word2vec" else "models/fasttext/cc.de.300.vec"
 
     # prepare logging
     log = {
@@ -67,10 +66,12 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
         query_tokens.append(filtered_tokens)
     log["query_tokens"] = [[token.text for token in tokens] for tokens in query_tokens]
 
+    del pipe
 
     # ------------------ WORD EMBEDDINGS ------------------
     from pipeline.embedding import Word2Vec
     from pipeline.embedding import FastText
+    from pipeline.text_processor import trim_symbols
 
     print(f'Loading {embedding_params["type"]} model...')
 
@@ -81,18 +82,17 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
     else:
         raise ValueError("Invalid Embedding")
 
-
     similar_terms = []
 
     # find similar terms using embedding model 
     for tokens in query_tokens:
-        similar_terms.append(model.get_similar_terms(pipe.trim_symbols(tokens), embedding_params["num_nearest_terms"]))
+        similar_terms.append(model.get_similar_terms(trim_symbols(tokens), embedding_params["num_nearest_terms"]))
     log["similar_terms"] = similar_terms
 
     # free space
     del model
 
-    
+
     # ------------------ ELASTIC SEARCH ------------------
     from pipeline.elasticsearch import ElasticsearchClient
 
@@ -112,7 +112,7 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
 
     # find most suitable expansion terms
     for i in range(len(queries)):
-        expansion_terms.append(es_client.get_expansion_terms(pipe.trim_symbols(query_tokens[i]), similar_terms[i]))
+        expansion_terms.append(es_client.get_expansion_terms(trim_symbols(query_tokens[i]), similar_terms[i]))
     log["expansion_terms"] = expansion_terms
 
 
@@ -122,13 +122,14 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
     for i in range(len(queries)):
 
         search = elastic_params
-        search["terms"] = pipe.trim_symbols(query_tokens[i]) + expansion_terms[i]
-        search["hashtags"] = [h.lower() for h in pipe.trim_symbols([t for t in query_tokens[i] if t._.is_hashtag ])]
-        search["users"] = pipe.trim_symbols([t for t in query_tokens[i] if t._.is_user ])
-        search["entities"] = pipe.trim_symbols([t for t in query_tokens[i] if t.ent_type_ ])
+        search["terms"] = trim_symbols(query_tokens[i]) + expansion_terms[i]
+        search["hashtags"] = [h.lower() for h in trim_symbols([t for t in query_tokens[i] if t._.is_hashtag ])]
+        search["users"] = trim_symbols([t for t in query_tokens[i] if t._.is_user ])
+        search["entities"] = trim_symbols([t for t in query_tokens[i] if t.ent_type_ ])
 
         results.append(es_client.get_tweets(search))
     
+    del es_client
 
     # ------------------ LOG RESULTS ------------------
     now = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
