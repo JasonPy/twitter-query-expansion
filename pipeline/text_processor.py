@@ -82,8 +82,11 @@ class TextProcessor:
         tokens = [ token for token in doc 
             if (token._.is_hashtag and params["hashtag"])
             or (token._.is_user and params["user"])
-            or (token.ent_type_ and params["entity"])
-            or (token.pos_ in params["pos_list"] and not token._.is_hashtag and not token._.is_user and not token.ent_type_)
+            or (token.ent_type_ in params["entity_list"])
+            or (token.pos_ in params["pos_list"] 
+                and not token._.is_hashtag 
+                and not token._.is_user 
+                and not token.ent_type_ in params["entity_list"])
         ]
            
         return tokens

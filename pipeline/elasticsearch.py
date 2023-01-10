@@ -1,4 +1,6 @@
 from elasticsearch import Elasticsearch
+from pipeline.utils import pmi, tf_idf
+
 import json
 
 class ElasticsearchClient:
@@ -31,6 +33,24 @@ class ElasticsearchClient:
             exit(1)
 
 
+    def get_total_number_of_tweets(self) -> int:
+        """
+        Count the number of documents in the index.
+
+        Returns
+        ----------     
+        count: int
+            The number of documents in _index.  
+        """
+        try:
+            # run search request
+            res = self._connection.count(index=self._index)
+        except Exception:
+            print("Error while executing count query for index", self._index)
+        
+        return res["count"]
+
+
     def get_tweets(self, params: json) -> json:
         """
         Get all tweets from an index given a query.
@@ -47,7 +67,7 @@ class ElasticsearchClient:
         """
 
         # compose the query based on predefined template
-        query = self.compose_search_query('config/es-query.tpl', params)
+        query = self.compose_search_query('templates/es-query.tpl', params)
 
         try:
             # run search request
@@ -128,7 +148,7 @@ class ElasticsearchClient:
             The co-occurrences.
         """
 
-        agg_query = self.compose_aggregation_query('config/es-adjacency-matrix.tpl', terms)
+        agg_query = self.compose_aggregation_query('templates/es-adjacency-matrix.tpl', terms)
 
         try:
             res = self._connection.search(index=self._index, size=agg_query["size"], aggregations=agg_query["aggs"])
@@ -175,7 +195,7 @@ class ElasticsearchClient:
         return agg_query
 
 
-    def get_expansion_terms(self, candidate_terms: list, similar_terms: json, threshold: float = 0.01) -> list:
+    def get_expansion_terms(self, candidate_terms: list, similar_terms: json, threshold: float=0.01) -> list:
         """
         Given some candidate terms and their corresponding similar terms, check if the terms
         can act as expansion terms. This is done by looking at the co-occurrence of both terms using TF-IDF.
@@ -188,7 +208,7 @@ class ElasticsearchClient:
         similar_terms: json
             The possible expansion terms.
 
-        threshold: float = 0.1
+        threshold: float = 0.01
             The threshold to include a term based on TF-IDF. 
 
         Returns
@@ -196,24 +216,41 @@ class ElasticsearchClient:
         expansion_terms : list
             The terms that are suitable to expand a query.
         """
-        try:
-            co_occurrences = self.get_co_occurring_terms(similar_terms)
-        except Exception:
-            print("Error while executing aggregation query.")
+        if not similar_terms:
+            return
+
+        co_occurrences = self.get_co_occurring_terms(similar_terms)
+        num_of_tweets = self.get_total_number_of_tweets()
 
         expansion_terms = []
 
         for term in candidate_terms:
             if term in co_occurrences.keys():
-                df = co_occurrences[term]
+
+                term_freq = co_occurrences[term]
 
                 for synonym in similar_terms[term]:
-                    if f"{synonym}&{term}" in co_occurrences.keys():
+                    if synonym in co_occurrences.keys():
+                        synonym_freq = co_occurrences[synonym]
 
-                        tf = co_occurrences[f"{synonym}&{term}"]
-                        tf_idf = tf / df
+                        # calc how often it occurs
+                        alpha = synonym_freq / num_of_tweets
 
-                        if tf_idf >= threshold:
+                        # occurs often itself, good term
+                        if alpha >= 0.01:
                             expansion_terms.append(synonym)
+                            continue
+
+                        if f"{synonym}&{term}" in co_occurrences.keys():
+                            joint_freq = co_occurrences[f"{synonym}&{term}"]
+
+                            beta = pmi(num_of_tweets, term_freq, synonym_freq, joint_freq)
+                            # joint occurrence often, good expansion
+                            if beta >= 0.1:
+                                expansion_terms.append(synonym)
+                    else:
+                        continue
 
         return expansion_terms
+
+# measure if they occur seperatly more often

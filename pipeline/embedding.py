@@ -1,15 +1,18 @@
 from gensim.models import KeyedVectors
 import fasttext
+import json
 
 class WordEmbedding():
     """
     Base class to handle different Word Embeddings.
     """
     
-    def get_similar_terms(self, terms, n: int):
+    def get_similar_terms(self, terms: list[str], n: int) -> json:
         """
-        TODO:
         """
+        if not terms:
+            return
+
         similar_terms = {}
 
         if isinstance(terms, list):

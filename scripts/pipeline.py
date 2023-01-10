@@ -31,7 +31,7 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
         The resulting Tweets.
     """
 
-    embedding_model = 'data/word2vec/german.model' if embedding_params["type"] == "word2vec" else 'data/fasttext/cc.de.300.bin'
+    embedding_model = 'models/word2vec/german.model' if embedding_params["type"] == "word2vec" else 'models/fasttext/cc.de.300.bin'
 
     # prepare logging
     log = {
