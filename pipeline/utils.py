@@ -3,7 +3,6 @@ import psycopg2
 
 import numpy as np
 
-from elasticsearch import Elasticsearch
 from pathlib import Path
 
 

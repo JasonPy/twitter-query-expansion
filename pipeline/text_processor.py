@@ -1,5 +1,5 @@
 import spacy as sp
-
+import de_core_news_lg as sp_model
 
 from pipeline.tokenizer.tweet_tokenizer import separate_hashtags, add_hashtag_pattern
 
@@ -13,9 +13,14 @@ class TextProcessor:
     This class is a singleton.
     """
 
-    def __new__(cls, model:str):
+    def __new__(cls, model:str = None):
         """
-        Override this method to create singleton pattern.
+        Calling this method to create singleton pattern.
+
+        Parameters
+        ----------
+        model : str
+            The name of the SpaCy model.
         """
         it = cls.__dict__.get("__it__")
 
@@ -29,7 +34,18 @@ class TextProcessor:
 
 
     def init(self, model:str):
-        self.nlp = sp.load(model)
+        """
+        Initialize the SpaCy model either by the specific name of the model or use the default model.
+        
+        Parameters
+        ----------
+        model : str
+            The name of the SpaCy model.
+        """
+        if model:
+            self.nlp = sp.load(model)
+        else:
+            self.nlp = sp_model.load()
 
         # Custom tokenization pattern for hashtags
         pattern = r'#\w+|\w+-\w+'

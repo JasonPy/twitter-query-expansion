@@ -9,7 +9,7 @@ from pipeline.embedding import Word2Vec, FastText
 from pipeline.elasticsearch import ElasticsearchClient
 
 
-def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:json) -> json:
+def run(queries: list, embedding_params: json, elastic_params:json) -> json:
     """
     Execute the complete Query Expansion Pipeline. This includes Query pre-processing, the application of Word Embeddings
     to find similar terms and the retrieval of Tweets.
@@ -19,9 +19,6 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
     ----------
     queries: list
         A list of queries.
-
-    spacy_model: str
-        The name of the SpaCy model.
 
     embedding_params: json
         Parameters defining embedding-specific configurations.
@@ -34,19 +31,10 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
     res: json
         The resulting Tweets.
     """    
-    if embedding_params["type"] == "word2vec":
-        embedding_model = 'models/word2vec/german.model' 
-    elif embedding_params["type"] == "fasttext":
-        embedding_model = "models/fasttext/cc.de.300.model"
-    else:
-        raise ValueError("Type of Embedding not found. Use 'word2vec' or 'fasttext'")
-
     # prepare logging
     log = {
         "timestamp": datetime.now().strftime("%d-%m-%y_%H:%M:%S"),
         "queries": queries,
-        "spacy_model": spacy_model,
-        "embedding_model": embedding_model,
         "embedding_params": embedding_params,
         "elastic_params": elastic_params,
     }
@@ -54,7 +42,7 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
 
     # ------------------ TEXT PROCESSING ------------------ 
     print('Processing text using SpaCy...')
-    pipe = TextProcessor(model=spacy_model)
+    pipe = TextProcessor()
 
     docs = []
 
@@ -76,14 +64,14 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
     del pipe
 
     # ------------------ WORD EMBEDDINGS ------------------
-    print(f'Loading {embedding_params["type"]} model...')
+    print(f'Evaluating {embedding_params["type"]} model...')
 
     if embedding_params["type"] == "word2vec":
-        model = Word2Vec(embedding_model)
+        model = Word2Vec(model=embedding_params["model"])
     elif embedding_params["type"] == "fasttext":
-        model = FastText(embedding_model) 
+        model = FastText(model=embedding_params["model"]) 
     else:
-        raise ValueError("Invalid Embedding")
+        raise ValueError("Invalid Embedding Model")
 
     similar_terms = []
 
@@ -121,12 +109,13 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
 
     # execute query to retrieve tweets using the final expanded query
     for i in range(len(queries)):
+        # TODO: use docs or query_terms? 
 
-        search = elastic_params
+        search = elastic_params.copy()
         search["terms"] = trim_symbols(query_tokens[i]) + expansion_terms[i]
-        search["hashtags"] = [h.lower() for h in trim_symbols([t for t in query_tokens[i] if t._.is_hashtag ])]
-        search["users"] = trim_symbols([t for t in query_tokens[i] if t._.is_user ])
-        search["entities"] = trim_symbols([t for t in query_tokens[i] if t.ent_type_ ])
+        search["hashtags"] = [h.lower() for h in trim_symbols([t for t in docs[i] if t._.is_hashtag ])]
+        search["users"] = trim_symbols([t for t in docs[i] if t._.is_user ])
+        search["entities"] = trim_symbols([t for t in docs[i] if t.ent_type_ ])
 
         results.append(es_client.get_tweets(search))
     
@@ -149,6 +138,6 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
         json.dump(results, file, ensure_ascii=False, indent=4)
     file.close()
 
-    print('Done!')
+    print('Finished!')
 
     return results
