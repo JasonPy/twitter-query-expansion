@@ -1,5 +1,4 @@
 from gensim.models import KeyedVectors
-import fasttext
 import json
 
 class WordEmbedding():
@@ -70,10 +69,7 @@ class FastText(WordEmbedding):
         """
         Initialize and load specified model from a file.
         """
-        self.model = KeyedVectors.load_word2vec_format(fname=model)
-
-        #fasttext.FastText.eprint = lambda x: None
-        #self.model = fasttext.load_model(model)
+        self.model = KeyedVectors.load(fname=model, mmap='r')
 
 
     def get_similar(self, term: str, n: int) -> list:

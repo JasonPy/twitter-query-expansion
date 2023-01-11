@@ -4,6 +4,11 @@ import configparser
 
 from datetime import datetime
 
+from pipeline.text_processor import TextProcessor, trim_symbols
+from pipeline.embedding import Word2Vec, FastText
+from pipeline.elasticsearch import ElasticsearchClient
+
+
 def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:json) -> json:
     """
     Execute the complete Query Expansion Pipeline. This includes Query pre-processing, the application of Word Embeddings
@@ -28,9 +33,13 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
     ----------
     res: json
         The resulting Tweets.
-    """
-
-    embedding_model = 'models/word2vec/german.model' if embedding_params["type"] == "word2vec" else "models/fasttext/cc.de.300.vec"
+    """    
+    if embedding_params["type"] == "word2vec":
+        embedding_model = 'models/word2vec/german.model' 
+    elif embedding_params["type"] == "fasttext":
+        embedding_model = "models/fasttext/cc.de.300.model"
+    else:
+        raise ValueError("Type of Embedding not found. Use 'word2vec' or 'fasttext'")
 
     # prepare logging
     log = {
@@ -44,8 +53,6 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
 
 
     # ------------------ TEXT PROCESSING ------------------ 
-    from pipeline.text_processor import TextProcessor
-
     print('Processing text using SpaCy...')
     pipe = TextProcessor(model=spacy_model)
 
@@ -69,10 +76,6 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
     del pipe
 
     # ------------------ WORD EMBEDDINGS ------------------
-    from pipeline.embedding import Word2Vec
-    from pipeline.embedding import FastText
-    from pipeline.text_processor import trim_symbols
-
     print(f'Loading {embedding_params["type"]} model...')
 
     if embedding_params["type"] == "word2vec":
@@ -94,8 +97,6 @@ def run(queries: list, spacy_model: str, embedding_params: json, elastic_params:
 
 
     # ------------------ ELASTIC SEARCH ------------------
-    from pipeline.elasticsearch import ElasticsearchClient
-
     # read Elastic Search credentials
     config = configparser.ConfigParser()
     config.read('auth/es-credentials.ini')
