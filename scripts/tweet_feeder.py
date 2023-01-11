@@ -3,13 +3,16 @@ import argparse
 import configparser
 import sys
 import os
+import json
+import psycopg2
 
 from elasticsearch.helpers import streaming_bulk
+from elasticsearch import Elasticsearch
 from tqdm import tqdm
 
 # add root directory (temporary) to path in order to make imports work
-sys.path.append(os.path.dirname(sys.path[0]))
-from pipeline.utils import es_connect, pg_connect, get_project_root
+#sys.path.append(os.path.dirname(sys.path[0]))
+#from pipeline.utils import get_project_root
 
 # mapped attributes
 ATTRIBUTES = ["_id", "retweet_count", "reply_count", "like_count", "created_at", "txt", "hashtags", "word_count"]
@@ -32,6 +35,34 @@ def iterate(cursor, attributes, size=1000):
             yield obj
 
 
+def es_connect(credentials: json) -> Elasticsearch:
+    """
+    Connect to an elastic search API.
+    """
+    try:
+        print("Connecting to Elastic Search...")
+        es = Elasticsearch(credentials['URL'], basic_auth=(credentials['USER'], credentials['PWD']), ca_certs="auth/"+credentials['CERT'])
+    except Exception:
+        print("Unable to connect to", credentials['URL'])
+        exit(1)
+    print("Successfully connected to", credentials['URL'])
+    return es
+
+
+def pg_connect(credentials: json) -> any:
+    """
+    Connect to a PostgreSQL database.
+    """
+    try:
+        print("Connecting to PostgreSQL database...")
+        pg = psycopg2.connect(dbname=credentials["DB"], user=credentials['USER'], password="auth/"+credentials['PWD'])
+    except Exception:
+        print("Failed to connect to PostgresQL database ", credentials['URL'])
+        exit(1)
+    print("Successfully connected to", credentials['URL'])
+    return pg
+
+
 def main():
     """
     This script ingests data from an PostgreSQL instance into an Elastic Search index.
@@ -42,15 +73,15 @@ def main():
     parser = argparse.ArgumentParser(description='Feed Postgres data into Elastic Search Index')
     parser.add_argument('-i', '--index', required=True, help='Elastic Search index')
     parser.add_argument('-t', '--table', required=True, help='Postgres table')
-    parser.add_argument('--es_credentials', required=False, default="auth/es-credentials.ini", help='Elastic Search credentials file')
-    parser.add_argument('--pg_credentials', required=False, default="auth/pg-credentials.ini", help='Postgres credentials file')
-    parser.add_argument('--es_config', required=False, default="templates/es-config.conf", help='Settings for new Index')
-    parser.add_argument('--wordcount', required=False, default=25, help='Minimum number of words per Tweet')
+    parser.add_argument('-ec','--elastic_credentials', required=False, default="auth/es-credentials.ini", help='Path to Elastic Search credentials file')
+    parser.add_argument('-pc', '--postgres_credentials', required=False, default="auth/pg-credentials.ini", help='Path to Postgres credentials file')
+    parser.add_argument('-es', '--elastic_settings', required=False, default="templates/es-config.conf", help='Settings for new Index; Look at "/templates/es-config.conf"')
+    parser.add_argument('-wc', '--wordcount', required=False, default=25, help='Minimum number of words per Tweet')
     args = parser.parse_args()                    
 
     # connect to postgres and elastic search
     config = configparser.ConfigParser()
-    config.read([get_project_root()/args.es_credentials, get_project_root()/args.pg_credentials])
+    config.read([args.elastic_credentials, args.postgres_credentials])
 
     es_client = es_connect(credentials=config["ELASTIC"])
     pg_client = pg_connect(credentials=config["POSTGRES"])
@@ -60,7 +91,7 @@ def main():
     # create index if it not exists
     if not es_client.indices.exists(index=args.index):
         print(f"Creating new index {args.index} using {args.es_config} ...")
-        es_conf = json.load(open(file=get_project_root()/args.es_config))
+        es_conf = json.load(open(file=args.es_config))
         es_client.indices.create(index=args.index, settings=es_conf["settings"], mappings=es_conf["mappings"])
 
     # count entries in data base

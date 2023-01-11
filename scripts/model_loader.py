@@ -52,7 +52,7 @@ def load_model(type: str, url: str) -> None:
     compress(dir + filename)
    
 
-def compress(path: str) -> None:
+def compress(path: str, binary:bool = False) -> None:
     """
     Load a Word Embedding model using Gensim's KeyedVectors library.
     Compress the model according to the L2-norm and save it in the specified directory.
@@ -61,6 +61,6 @@ def compress(path: str) -> None:
         The directory of the model file.
     """
     print("Compress model...")
-    model = KeyedVectors.load_word2vec_format(path)
+    model = KeyedVectors.load_word2vec_format(path, binary=binary)
     model.fill_norms()
     model.save(f"{path}.model")

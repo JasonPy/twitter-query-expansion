@@ -1,10 +1,17 @@
 from gensim.models import KeyedVectors
 import json
 
-class WordEmbedding():
+class WordEmbedding:
     """
     Base class to handle different Word Embeddings.
     """
+
+    def __init__(self, model):
+        """
+        Initialize and load specified model from a file.
+        """
+        self.model = KeyedVectors.load(fname=model, mmap='r')
+
     
     def get_similar_terms(self, terms: list[str], n: int) -> json:
         """
@@ -26,52 +33,7 @@ class WordEmbedding():
             similar_terms[f"{terms}"] = self.get_similar(terms, n)
             return similar_terms
 
-
-class Word2Vec(WordEmbedding):
-    """
-    This class wraps the Word2Vec embedding and enables to load a model and evaluate it.
-    """
-
-    def __init__(self, model):
-        """
-        Initialize and load specified model from a file.
-        """
-        self.model = KeyedVectors.load_word2vec_format(fname=model, no_header=False, binary=True)
-
-
-    def get_similar(self, term: str, n: int) -> list:
-        """
-        Get the most similar terms given a single term.
-
-        Parameters
-        ----------
-        term : str
-            The term to find similar terms for.
-        n : int
-            The number of similar terms returned.
-
-        Returns
-        -------
-        similar_terms : List[str]
-            The similar terms.
-        """
-        if self.model.has_index_for(term):
-            similar_terms = self.model.most_similar(term)[:n]
-            return [t[0].replace("_"," ") for t in similar_terms]
-
-
-class FastText(WordEmbedding):
-    """
-    This class wraps the FastText embedding and enables to load a model and evaluate it.
-    """
-
-    def __init__(self, model):
-        """
-        Initialize and load specified model from a file.
-        """
-        self.model = KeyedVectors.load(fname=model, mmap='r')
-
-
+            
     def get_similar(self, term: str, n: int) -> list:
         """
         Get the most similar terms given a single term.

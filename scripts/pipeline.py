@@ -5,7 +5,7 @@ import configparser
 from datetime import datetime
 
 from pipeline.text_processor import TextProcessor, trim_symbols
-from pipeline.embedding import Word2Vec, FastText
+from pipeline.embedding import WordEmbedding
 from pipeline.elasticsearch import ElasticsearchClient
 
 
@@ -65,13 +65,7 @@ def run(queries: list, embedding_params: json, elastic_params:json) -> json:
 
     # ------------------ WORD EMBEDDINGS ------------------
     print(f'Evaluating {embedding_params["type"]} model...')
-
-    if embedding_params["type"] == "word2vec":
-        model = Word2Vec(model=embedding_params["model"])
-    elif embedding_params["type"] == "fasttext":
-        model = FastText(model=embedding_params["model"]) 
-    else:
-        raise ValueError("Invalid Embedding Model")
+    model = WordEmbedding(model=embedding_params["model"])
 
     similar_terms = []
 
