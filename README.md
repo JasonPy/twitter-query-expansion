@@ -63,7 +63,9 @@ options:
 ## Twitter Dataset
 The utilized data set was provided by the [Database Systems Research Group](https://dbs.ifi.uni-heidelberg.de/). It contains about 300,000 german Tweets over a period of about two years related to politics. 
 
-![Twitter Database ER-Diagram](img/twitterdb-er-diagram.png "ER-diagram")
+<p align="center">
+  <img src="img/twitterdb-er-diagram.png" />
+</p>
 <div align="center"><i>Twitter Database ER-Diagram</i></div>
 
 ## Word Embedding Models
