@@ -5,7 +5,13 @@ This project aims at reformulating a user query by enriching it with suitable te
 [[_TOC_]]
 
 
+
 ## Project Description
+In order to find relevant Tweets within a large collection, it is useful to expand the initial user query with suitable terms. These expansion terms are determined using the provided Pipeline which consists of:
+1. Text Preprocessing  
+2. Word Embedding
+3. Elastic Search
+
 This project aims at reformulating a query by enriching it with suitable expansion terms. For this purpose the initial query is preprocessed using *SpaCy*. This first part of the pipeline includes the following steps:
 - tokenize text
 - remove stop-word
