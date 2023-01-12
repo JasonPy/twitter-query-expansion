@@ -2,7 +2,8 @@
 This project aims at reformulating a user query by enriching it with suitable terms. For this purpose different word embedding models are applied such as FastText and Word2Vec. The selection of candidate terms to enrich the query are determined using spaCy. Elastic Search is used to find relevant tweets by using the reformulated user query.
 
 **Contents**
-[TOC]
+
+[[_TOC_]]
 
 
 
