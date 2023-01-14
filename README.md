@@ -5,23 +5,6 @@ Reformulate a user query by enriching it with suitable expansion terms. Differen
 
 [[_TOC_]]
 
-
-## Project Description
-In order to find relevant Tweets within a large collection, it is useful to expand the initial user query with suitable terms. These expansion terms are determined using the provided Pipeline which consists of:
-1. Text Preprocessing  
-2. Word Embedding
-3. Elastic Search
-
-The initial query is preprocessed using [SpaCy](https://spacy.io/). This first part of the pipeline includes the following steps:
-- tokenize text
-- remove stop-words
-- detect entities
-- determine Part-of-Speech (POS) tags
-- mark hashtags
-- mark Twitter users
-
-For finding suitable expansions, different word embedding models are applied such as *FastText* and *Word2Vec*. To determine if an expansion term is suitable, the Point-wise Mutual Information (PMI) measure is performed, with respect to the co-occurrences of the initial query term and the expansion term. Finally, [Elastic Search](https://www.elastic.co/elasticsearch/) is used to obtain relevant tweets by using the reformulated user query.  
-
 ## Structure
 In the root directory a `demo.ipynb` file is provided which demonstrates the use of the Pipeline. This includes downloading the embedding models as well as executing the Pipeline and describing different parameters. It is referred to this file for detailed information.  
 
@@ -60,7 +43,34 @@ options:
                         Minimum number of words per Tweet
 ```
 
-## Twitter Dataset
+
+## 1. Pipeline
+In order to find relevant Tweets within a large collection, it is useful to expand the initial user query with suitable terms. These expansion terms are determined using the provided Pipeline which is displayed below:
+<p align="center">
+  <img src="img/pipeline.png" />
+</p>
+<div align="center"><i>Query Expansion Pipeline</i></div>
+</br>
+
+The initial query is preprocessed using [SpaCy](https://spacy.io/). This first part of the pipeline includes the following steps:
+- tokenize text
+- remove stop-words
+- detect entities
+- determine Part-of-Speech (POS) tags
+- mark hashtags
+- mark Twitter users
+
+For finding suitable expansions, different word embedding models are applied such as *FastText* and *Word2Vec*. To determine if an expansion term is suitable, the Point-wise Mutual Information (PMI) measure is performed, with respect to the co-occurrences of the initial query term and the expansion term. Finally, [Elastic Search](https://www.elastic.co/elasticsearch/) is used to obtain relevant tweets by using the reformulated user query.  
+
+### 1.1 Text Processing
+### 1.2 Word Embedding
+
+### 1.3 Elastic Search
+
+
+## 2. Data
+
+### 2.1 Twitter Dataset
 The utilized data set was provided by the [Database Systems Research Group](https://dbs.ifi.uni-heidelberg.de/). It contains about 300,000 german Tweets over a period of about two years related to politics. 
 
 <p align="center">
@@ -68,7 +78,7 @@ The utilized data set was provided by the [Database Systems Research Group](http
 </p>
 <div align="center"><i>Twitter Database ER-Diagram</i></div>
 
-## Word Embedding Models
+### 2.2 Word Embedding Models
 
 **Word2Vec:**
 [German Word2Vec Model](https://fasttext.cc/docs/en/crawl-vectors.html)
@@ -77,7 +87,7 @@ The utilized data set was provided by the [Database Systems Research Group](http
 [German Fasttext Model](https://devmount.github.io/GermanWordEmbeddings/)
 
 
-## Elastic Search Index
+### 2.3 Elastic Search Index
 To search Tweets performantly, an Elastic Search index is fed with data from the PostgreSQL database. Make sure to have access to a database and a running Elastic Search Cluster. The configurations of the Index are stated in `templates/es-config.tpl`. An example Tweet within an Index looks as follows:
 
 ```yaml
@@ -95,12 +105,17 @@ To search Tweets performantly, an Elastic Search index is fed with data from the
 }
 ```
 
+## 3. Results
 
-## Results
+### 3.1
+Show comparison of initial query vs. expanded query
+### 3.2
 
-### Limitations
+## 4. Conclusion
+## 4.1 Limitations
 - model vectors, no OOV
 
-### Next Steps
+## 4.2 Outlook
 - include named entities
+- no synonyms
 
