@@ -1,7 +1,7 @@
 # Twitter Query Expansion
 Reformulate a user query by enriching it with suitable expansion terms. Different word embedding models are applied such as FastText and Word2Vec. Elastic Search is used to find relevant tweets by using the reformulated user query.
 
-**Contents**
+**Outline**
 
 [[_TOC_]]
 
@@ -52,6 +52,7 @@ In order to find relevant Tweets within a large collection, it is useful to expa
 <div align="center"><i>Query Expansion Pipeline</i></div>
 </br>
 
+### 1.1 Text Processing
 The initial query is preprocessed using [SpaCy](https://spacy.io/). This first part of the pipeline includes the following steps:
 - tokenize text
 - remove stop-words
@@ -59,13 +60,10 @@ The initial query is preprocessed using [SpaCy](https://spacy.io/). This first p
 - determine Part-of-Speech (POS) tags
 - mark hashtags
 - mark Twitter users
-
-For finding suitable expansions, different word embedding models are applied such as *FastText* and *Word2Vec*. To determine if an expansion term is suitable, the Point-wise Mutual Information (PMI) measure is performed, with respect to the co-occurrences of the initial query term and the expansion term. Finally, [Elastic Search](https://www.elastic.co/elasticsearch/) is used to obtain relevant tweets by using the reformulated user query.  
-
-### 1.1 Text Processing
 ### 1.2 Word Embedding
-
+For finding suitable expansions, different word embedding models are applied such as *FastText* and *Word2Vec*. To determine if an expansion term is suitable, the Point-wise Mutual Information (PMI) measure is performed, with respect to the co-occurrences of the initial query term and the expansion term.
 ### 1.3 Elastic Search
+Finally, [Elastic Search](https://www.elastic.co/elasticsearch/) is used to obtain relevant tweets by using the reformulated user query.  
 
 
 ## 2. Data
@@ -107,9 +105,9 @@ To search Tweets performantly, an Elastic Search index is fed with data from the
 
 ## 3. Results
 
-### 3.1
+### 3.1 Investigation of Expansions
 Show comparison of initial query vs. expanded query
-### 3.2
+### 3.2 Comparison of Initial and Expanded Query
 
 ## 4. Conclusion
 ## 4.1 Limitations
