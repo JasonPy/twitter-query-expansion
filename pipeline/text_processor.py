@@ -42,10 +42,12 @@ class TextProcessor:
         model : str
             The name of the SpaCy model.
         """
+        exclude_pipes = ["tagger", "entity_linker", "textcat", "textcat_multilabel", "trainable_lemmatizer", "senter", "sentencizer", "transformer"]
+
         if model:
-            self.nlp = sp.load(model)
+            self.nlp = sp.load(model, exclude=exclude_pipes)
         else:
-            self.nlp = sp_model.load()
+            self.nlp = sp_model.load(exclude=exclude_pipes)
 
         # Custom tokenization pattern for hashtags
         pattern = r'#\w+|\w+-\w+'
@@ -110,7 +112,7 @@ class TextProcessor:
 
 def trim_symbols(tokens: sp.tokens.token.Token, symbols = ['#', '@']) -> list[str]:
     """
-    Truncate specified symbols from tokens and returns them as string list.
+    Truncate specified symbols from tokens and returns the lemma as string list.
 
     Parameters
     ----------
@@ -132,7 +134,7 @@ def trim_symbols(tokens: sp.tokens.token.Token, symbols = ['#', '@']) -> list[st
         # Check if the token begins with sym
         if token.text[0] in symbols:
             # Remove the symbol from the token text
-            text.append(token.text[1:])
+            text.append(token.lemma_[1:])
         else:
-            text.append(token.text)
+            text.append(token.lemma_)
     return text
