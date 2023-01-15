@@ -1,9 +1,9 @@
-from elasticsearch import Elasticsearch
-from pipeline.utils import pmi, tf_idf
-
+import elasticsearch
 import json
 
-class ElasticsearchClient:
+from pipeline.utils import pmi
+
+class ElasticsearchClient(elasticsearch.Elasticsearch):
     """
     This class represents an Elastic Search client to handle the connection to an Index.
     """
@@ -13,24 +13,8 @@ class ElasticsearchClient:
         self._user = credentials['USER']
         self._cert_path = credentials['CERT']
         self._index = index
-        self._connection = None
 
-
-    def connect(self, password) -> None:
-        """
-        Establishes a connection to an elastic search API.
-
-        Parameters
-        ----------
-        password : str
-            The password to connect to an Elastic Search cluster.
-        """
-        try:
-            self._connection = Elasticsearch(self._host, basic_auth=(self._user, password), ca_certs=f"auth/{self._cert_path}")
-            print("Successfully connected to", self._host)
-        except Exception:
-            print("Unable to connect to", self._host)
-            exit(1)
+        super().__init__(self._host, basic_auth=(self._user, credentials['PWD']), ca_certs=f"auth/{self._cert_path}")
 
 
     def get_total_number_of_tweets(self) -> int:
@@ -44,8 +28,8 @@ class ElasticsearchClient:
         """
         try:
             # run search request
-            res = self._connection.count(index=self._index)
-        except Exception:
+            res = self.count(index=self._index)
+        except elasticsearch.ApiError:
             print("Error while executing count query for index", self._index)
         
         return res["count"]
@@ -71,8 +55,8 @@ class ElasticsearchClient:
 
         try:
             # run search request
-            res = self._connection.search(index=self._index, size=query["size"], query=query["query"], aggregations=query["aggs"])
-        except Exception:
+            res = self.search(index=self._index, size=query["size"], query=query["query"], aggregations=query["aggs"])
+        except elasticsearch.ApiError:
             print("Error while executing search query for index", self._index)
 
         tweets = {}
@@ -83,60 +67,6 @@ class ElasticsearchClient:
         tweets["tweets"] = res["hits"]["hits"]
 
         return tweets
-
-
-    def compose_search_query(self, query_path: str, params: json) -> json:
-        """
-        Load a predefined template and manipulate it according to specific configurations.
-
-        Parameters
-        ----------
-        query_path : str
-            The path to the query template..
-        
-        params: json
-            The parameters to fill into the template.
-
-        Returns
-        -------
-        search_query : json
-            The search object with filled in data.
-        """
-
-        with open(query_path, 'r') as q:
-            search_query = json.load(q)
-        query = search_query['query']
-
-        if params["num_of_tweets"]:
-            search_query["size"] = params["num_of_tweets"]
-
-        # filter retweets
-        if params["retweet"]:
-            del query['bool']['must_not']['term']
-        
-        # boost hashtags
-        if params["hashtag_boost"]:
-            query['bool']['should'][1]['terms']["boost"] = params["hashtag_boost"]
-        
-        # if present, insert hashtags from query
-        if len(params["hashtags"]) > 0 :
-            query['bool']['must']['terms_set']['hashtags']['terms'] = [h for h in params["hashtags"]]
-        else:
-            del query['bool']['must']
-        
-        # set date range for tweets
-        if params["tweet_range"]:
-            query['bool']['filter'][0]['range']['created_at']['gte'] = params["tweet_range"][0]
-            query['bool']['filter'][1]['range']['created_at']['lte'] = params["tweet_range"][1]
-
-        # insert the query terms
-        if params["terms"]:
-            query['bool']['should'][0]['match']['txt']['query'] = ' '.join(params["terms"])
-
-        if params["hashtags"]:
-            query['bool']['should'][1]['terms']['hashtags'] = [q.lower() for q in params["hashtags"]]
-
-        return search_query
 
 
     def get_co_occurring_terms(self, terms) -> json:
@@ -158,14 +88,73 @@ class ElasticsearchClient:
         agg_query = self.compose_aggregation_query('templates/es-adjacency-matrix.tpl', terms)
 
         try:
-            res = self._connection.search(index=self._index, size=agg_query["size"], aggregations=agg_query["aggs"])
-        except Exception:
+            res = self.search(index=self._index, size=agg_query["size"], aggregations=agg_query["aggs"])
+        except elasticsearch.ApiError:
             print("Error while executing aggregation query for index", self._index)
         
         co_occurrences = {}
         co_occurrences.update((t["key"], t["doc_count"]) for t in res["aggregations"]["interactions"]["buckets"])
 
         return co_occurrences
+
+
+    def get_expansion_terms(self, candidate_terms: list, similar_terms: json, threshold: float=0.01) -> list:
+            """
+            Given some candidate terms and their corresponding similar terms, check if the terms
+            can act as expansion terms. This is done by looking at the co-occurrence of both terms using TF-IDF.
+
+            Parameters
+            ----------
+            candidate_terms: list
+                The initial terms of the query.
+
+            similar_terms: json
+                The possible expansion terms.
+
+            threshold: float = 0.01
+                The threshold to include a term based on TF-IDF. 
+
+            Returns
+            -------
+            expansion_terms : list
+                The terms that are suitable to expand a query.
+            """
+            if not similar_terms:
+                return
+
+            co_occurrences = self.get_co_occurring_terms(similar_terms)
+            num_of_tweets = self.get_total_number_of_tweets()
+
+            expansion_terms = []
+
+            for term in candidate_terms:
+                if term in co_occurrences.keys():
+
+                    term_freq = co_occurrences[term]
+
+                    for synonym in similar_terms[term]:
+                        if synonym in co_occurrences.keys():
+                            synonym_freq = co_occurrences[synonym]
+
+                            # calc how often it occurs
+                            alpha = synonym_freq / num_of_tweets
+
+                            # occurs often itself, good term
+                            if alpha >= 0.01:
+                                expansion_terms.append(synonym)
+                                continue
+
+                            if f"{synonym}&{term}" in co_occurrences.keys():
+                                joint_freq = co_occurrences[f"{synonym}&{term}"]
+
+                                beta = pmi(num_of_tweets, term_freq, synonym_freq, joint_freq)
+                                # joint occurrence often, good expansion
+                                if beta >= 0.1:
+                                    expansion_terms.append(synonym)
+                        else:
+                            continue
+
+            return expansion_terms
 
 
     def compose_aggregation_query(self, query_path, terms) -> json:
@@ -202,62 +191,57 @@ class ElasticsearchClient:
         return agg_query
 
 
-    def get_expansion_terms(self, candidate_terms: list, similar_terms: json, threshold: float=0.01) -> list:
-        """
-        Given some candidate terms and their corresponding similar terms, check if the terms
-        can act as expansion terms. This is done by looking at the co-occurrence of both terms using TF-IDF.
+    def compose_search_query(self, query_path: str, params: json) -> json:
+            """
+            Load a predefined template and manipulate it according to specific configurations.
 
-        Parameters
-        ----------
-        candidate_terms: list
-            The initial terms of the query.
+            Parameters
+            ----------
+            query_path : str
+                The path to the query template..
+            
+            params: json
+                The parameters to fill into the template.
 
-        similar_terms: json
-            The possible expansion terms.
+            Returns
+            -------
+            search_query : json
+                The search object with filled in data.
+            """
 
-        threshold: float = 0.01
-            The threshold to include a term based on TF-IDF. 
+            with open(query_path, 'r') as q:
+                search_query = json.load(q)
+            query = search_query['query']
 
-        Returns
-        -------
-        expansion_terms : list
-            The terms that are suitable to expand a query.
-        """
-        if not similar_terms:
-            return
+            if params["num_of_tweets"]:
+                search_query["size"] = params["num_of_tweets"]
 
-        co_occurrences = self.get_co_occurring_terms(similar_terms)
-        num_of_tweets = self.get_total_number_of_tweets()
+            # filter retweets
+            if params["retweet"]:
+                del query['bool']['must_not']['term']
+            
+            # boost hashtags
+            if params["hashtag_boost"]:
+                query['bool']['should'][1]['terms']["boost"] = params["hashtag_boost"]
+            
+            # if present, insert hashtags from query
+            if len(params["hashtags"]) > 0 :
+                query['bool']['must']['terms_set']['hashtags']['terms'] = [h for h in params["hashtags"]]
+            else:
+                del query['bool']['must']
+            
+            # set date range for tweets
+            if params["tweet_range"]:
+                query['bool']['filter'][0]['range']['created_at']['gte'] = params["tweet_range"][0]
+                query['bool']['filter'][1]['range']['created_at']['lte'] = params["tweet_range"][1]
 
-        expansion_terms = []
+            # insert the query terms
+            if params["terms"]:
+                query['bool']['should'][0]['match']['txt']['query'] = ' '.join(params["terms"])
 
-        for term in candidate_terms:
-            if term in co_occurrences.keys():
+            if params["hashtags"]:
+                query['bool']['should'][1]['terms']['hashtags'] = [q.lower() for q in params["hashtags"]]
 
-                term_freq = co_occurrences[term]
+            return search_query
 
-                for synonym in similar_terms[term]:
-                    if synonym in co_occurrences.keys():
-                        synonym_freq = co_occurrences[synonym]
-
-                        # calc how often it occurs
-                        alpha = synonym_freq / num_of_tweets
-
-                        # occurs often itself, good term
-                        if alpha >= 0.01:
-                            expansion_terms.append(synonym)
-                            continue
-
-                        if f"{synonym}&{term}" in co_occurrences.keys():
-                            joint_freq = co_occurrences[f"{synonym}&{term}"]
-
-                            beta = pmi(num_of_tweets, term_freq, synonym_freq, joint_freq)
-                            # joint occurrence often, good expansion
-                            if beta >= 0.1:
-                                expansion_terms.append(synonym)
-                    else:
-                        continue
-
-        return expansion_terms
-
-# measure if they occur seperatly more often
+    

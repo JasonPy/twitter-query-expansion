@@ -25,9 +25,3 @@ def pmi(total, w1, w2, w12) -> float:
     p1 = w1 / total
     p2 = w2 / total
     return np.log(p12 / (p1 * p2))
-
-
-def tf_idf(tf, df) -> float:
-    """
-    """
-    return tf / df

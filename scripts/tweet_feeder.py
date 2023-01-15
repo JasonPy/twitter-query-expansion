@@ -75,7 +75,7 @@ def main():
     parser.add_argument('-t', '--table', required=True, help='Postgres table')
     parser.add_argument('-ec','--elastic_credentials', required=False, default="auth/es-credentials.ini", help='Path to Elastic Search credentials file')
     parser.add_argument('-pc', '--postgres_credentials', required=False, default="auth/pg-credentials.ini", help='Path to Postgres credentials file')
-    parser.add_argument('-es', '--elastic_settings', required=False, default="templates/es-config.conf", help='Settings for new Index; Look at "/templates/es-config.conf"')
+    parser.add_argument('-es', '--elastic_settings', required=False, default="templates/es-config.tpl", help='Settings for new Index; Look at "/templates/es-config.conf"')
     parser.add_argument('-wc', '--wordcount', required=False, default=25, help='Minimum number of words per Tweet')
     args = parser.parse_args()                    
 
@@ -90,8 +90,8 @@ def main():
 
     # create index if it not exists
     if not es_client.indices.exists(index=args.index):
-        print(f"Creating new index {args.index} using {args.es_config} ...")
-        es_conf = json.load(open(file=args.es_config))
+        print(f"Creating new index {args.index} using {args.elastic_settings} ...")
+        es_conf = json.load(open(file=args.elastic_settings))
         es_client.indices.create(index=args.index, settings=es_conf["settings"], mappings=es_conf["mappings"])
 
     # count entries in data base

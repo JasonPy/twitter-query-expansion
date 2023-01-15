@@ -4,7 +4,7 @@ import configparser
 
 from datetime import datetime
 
-from pipeline.text_processor import TextProcessor, trim_symbols
+from pipeline.text_processor import TextProcessor
 from pipeline.embedding import WordEmbedding
 from pipeline.elasticsearch import ElasticsearchClient
 
@@ -42,13 +42,13 @@ def run(queries: list, embedding_params: json, elastic_params:json) -> json:
 
     # ------------------ TEXT PROCESSING ------------------ 
     print('Processing text using SpaCy...')
-    pipe = TextProcessor()
+    text_processor = TextProcessor()
 
     docs = []
 
     # for each query, invoke the SpaCy pipeline
     for query in queries:
-        doc = pipe.invoke(query)
+        doc = text_processor.invoke(query)
         docs.append(doc)
     log["docs"] = [d.text for d in docs]
 
@@ -57,11 +57,10 @@ def run(queries: list, embedding_params: json, elastic_params:json) -> json:
 
     # for each processed query, filter the tokens depending on the specified parameters
     for doc in docs:
-        filtered_tokens = pipe.get_filtered_tokens(doc, embedding_params)
+        filtered_tokens = text_processor.get_filtered_tokens(doc, embedding_params)
         query_tokens.append(filtered_tokens)
     log["query_tokens"] = [[token.text for token in tokens] for tokens in query_tokens]
 
-    del pipe
 
     # ------------------ WORD EMBEDDINGS ------------------
     print(f'Evaluating {embedding_params["type"]} model...')
@@ -71,7 +70,7 @@ def run(queries: list, embedding_params: json, elastic_params:json) -> json:
 
     # find similar terms using embedding model 
     for tokens in query_tokens:
-        similar_terms.append(model.get_similar_terms(trim_symbols(tokens), embedding_params["num_nearest_terms"]))
+        similar_terms.append(model.get_similar_terms(text_processor.trim_symbols(tokens), embedding_params["num_nearest_terms"]))
     log["similar_terms"] = similar_terms
 
     # free space
@@ -87,7 +86,6 @@ def run(queries: list, embedding_params: json, elastic_params:json) -> json:
 
     # connect to Elastic Search
     es_client = ElasticsearchClient(credentials=config["ELASTIC"], index=elastic_params["index"])
-    es_client.connect(config["ELASTIC"]["PWD"])
 
     print('Retrieving Tweets...')
 
@@ -95,9 +93,8 @@ def run(queries: list, embedding_params: json, elastic_params:json) -> json:
 
     # find most suitable expansion terms
     for i in range(len(queries)):
-        expansion_terms.append(es_client.get_expansion_terms(trim_symbols(query_tokens[i]), similar_terms[i]))
+        expansion_terms.append(es_client.get_expansion_terms(text_processor.trim_symbols(query_tokens[i]), similar_terms[i]))
     log["expansion_terms"] = expansion_terms
-
 
     results = []
 
@@ -106,10 +103,10 @@ def run(queries: list, embedding_params: json, elastic_params:json) -> json:
         # TODO: use docs or query_terms? 
 
         search = elastic_params.copy()
-        search["terms"] = trim_symbols(query_tokens[i]) + expansion_terms[i]
-        search["hashtags"] = [h.lower() for h in trim_symbols([t for t in docs[i] if t._.is_hashtag ])]
-        search["users"] = trim_symbols([t for t in docs[i] if t._.is_user ])
-        search["entities"] = trim_symbols([t for t in docs[i] if t.ent_type_ ])
+        search["terms"] = text_processor.trim_symbols(query_tokens[i]) + expansion_terms[i]
+        search["hashtags"] = [h.lower() for h in text_processor.trim_symbols([t for t in docs[i] if t._.is_hashtag ])]
+        search["users"] = text_processor.trim_symbols([t for t in docs[i] if t._.is_user ])
+        search["entities"] = text_processor.trim_symbols([t for t in docs[i] if t.ent_type_ ])
 
         results.append(es_client.get_tweets(search))
     

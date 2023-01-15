@@ -109,32 +109,32 @@ class TextProcessor:
            
         return tokens
 
+    @staticmethod
+    def trim_symbols(tokens: sp.tokens.token.Token, symbols = ['#', '@']) -> list[str]:
+        """
+        Truncate specified symbols from tokens and returns the lemma as string list.
 
-def trim_symbols(tokens: sp.tokens.token.Token, symbols = ['#', '@']) -> list[str]:
-    """
-    Truncate specified symbols from tokens and returns the lemma as string list.
+        Parameters
+        ----------
+        tokens : spacy.tokens.doc.Token
+            The input tokens.
+        symbols : list
+            The symbols that are truncated from each token.
 
-    Parameters
-    ----------
-    tokens : spacy.tokens.doc.Token
-        The input tokens.
-    symbols : list
-        The symbols that are truncated from each token.
+        Returns
+        -------
+        text : list
+            The truncated tokens as string list.
 
-    Returns
-    -------
-    text : list
-           The truncated tokens as string list.
-
-    """
-    text = []
-         
-    # Iterate over the tokens in the doc
-    for token in tokens:
-        # Check if the token begins with sym
-        if token.text[0] in symbols:
-            # Remove the symbol from the token text
-            text.append(token.lemma_[1:])
-        else:
-            text.append(token.lemma_)
-    return text
+        """
+        text = []
+            
+        # Iterate over the tokens in the doc
+        for token in tokens:
+            # Check if the token begins with sym
+            if token.text[0] in symbols:
+                # Remove the symbol from the token text
+                text.append(token.lemma_[1:])
+            else:
+                text.append(token.lemma_)
+        return text
