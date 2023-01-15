@@ -53,30 +53,51 @@ In order to find relevant Tweets within a large collection, it is useful to expa
 </br>
 
 ### 1.1 Text Processing
-The initial query is preprocessed using [SpaCy](https://spacy.io/). This first part of the pipeline includes the following steps:
+The initial query is processed using [SpaCy](https://spacy.io/). This first part of the pipeline includes the following steps:
 - tokenize text
 - remove stop-words
 - detect entities
 - determine Part-of-Speech (POS) tags
 - mark hashtags
 - mark Twitter users
+
 ### 1.2 Word Embedding
 For finding suitable expansions, different word embedding models are applied such as *FastText* and *Word2Vec*. To determine if an expansion term is suitable, the Point-wise Mutual Information (PMI) measure is performed, with respect to the co-occurrences of the initial query term and the expansion term.
+
 ### 1.3 Elastic Search
-Finally, [Elastic Search](https://www.elastic.co/elasticsearch/) is used to obtain relevant tweets by using the reformulated user query.  
+[Elastic Search](https://www.elastic.co/elasticsearch/)
+The similar terms - obtained by the Word Embeddings - are consequently ranked based on the Tweet Collection. In order to decide if a found similar term $x$ can act as an expansion, the Point-wise Mutual Information (PMI) is applied. Therefore, Elastic Search [Adjacency Matrix Aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-adjacency-matrix-aggregation.html) determine the number of co-occurrences $N_{x,y}$ of the initial term $x$ and the similar term $y$, their separate occurrence across the whole document collection $N_x$, $N_y$ and the total number of documents $N$. Thus, the probabilities can be computed as
+$$
+P(x,y) = \frac{N_{x,y}}{N},
+P(x) = \frac{N_x}{N},
+P(y) = \frac{N_y}{N},
+$$ 
+and consequently inserted into the formula for PMI as
+$$
+PMI(x,y) = log \left( \frac{P(x,y)}{P(x)P(y)} \right).
+$$
+If a similar term's $PMI$ exceeds some threshold $\tau \in \mathbb{R}$ it is added as expansion term. Finally, the expanded query is utilized to retrieve the Top 10 Tweets. 
 
 
 ## 2. Data
+The Pipeline requires a collection of Tweets and at least one Word Embedding model. The utilized data sources are stated and briefly described.
 
 ### 2.1 Twitter Dataset
-The utilized data set was provided by the [Database Systems Research Group](https://dbs.ifi.uni-heidelberg.de/). It contains about 300,000 german Tweets over a period of about two years related to politics. 
+The Twitter data collection was provided by the [Database Systems Research Group](https://dbs.ifi.uni-heidelberg.de/). It contains about 300,000 german Tweets over a period of about two years related to politics. Initially, this data set is provided in form of a _PostgresSQL_ database. The respective scheme is displayed in Figure 2.
 
 <p align="center">
   <img src="img/twitterdb-er-diagram.png" />
 </p>
-<div align="center"><i>Twitter Database ER-Diagram</i></div>
+<div align="center"><i>2. Twitter Database ER-Diagram</i></div>
+
+<p align="center">
+  <img src="img/tweet-words.png" />
+</p>
+<div align="center"><i>3. Word amount of Tweets</i></div>
+
 
 ### 2.2 Word Embedding Models
+...
 
 **Word2Vec:**
 [German Word2Vec Model](https://fasttext.cc/docs/en/crawl-vectors.html)
@@ -110,10 +131,10 @@ Show comparison of initial query vs. expanded query
 ### 3.2 Comparison of Initial and Expanded Query
 
 ## 4. Conclusion
-## 4.1 Limitations
+### 4.1 Limitations
 - model vectors, no OOV
 
-## 4.2 Outlook
+### 4.2 Outlook
 - include named entities
 - no synonyms
 
