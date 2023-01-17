@@ -157,15 +157,15 @@ For finding suitable expansions, different word embedding models can be applied.
 - FastText
 - Word2Vec
 
-In order to determine the $n$ most similar terms based on some input, the vector representation of terms within Word Embeddings is utilized. The similarity between the initial term $x$ and the possible expansion term $y$ is determined using the cosine similarity of their vector representation $X, Y \in \mathbb{R}^N$ respectively. The similarity can then be computed as
+In order to determine the $`n`$ most similar terms based on some input, the vector representation of terms within Word Embeddings is utilized. The similarity between the initial term $`x`$ and the possible expansion term $`y`$ is determined using the cosine similarity of their vector representation $`X, Y \in \mathbb{R}^N`$ respectively. The similarity can then be computed as
 ```math
 SIM_{cos}(X,Y) = \frac{X \cdot Y}{\lVert X \rVert \lVert Y \rVert}
 ```
-For each initial term the $n$ most similar terms are returned and further investigated using Elastic Search.
+For each initial term the $`n`$ most similar terms are returned and further investigated using Elastic Search.
 
 
 ## 3.3 Elastic Search
-The similar terms - obtained by the Word Embeddings - are consequently ranked based on the Tweet Collection. In order to decide if a found similar term can act as an expansion, the Point-wise Mutual Information (PMI) is applied. Therefore, Elastic Search [Adjacency Matrix Aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-adjacency-matrix-aggregation.html) determine the number of co-occurrences $N_{x,y}$ of the initial term $x$ and the similar term $y$, their separate occurrence across the whole document collection $N_x$, $N_y$ and the total number of documents $N$. Thus, the probabilities can be computed as
+The similar terms - obtained by the Word Embeddings - are consequently ranked based on the Tweet Collection. In order to decide if a found similar term can act as an expansion, the Point-wise Mutual Information (PMI) is applied. Therefore, Elastic Search [Adjacency Matrix Aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-adjacency-matrix-aggregation.html) determine the number of co-occurrences $`N_{x,y}`$ of the initial term $`x`$ and the similar term $`y`$, their separate occurrence across the whole document collection $`N_x`$, $`N_y`$ and the total number of documents $`N`$. Thus, the probabilities can be computed as
 ```math
 P(x,y) = \frac{N_{x,y}}{N},
 P(x) = \frac{N_x}{N},
@@ -175,7 +175,7 @@ and consequently inserted into the formula
 ```math
 PMI(x,y) = log \left( \frac{P(x,y)}{P(x)P(y)} \right).
 ```
-If a similar term's $PMI$ exceeds some threshold $\tau \in \mathbb{R}$ it is added as expansion term. These terms are then combined with the terms of the initial user query. The provided template [es-query.tpl]() is filled with the extracted data and the corresponding Elastic Search index is scanned. Finally, the Top $K$ Tweets are returned. 
+If a similar term's $`PMI`$ exceeds some threshold $`\tau \in \mathbb{R}`$ it is added as expansion term. These terms are then combined with the terms of the initial user query. The provided template [es-query.tpl]() is filled with the extracted data and the corresponding Elastic Search index is scanned. Finally, the Top $`K`$ Tweets are returned. 
 
 
 ---
