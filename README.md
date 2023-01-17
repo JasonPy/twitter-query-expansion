@@ -44,25 +44,9 @@ The Pipeline requires a collection of Tweets and at least one Word Embedding mod
 ## 2.1 Twitter Dataset
 The Twitter data collection was provided by the [Database Systems Research Group](https://dbs.ifi.uni-heidelberg.de/). It contains about 300,000 german Tweets over a period of about two years related to politics. Initially, this data set is provided in form of a _PostgresSQL_ database. The respective scheme is displayed in Figure 2. Of particular interest are the Tweets itself and their respective hashtags, user names and named entities.
 
-
-<div style="display:flex">
-     <div style="flex:1;">
-          <img src="img/twitterdb-er-diagram.png" align="left" />
-     </div>
-     <div style="flex:1;">
-          <img src="img/tweet-words.png" align="right" />
-     </div>
-</div>
-<div style="display:flex">
-     <div style="flex:1;">
-          <div><i>2.1 Twitter Database ER-Diagram</i></div>
-     </div>
-     <div style="flex:1;">
-          <div><i>2.2 Word Count statistic</i></div>
-     </div>
-</div>
-<br>
-
+|<img src="img/twitterdb-er-diagram.png" align="left" /> | <img src="img/tweet-words.png" align="right" />
+:---:|:---:
+2.1 Twitter Database ER-Diagram | 2.2 Word Count statistic
 
 To search Tweets performantly, an Elastic Search index is fed with data from the PostgreSQL database. The indexing is configured by the [es-config.tpl]() template. Tokenization is applied and each token is split at `[ -.,;:!?/#]`. Consequently the following filters are applied to the obtained tokens:
 - **Tweet syntax marker**
