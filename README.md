@@ -130,7 +130,7 @@ To reduce memory consumption the models are post-processed (see [model_loader.py
 # 3. Pipeline
 In order to find relevant Tweets within a large collection, it is useful to expand the initial user query with suitable terms. Therefore, a structural approach is provided - a configurable pipeline. This pipeline handles the expansion of the user query by firstly processing the initial query terms by the component [Text Processor](#31-text-processing). It outputs a list of tokens with specific information. Based on this, tokens are identified for finding similar terms. 
 
-The selected terms are feed into the Word Embedding models. The component [Word Embedding](#32-word-embedding) handles the process of retrieving $n$ possible expansion terms for each selected term. The pipeline allows to download and process arbitrary pre-trained Word Embeddings. 
+The selected terms are feed into the Word Embedding models. The component [Word Embedding](#32-word-embedding) handles the process of retrieving $`n`$ possible expansion terms for each selected term. The pipeline allows to download and process arbitrary pre-trained Word Embeddings. 
 
 To determine, if a possible expansion term is suitable, the component [Elastic Search](#33-elastic-search) receives the previously computed terms. By looking at the co-occurrences of the initial term and the expansion term, the most appropriate expansions are chosen. Finally, the query is executed and the Top K Tweets returned.
 
@@ -158,23 +158,23 @@ For finding suitable expansions, different word embedding models can be applied.
 - Word2Vec
 
 In order to determine the $n$ most similar terms based on some input, the vector representation of terms within Word Embeddings is utilized. The similarity between the initial term $x$ and the possible expansion term $y$ is determined using the cosine similarity of their vector representation $X, Y \in \mathbb{R}^N$ respectively. The similarity can then be computed as
-$$
+```math
 SIM_{cos}(X,Y) = \frac{X \cdot Y}{\lVert X \rVert \lVert Y \rVert}
-$$
+```
 For each initial term the $n$ most similar terms are returned and further investigated using Elastic Search.
 
 
 ## 3.3 Elastic Search
 The similar terms - obtained by the Word Embeddings - are consequently ranked based on the Tweet Collection. In order to decide if a found similar term can act as an expansion, the Point-wise Mutual Information (PMI) is applied. Therefore, Elastic Search [Adjacency Matrix Aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-adjacency-matrix-aggregation.html) determine the number of co-occurrences $N_{x,y}$ of the initial term $x$ and the similar term $y$, their separate occurrence across the whole document collection $N_x$, $N_y$ and the total number of documents $N$. Thus, the probabilities can be computed as
-$$
+```math
 P(x,y) = \frac{N_{x,y}}{N},
 P(x) = \frac{N_x}{N},
 P(y) = \frac{N_y}{N},
-$$ 
+```
 and consequently inserted into the formula 
-$$
+```math
 PMI(x,y) = log \left( \frac{P(x,y)}{P(x)P(y)} \right).
-$$
+```
 If a similar term's $PMI$ exceeds some threshold $\tau \in \mathbb{R}$ it is added as expansion term. These terms are then combined with the terms of the initial user query. The provided template [es-query.tpl]() is filled with the extracted data and the corresponding Elastic Search index is scanned. Finally, the Top $K$ Tweets are returned. 
 
 
