@@ -31,8 +31,7 @@ The required python version and installed packages are listed within the [Pipfil
 
 
 # 1. Introduction
-[^1]
-[^2]
+
 
 ## 1.1 Motivation
 
@@ -119,7 +118,7 @@ For the purpose of finding similar terms, word embeddings are utilized. These mo
 - **Word2Vec:** [German Word2Vec Model](https://devmount.github.io/GermanWordEmbeddings/) 
 - **Fasttext:** [German Fasttext Model](https://fasttext.cc/docs/en/crawl-vectors.html) 
 
-This Fasttext model is trained on Common Crawl and Wikipedia data. The dimension of the vector space is 300 which results in a fairly large model of about 4.5 GB. The Word2Vec model is small in comparison since it only provides the word vectors. It is trained on german wikipedia data and news articles.
+This Fasttext[^1] model is trained on Common Crawl and Wikipedia data. The dimension of the vector space is 300 which results in a fairly large model of about 4.5 GB. The Word2Vec[^2] model is small in comparison since it only provides the word vectors. It is trained on german wikipedia data and news articles.
 
 To reduce memory consumption the models are post-processed (see [model_loader.py]()). Each models vectors are compressed by using the L2-norm, reducing the size significantly. However, the drawbacks are that the model can not be used for training anymore, out of vocabulary words are no longer available and the overall performance is slightly reduced.
 
@@ -160,6 +159,8 @@ SIM_{cos}(X,Y) = \frac{X \cdot Y}{\lVert X \rVert \lVert Y \rVert}
 ```
 For each term the $`n`$ most similar terms are returned and investigated if they can act as an expansion using Elastic Search.
 
+todo: maximum n of Y are new y
+word count genauer sagen
 
 ## 3.3 Elastic Search
 The similar terms - obtained by the Word Embeddings - are ranked based on the Tweet Collection. In order to decide if a found similar term can act as an expansion, the Point-wise Mutual Information[^3] (PMI) is applied. Therefore, Elastic Search [Adjacency Matrix Aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-adjacency-matrix-aggregation.html) determine the number of co-occurrences $`N_{x,y}`$ of the initial term $`x`$ and the similar term $`y`$, their separate occurrence across the whole document collection $`N_x`$, $`N_y`$. The attribute `word_count` for each Tweet comes in handy now and simplifies the calculation of the total number of words $`N`$. Thus, the probabilities can be computed as
@@ -172,7 +173,7 @@ and consequently inserted into the formula
 ```math
 PMI(x,y) = log \left( \frac{P(x,y)}{P(x)P(y)} \right).
 ```
-If a similar term's $`PMI`$ exceeds some threshold $`\tau \in \mathbb{R}`$ it is added as expansion term. These terms are then combined with the terms of the initial user query. The provided template [es-query.tpl]() is filled with the extracted data and the corresponding Elastic Search index is scanned. Finally, the Top $`K`$ Tweets are returned. 
+If a similar term's $`PMI`$ exceeds some threshold $`\tau \in \mathbb{R}`$ it is added as expansion term. These terms are then combined with the terms of the initial user query. The provided template [es-query.tpl]() is filled with the extracted data and the corresponding Elastic Search index is scanned. Finally, the Top $`k`$ Tweets are returned. 
 
 
 ---
@@ -185,11 +186,11 @@ The whole pipeline is configurable - this means that it can be adjusted which pa
 
 | Initial Query | Noun | Verb | Adjective | Proper Noun | Location | Organization | Hashtag | 
 |:---|---|---|---|---|---|---|---|
-|`[große Koalition gescheitert unter Merkel? #Groko #SPD #CDU]`||||`[Kanzlerin, Bundeskanzlerin]`| | |`[GroKo,SPD,AFD,CDU,FDP,CSU,Linkspartei]`|
-|`[Lauterbach Deutschland Corona-Maßnahmen #Impfung}`| | | |`[Europa, Bundesrepublik]`|`[Europa, Bundesrepublik]`| |`[Impfung]`|
-|`[@bundestag Bundestagswahl 2021 Ergebnisse]`|`[Endergebnis]`| | | | | | | |
+|`[große Koalition gescheitert unter Merkel? #Groko #SPD #CDU]`||||`[Kanzlerin, Bundeskanzlerin]`| | |`[GroKo, SPD, AFD, CDU, FDP, CSU, Linkspartei]`|
+|`[Lauterbach Deutschland Corona-Maßnahmen #Impfung}`|| | |`[Bundesrepublik]`|`[Bundesrepublik]`| |`[impfung, Schutzimpfung]`|
+|`[@bundestag Bundestagswahl 2021 Ergebnisse]`|`[Endergebnis, Ergebniss, Gesamtergebnis, Zwischenergebnis]`| | | | | | | |
 |`[Gesetzliche Rentenversicherung Rente Mit 67]`| | | | | | | | |
-|`[Bundeswehr Afghanistan Krieg stoppen]`| | | | | | | | |
+|`[Bundeswehr Afghanistan Krieg stoppen]`|`[bundeswehr, Bundeswehrverwaltung, Kriegs]`| | |`[Pakistan, Hindukusch]` |`[Pakistan, Hindukusch]` | `[bundeswehr, Bundeswehrverwaltung]`| | 
 
 Describe...
 
@@ -217,11 +218,12 @@ How do the results differ for the initial and the expanded user query? To get an
 
 | Rank | Tweets from Initial Query | Tweets from Expanded Query | 
 |:---:|---|---|
-|1|Das Versagen der #GroKo #cdu #spd in einem Tweet \n👎🏼Parteitaktik über alles \n👎🏼in 4 J. keine wirkliche Reform hinbekommen\n👎🏼 Oppositionsvorschl. wie immer abgelehnt \n\n👎🏼👎🏼 Konsequenz: evtl über 900 MdB inkl. riesiger Kosten &amp; Chaos https://t.co/K9s1T8dVH5|Von den letzten 16 Jahren hat die #SPD 12 Jahre mit der #CDU regiert. Die #SPD hat Scholz mit großem Getöse nicht zum Parteivorsitzenden gewählt,mit dem Argument,er stünde für die #GroKo Jetzt ist er Kanzlerkandidat und kokettiert offen damit merkellike zu sein.Die Wahrheit ist:|
-|2|Von den letzten 16 Jahren hat die #SPD 12 Jahre mit der #CDU regiert. Die #SPD hat Scholz mit großem Getöse nicht zum Parteivorsitzenden gewählt,mit dem Argument,er stünde für die #GroKo Jetzt ist er Kanzlerkandidat und kokettiert offen damit merkellike zu sein.Die Wahrheit ist:|Da Herr #Söder vor einem Linksrutsch warnt, der größte Linksrutsch fand unter den #Groko-Regierungen unter Angela #Merkel statt. ☝️🤔\n👉Sie war die beste #CDU-Kanzlerin, welche die #SPD je hatte.🤷‍♂️ https://t.co/UwrxHT8yDu|
-|3|Da Herr #Söder vor einem Linksrutsch warnt, der größte Linksrutsch fand unter den #Groko-Regierungen unter Angela #Merkel statt. ☝️🤔\n👉Sie war die beste #CDU-Kanzlerin, welche die #SPD je hatte.🤷‍♂️ https://t.co/UwrxHT8yDu|Mit @Anne_Kura beim Städte- und Gemeindebund Niedersachsen in Bodenwerder, der die #Groko #SPD #CDU gerade für das „Kommunen in die Tasche Greif-Gesetz“ kritisiert. #Grüne wollen bessere Kommunalfinanzierung und Investitionen in #Klimaschutz und #Bildung @GrueneLtNds https://t.co/PK6zkUM6Ja|
+|1|Die #GroKo #SPD #CDU #CSU will kein #Löschmoratorium zur Sicherung von Akten, sie will keinen Untersuchungsausschuss, sondern eine Enquete zum Desaster in #Afghanistan -  niemand übernimmt Verantwortung und parlamentarische Aufklärung wird blockiert. Das ist die Lage.|Die erste #GroKo in Deutschland vereinte 1966 noch 86,9% der Wähler:innen hinter sich. Das lässt sich heute nicht mal mit einer Mosambik-Koalition erreichen. Aber wenn man #CDU und #FDP einerseits und #SPD und #Grüne anderseits beobachtet, könnte man das glatt als Lösung sehen.|
+|2|#SPD und #CDU sind sich bis zur Unkenntlichkeit ähnlich geworden und natürlich wäre eine Neuauflage der #GroKo die bequemste Koa von allen. Kann man nur zuverlässig verhindern, wenn #CSU + + #SPD + #CDU keine eigene Mehrheit bekommen. #triell|6. Als @GrueneBundestag haben wir die Aufklärung im Untersuchungsausschuss #Breitscheidplatz gegen massive Widerstände der #Bundesregierung und #GroKo #CDU #CSU #SPD maßgeblich vorangetrieben. Hier eine Bilanz: https://t.co/Y8fb7v6oa8|
+|3|Wenn die Partei des Versagens beim Glasfaserausbau #CDU auf #Digitalisierung macht, und die #Kohlepartei #SPD plötzlich vorgibt,  #KlimaSchutz betreiben zu wollen, weißt Du, die #GroKo erzählt 3 Wochen vor der #btw21 alles mögliche, um an der Macht zu bleiben.|Aber…. Ach so, das wollten ja #SPD #CDU und #CSU explizit nicht. Obwohl Grüne, FDP und Linke das beantragt hatten. Die #GroKo nimmt es schlicht billigend in Kauf, dass bis zu 300 Abgeordnete mehr in den Bundestag kommen. Es wäre schlicht verheerend.|
 
 *Number of overlaps*
+*Eventull sortieren nach likes, RT?*
 
 # 4.4 Comparison of Fasttext and Word2Vec
 

@@ -71,8 +71,8 @@ def main():
 
     # parse command line arguments
     parser = argparse.ArgumentParser(description='Feed Postgres data into Elastic Search Index')
-    parser.add_argument('-i', '--index', required=True, help='Elastic Search index')
-    parser.add_argument('-t', '--table', required=True, help='Postgres table')
+    parser.add_argument('-i', '--index', required=True, help='Name of Elastic Search index')
+    parser.add_argument('-t', '--table', required=True, help='Name of Postgres table')
     parser.add_argument('-ec','--elastic_credentials', required=False, default="auth/es-credentials.ini", help='Path to Elastic Search credentials file')
     parser.add_argument('-pc', '--postgres_credentials', required=False, default="auth/pg-credentials.ini", help='Path to Postgres credentials file')
     parser.add_argument('-es', '--elastic_settings', required=False, default="templates/es-config.tpl", help='Settings for new Index; Look at "/templates/es-config.conf"')
