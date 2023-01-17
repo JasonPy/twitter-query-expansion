@@ -17,7 +17,7 @@ class WordEmbedding:
         """
         """
         if not terms:
-            return
+            return {}
 
         similar_terms = {}
 

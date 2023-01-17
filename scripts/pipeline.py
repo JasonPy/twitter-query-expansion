@@ -100,8 +100,6 @@ def run(queries: list, embedding_params: json, elastic_params:json) -> json:
 
     # execute query to retrieve tweets using the final expanded query
     for i in range(len(queries)):
-        # TODO: use docs or query_terms? 
-
         search = elastic_params.copy()
         search["terms"] = text_processor.trim_symbols(query_tokens[i]) + expansion_terms[i]
         search["hashtags"] = [h.lower() for h in text_processor.trim_symbols([t for t in docs[i] if t._.is_hashtag ])]

@@ -17,7 +17,7 @@ class ElasticsearchClient(elasticsearch.Elasticsearch):
         super().__init__(self._host, basic_auth=(self._user, credentials['PWD']), ca_certs=f"auth/{self._cert_path}")
 
 
-    def get_total_number_of_tweets(self) -> int:
+    def get_total_word_count(self) -> int:
         """
         Count the number of documents in the index.
 
@@ -26,13 +26,20 @@ class ElasticsearchClient(elasticsearch.Elasticsearch):
         count: int
             The number of documents in _index.  
         """
+
+        query = {
+            "size": 0,
+            "aggs": {
+                "total_word_count": { "sum": { "field": "word_count" } }
+            }
+        }
         try:
             # run search request
-            res = self.count(index=self._index)
+            res = self.search(index=self._index, size=query["size"], aggregations=query["aggs"])
         except elasticsearch.ApiError:
             print("Error while executing count query for index", self._index)
         
-        return res["count"]
+        return res["aggregations"]["total_word_count"]["value"]
 
 
     def get_tweets(self, params: json) -> json:
@@ -98,7 +105,7 @@ class ElasticsearchClient(elasticsearch.Elasticsearch):
         return co_occurrences
 
 
-    def get_expansion_terms(self, candidate_terms: list, similar_terms: json, threshold: float=0.01) -> list:
+    def get_expansion_terms(self, candidate_terms: list, similar_terms: json, threshold: float=1.) -> list:
             """
             Given some candidate terms and their corresponding similar terms, check if the terms
             can act as expansion terms. This is done by looking at the co-occurrence of both terms using TF-IDF.
@@ -120,10 +127,10 @@ class ElasticsearchClient(elasticsearch.Elasticsearch):
                 The terms that are suitable to expand a query.
             """
             if not similar_terms:
-                return
+                return []
 
             co_occurrences = self.get_co_occurring_terms(similar_terms)
-            num_of_tweets = self.get_total_number_of_tweets()
+            total_word_count = self.get_total_word_count()
 
             expansion_terms = []
 
@@ -136,20 +143,12 @@ class ElasticsearchClient(elasticsearch.Elasticsearch):
                         if synonym in co_occurrences.keys():
                             synonym_freq = co_occurrences[synonym]
 
-                            # calc how often it occurs
-                            alpha = synonym_freq / num_of_tweets
-
-                            # occurs often itself, good term
-                            if alpha >= 0.01:
-                                expansion_terms.append(synonym)
-                                continue
-
                             if f"{synonym}&{term}" in co_occurrences.keys():
                                 joint_freq = co_occurrences[f"{synonym}&{term}"]
 
-                                beta = pmi(num_of_tweets, term_freq, synonym_freq, joint_freq)
+                                beta = pmi(total_word_count, term_freq, synonym_freq, joint_freq)
                                 # joint occurrence often, good expansion
-                                if beta >= 0.1:
+                                if beta >= threshold:
                                     expansion_terms.append(synonym)
                         else:
                             continue
