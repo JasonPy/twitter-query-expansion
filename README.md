@@ -211,7 +211,7 @@ For each query, the respective tokens (after Text Processing) are displayed in t
 |Number most similar terms|`5`|
 
 |Query Token|Candidates|
-|---:|:---|---|
+|---:|:---|
 `groß` <br> `Koalition`<br> `scheitern`<br> `Merkel`<br> `Groko`<br> `SPD`<br> `CDU`|`[riesengroß,gross,klein,große,riesig]` <br>`[Regierungskoalition,Koalitionsrunde,Koalitionspartei,Koalitionen,Koalitionskrise]` <br> `[scheitert,gescheitert,scheiterten,scheitern, scheiterte]`<br> `[Kanzlerin,Merkels,Bundeskanzlerin,Steinmeier,Schäuble]`<br> `[GROKO,Groko,SPD,CDU-CSU,AFD]` <br> `[CDU,FDP,CDU,Linkspartei,Sozialdemokraten]` <br> `[SPD,FDP,CSU,CSU-MdB,SPD-MdB]`
 `Lauterbach` <br> `Deutschland`<br> `Impfung`|`[Lauterbachs,Lauterbach-Schlitz,Reichenbach,Stickendorf,Lauterbrunn]` <br> `[Österreich,Europa,Bundesrepublik,Schweiz,Frankreich]` <br> `[Impfungen,impfung,Schutzimpfung,B-Impfung,FSME-Impfung]` 
 |`Bundestagswahl` <br> `Ergebnis` | `[Bundestagswahlen,Landtagswahl,Bundestagwahl,Bundestagswahljahr,Landtagswahlen]` <br> `[Resultat,Endergebnis,Ergebniss,Gesamtergebnis,Zwischenergebnis]`
