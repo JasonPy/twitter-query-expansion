@@ -1,19 +1,15 @@
 # _Twitter Query Expansion_
-Reformulate a user query by enriching it with suitable expansion terms. Different word embedding models are applied such as FastText and Word2Vec. Elastic Search is used to find relevant tweets by using the reformulated user query.
+Modify an initial user query by enriching it with suitable expansion terms. Different word embedding models are applied such as FastText and Word2Vec. Elastic Search is used to find relevant tweets by using the reformulated user query.
 
 **Outline**
-
 [[_TOC_]]
-
-**Goals**
-- Implement a Pipeline to expand a query with suitable expansion terms
-- ...
 
 # Structure
 - **Pipeline**
 The Pipeline itself is in the `pipeline` module folder, which contains the three main components e.g. [text_processor.py](), [embedding.py]() and [elasticsearch.py](). Custom tokenizer and matcher for SpaCy's text processing are listed under `pipeline/tokenizer` and `pipeline/matcher` respectively. 
 The Word Embeddings make use of downloaded models in the `models` directory. Have a look into the `templates` folder to inspect the files for generating an Elastic Search index and queries. 
 <br>
+
 - **Scripts**
 In the `scripts` folder all executable files for working with this package are contained. The [model_loader.py]() downloads a specified *Word2Vec* or *Fasttext* model and converts it into the expected format. For parsing Tweets from a PostgreSQL database into an ElasticSearch index, the [tweet_feeder.py]() is utilized. It allows to filter Tweets to have some minimum number of words. The script [pipeline.py]() handles the invocation of the full pipeline. 
 <br>
@@ -21,12 +17,126 @@ In the `scripts` folder all executable files for working with this package are c
 - **Demo** 
 In the root directory a [demo.ipynb]() file is provided which demonstrates the use of the Pipeline. This includes downloading the embedding models as well as executing the Pipeline and describing different parameters. It is referred to this file for detailed information.  
 
+
 # Setup
-This project uses [pipenv](https://pipenv.pypa.io/en/latest/#install-pipenv-today). Make sure it is installed and run the following command in the root of this project
+This project uses [pipenv](https://pipenv.pypa.io/en/latest/#install-pipenv-today). Make sure it is installed and run the following command in the root of this project:
 
 ```sh
 pipenv install
 ```
+The required python version and all packages are listed within the [Pipfile]().
+
+---
+
+# 1. Introduction
+
+## Motivation
+
+## Goals
+- Implement a Pipeline to expand a query with suitable expansion terms
+- ...
+
+---
+
+# 2. Data
+The Pipeline requires a collection of Tweets and at least one Word Embedding model. The utilized data sources are stated and briefly described.
+
+## 2.1 Twitter Dataset
+The Twitter data collection was provided by the [Database Systems Research Group](https://dbs.ifi.uni-heidelberg.de/). It contains about 300,000 german Tweets over a period of about two years related to politics. Initially, this data set is provided in form of a _PostgresSQL_ database. The respective scheme is displayed in Figure 2. Of particular interest are the Tweets itself and their respective hashtags, user names and named entities.
+
+
+<div style="display:flex">
+     <div style="flex:1;">
+          <img src="img/twitterdb-er-diagram.png" align="left" />
+     </div>
+     <div style="flex:1;">
+          <img src="img/tweet-words.png" align="right" />
+     </div>
+</div>
+<div style="display:flex">
+     <div style="flex:1;">
+          <div><i>2.1 Twitter Database ER-Diagram</i></div>
+     </div>
+     <div style="flex:1;">
+          <div><i>2.2 Word Count statistic</i></div>
+     </div>
+</div>
+<br>
+
+
+To search Tweets performantly, an Elastic Search index is fed with data from the PostgreSQL database. The indexing is configured by the [es-config.tpl]() template. Tokenization is applied and each token is split at `[ -.,;:!?/#]`. Consequently the following filters are applied to the obtained tokens:
+- **Tweet syntax marker**
+To identify Twitter-specific symbols like `#`, `@` and Retweets.
+- **Length Filter**
+To keep words with some length in `[2, ... ,20]` 
+- **ASCII folding**
+Converts non-acsii characters into valid ascii characters
+- **Lowercase**
+- **Decimal digits**
+- **Stop-word removal**
+- **Normalization**
+For example replaces `ä` with `a`
+- **N-Grams**
+Especially good for compound words in german language.
+- **Word stemming**
+- **Unique**
+
+To stream Tweets from PostgreSQL to an Elastic Search index, use the provided script [tweet_feeder.py](). The credentials must be specified within the `auth` folder. You can also specify the minimum number of words for Tweets to include. Make sure to have access to a database and a running Elastic Search Cluster and execute
+```sh
+python3 scripts/tweet_feeder.py
+```
+```sh
+usage: tweet_feeder.py [-h] -i INDEX -t TABLE [-ec ELASTIC_CREDENTIALS]
+                       [-pc POSTGRES_CREDENTIALS] [-es ELASTIC_SETTINGS]
+                       [-wc WORDCOUNT]
+
+Feed Postgres data into Elastic Search Index
+
+options:
+  -h, --help            show this help message and exit
+  -i INDEX, --index INDEX
+                        Elastic Search index
+  -t TABLE, --table TABLE
+                        Postgres table
+  -ec ELASTIC_CREDENTIALS, --elastic_credentials ELASTIC_CREDENTIALS
+                        Path to Elastic Search credentials file
+  -pc POSTGRES_CREDENTIALS, --postgres_credentials POSTGRES_CREDENTIALS
+                        Path to Postgres credentials file
+  -es ELASTIC_SETTINGS, --elastic_settings ELASTIC_SETTINGS
+                        Settings for new Index; Look at "/templates/es-
+                        config.conf"
+  -wc WORDCOUNT, --wordcount WORDCOUNT
+                        Minimum number of words per Tweet
+```
+An example Tweet within the resulting Index looks as follows:
+
+```yaml
+{
+    "retweet_count": 30,
+    "reply_count": 0,
+    "like_count": 0,
+    "created_at": "2021-09-01T15:04:20+02:00",
+    "txt": "RT @THWLeitung: Seit sieben Wochen ist das #THW im Einsatz, um die Folgen der #Flutkatastrophe zu beseitigen. Dabei sind die Fähigkeiten aller THW-Fachgruppen gefordert. Bisher haben die 13.566 Einsatzkräfte des THW 1.530.000 Einsatzstunden geleistet. Foto: Kai-Uwe Wärner https://t.co/3N7xqdFb21",
+    "hashtags": [
+        "flutkatastrophe",
+        "thw"
+    ],
+    "word_count": 38
+}
+```
+
+
+## 2.2 Word Embedding Models
+...
+
+**Word2Vec:**
+[German Word2Vec Model](https://fasttext.cc/docs/en/crawl-vectors.html)
+
+**Fasttext:**
+[German Fasttext Model](https://devmount.github.io/GermanWordEmbeddings/)
+
+
+---
 
 # 1. Pipeline
 In order to find relevant Tweets within a large collection, it is useful to expand the initial user query with suitable terms. These expansion terms are determined using the provided Pipeline which is displayed below:
@@ -70,50 +180,7 @@ $$
 If a similar term's $PMI$ exceeds some threshold $\tau \in \mathbb{R}$ it is added as expansion term. Finally, the expanded query is utilized to retrieve the Top $K$ Tweets. 
 
 
-# 2. Data
-The Pipeline requires a collection of Tweets and at least one Word Embedding model. The utilized data sources are stated and briefly described.
-
-## 2.1 Twitter Dataset
-The Twitter data collection was provided by the [Database Systems Research Group](https://dbs.ifi.uni-heidelberg.de/). It contains about 300,000 german Tweets over a period of about two years related to politics. Initially, this data set is provided in form of a _PostgresSQL_ database. The respective scheme is displayed in Figure 2.
-
-<p align="center">
-  <img src="img/twitterdb-er-diagram.png" />
-</p>
-<div align="center"><i>2. Twitter Database ER-Diagram</i></div>
-
-<p align="center">
-  <img src="img/tweet-words.png" />
-</p>
-<div align="center"><i>3. Word amount of Tweets</i></div>
-
-
-## 2.2 Word Embedding Models
-...
-
-**Word2Vec:**
-[German Word2Vec Model](https://fasttext.cc/docs/en/crawl-vectors.html)
-
-**Fasttext:**
-[German Fasttext Model](https://devmount.github.io/GermanWordEmbeddings/)
-
-
-## 2.3 Elastic Search Index
-To search Tweets performantly, an Elastic Search index is fed with data from the PostgreSQL database. Make sure to have access to a database and a running Elastic Search Cluster. The configurations of the Index are stated in `templates/es-config.tpl`. An example Tweet within an Index looks as follows:
-
-```yaml
-{
-    "retweet_count": 30,
-    "reply_count": 0,
-    "like_count": 0,
-    "created_at": "2021-09-01T15:04:20+02:00",
-    "txt": "RT @THWLeitung: Seit sieben Wochen ist das #THW im Einsatz, um die Folgen der #Flutkatastrophe zu beseitigen. Dabei sind die Fähigkeiten aller THW-Fachgruppen gefordert. Bisher haben die 13.566 Einsatzkräfte des THW 1.530.000 Einsatzstunden geleistet. Foto: Kai-Uwe Wärner https://t.co/3N7xqdFb21",
-    "hashtags": [
-        "flutkatastrophe",
-        "thw"
-    ],
-    "word_count": 38
-}
-```
+---
 
 # 3. Results
 
