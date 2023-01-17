@@ -2,6 +2,7 @@
 Modify an initial user query by enriching it with suitable expansion terms. Different word embedding models are applied such as FastText and Word2Vec. Elastic Search is used to find relevant tweets by using the reformulated user query.
 
 **Outline**
+
 [[_TOC_]]
 
 # Structure
@@ -19,27 +20,32 @@ In the root directory a [demo.ipynb]() file is provided which demonstrates the u
 
 
 # Setup
-This project uses [pipenv](https://pipenv.pypa.io/en/latest/#install-pipenv-today). Make sure it is installed and run the following command in the root of this project:
+First of all clone the present repository to your local machine.
+```sh
+git colone https://git-dbs.ifi.uni-heidelberg.de/practicals/2022-jason-pyanowski
+```
+
+This project uses [pipenv](https://pipenv.pypa.io/en/latest/#install-pipenv-today). Make sure it is installed and run the following command in the root of this project to install all dependencies.
 
 ```sh
 pipenv install
 ```
-The required python version and all packages are listed within the [Pipfile]().
+The required python version and installed packages are listed within the [Pipfile]().
 
 ---
 
 # 1. Introduction
 
-## Motivation
+## 1.1 Motivation
 
-## Goals
+## 1.2 Goals
 - Implement a Pipeline to expand a query with suitable expansion terms
 - ...
 
 ---
 
 # 2. Data
-The Pipeline requires a collection of Tweets and at least one Word Embedding model. The utilized data sources are stated and briefly described.
+The Pipeline requires a collection of Tweets and and a Word Embedding model. The employed Twitter data and Word Embeddings are stated below and described briefly.
 
 ## 2.1 Twitter Dataset
 The Twitter data collection was provided by the [Database Systems Research Group](https://dbs.ifi.uni-heidelberg.de/). It contains about 300,000 german Tweets over a period of about two years related to politics. Initially, this data set is provided in form of a _PostgresSQL_ database. The respective scheme is displayed in Figure 2. Of particular interest are the Tweets itself and their respective hashtags, user names and named entities.
@@ -109,48 +115,50 @@ An example Tweet within the resulting Index looks as follows:
     "word_count": 38
 }
 ```
-
-
 ## 2.2 Word Embedding Models
-...
+For the purpose of finding similar terms, word embeddings are utilized. These models are trained on a large corpus of german text data. and allow to describe terms in form of multidimensional vectors. The two following models are evaluated regarding this project:
 
-**Word2Vec:**
-[German Word2Vec Model](https://fasttext.cc/docs/en/crawl-vectors.html)
+- **Word2Vec:** [German Word2Vec Model](https://devmount.github.io/GermanWordEmbeddings/)
+- **Fasttext:** [German Fasttext Model](https://fasttext.cc/docs/en/crawl-vectors.html)
 
-**Fasttext:**
-[German Fasttext Model](https://devmount.github.io/GermanWordEmbeddings/)
+This Fasttext model is trained on Common Crawl and Wikipedia data. The dimension of the vector space is 300 which results in a fairly large model of about 7 GB. The Word2Vec model is small in comparison since it only provides the word vectors. It is trained on german wikipedia data.
 
+To reduce memory consumption the models are post-processed (see [model_loader.py]()). Each models vectors are compressed by using the L2-norm, reducing the size significantly. However, the drawbacks are that the model can not be used for training anymore, out of vocabulary words are no longer available and the overall performance is slightly reduced.
 
 ---
 
-# 1. Pipeline
-In order to find relevant Tweets within a large collection, it is useful to expand the initial user query with suitable terms. These expansion terms are determined using the provided Pipeline which is displayed below:
+# [3. Pipeline](pipeline)
+In order to find relevant Tweets within a large collection, it is useful to expand the initial user query with suitable terms. Therefore, a structural approach is provided - a configurable pipeline. This pipeline handles the expansion of the user query by firstly processing the initial query terms [aaaa](#31-text-processing). 
+[ress](#4-results)
+
+
+These expansion terms are determined using the provided Pipeline which is displayed below:
 <p align="center">
   <img src="img/pipeline.png" />
 </p>
 <div align="center"><i>A. Query Expansion Pipeline</i></div>
 </br>
 
-## 1.1 Text Processing
+## 3.1 Text Processing
 The initial query is processed using [SpaCy](https://spacy.io/). This first part of the pipeline includes the following steps:
-- tokenize text
-- remove stop-words
-- detect entities
-- determine Part-of-Speech (POS) tags
-- mark hashtags
-- mark Twitter users
+- **Tokenize text**
+- **Remove stop-words**
+- **Detect entities**
+- **Determine Part-of-Speech (POS) tags**
+- **Mark hashtags**
+- **Mark Twitter users**
 
 The output of this processing step is a _SpaCy_ document which consist of tokens. 
 
-## 1.2 Word Embedding
-For finding suitable expansions, different word embedding models are applied. These models allow to describe terms in form of multidimensional vectors. 
+## 3.2 Word Embedding
+For finding suitable expansions, different word embedding models are applied. 
 
 - FastText [^1]
 - Word2Vec [^2]
 
 To determine if an expansion term is suitable, the Point-wise Mutual Information (PMI) measure is performed, with respect to the co-occurrences of the initial query term and the expansion term.
 
-## 1.3 Elastic Search
+## 3.3 Elastic Search
 [Elastic Search](https://www.elastic.co/elasticsearch/)
 The similar terms - obtained by the Word Embeddings - are consequently ranked based on the Tweet Collection. In order to decide if a found similar term $x$ can act as an expansion, the Point-wise Mutual Information (PMI) is applied. Therefore, Elastic Search [Adjacency Matrix Aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-adjacency-matrix-aggregation.html) determine the number of co-occurrences $N_{x,y}$ of the initial term $x$ and the similar term $y$, their separate occurrence across the whole document collection $N_x$, $N_y$ and the total number of documents $N$. Thus, the probabilities can be computed as
 $$
@@ -158,21 +166,21 @@ P(x,y) = \frac{N_{x,y}}{N},
 P(x) = \frac{N_x}{N},
 P(y) = \frac{N_y}{N},
 $$ 
-and consequently inserted into the formula for PMI as
+and consequently inserted into the formula 
 $$
 PMI(x,y) = log \left( \frac{P(x,y)}{P(x)P(y)} \right).
 $$
-If a similar term's $PMI$ exceeds some threshold $\tau \in \mathbb{R}$ it is added as expansion term. Finally, the expanded query is utilized to retrieve the Top $K$ Tweets. 
+If a similar term's $PMI$ exceeds some threshold $\tau \in \mathbb{R}$ it is added as expansion term. These terms are then combined with the terms of the initial user query. The provided template [es-query.tpl]() is filled with the extracted data and the corresponding Elastic Search index is scanned. Finally, the Top $K$ Tweets are returned. 
 
 
 ---
 
-# 3. Results
+# 4. Results
 
-## 3.1 Investigation of Expansions
+## 4.1 Investigation of Expansions
 Show comparison of initial query vs. expanded query
 
-## 3.2 Comparison of Initial and Expanded Query
+## 4.2 Comparison of Initial and Expanded Query
 
 ### Word2Vec
 
@@ -218,11 +226,11 @@ Hier Tabelle mit jeweils den erwiterungen die rauskommen
 
 *Number of overlaps*
 
-# 4. Conclusion
-## 4.1 Limitations
+# 5. Conclusion
+## 5.1 Limitations
 - model vectors, no OOV
 
-## 4.2 Outlook
+## 5.2 Outlook
 - include named entities
 - no synonyms
 
