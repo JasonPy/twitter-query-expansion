@@ -1,7 +1,7 @@
 import elasticsearch
 import json
 
-from pipeline.utils import pmi
+from pipeline.utils import pmi, npmi
 
 class ElasticsearchClient(elasticsearch.Elasticsearch):
     """
@@ -105,7 +105,7 @@ class ElasticsearchClient(elasticsearch.Elasticsearch):
         return co_occurrences
 
 
-    def get_expansion_terms(self, candidate_terms: list, similar_terms: json, threshold: float=1.) -> list:
+    def get_expansion_terms(self, candidate_terms: list, similar_terms: json, threshold: float=.5, measure=npmi) -> list:
             """
             Given some candidate terms and their corresponding similar terms, check if the terms
             can act as expansion terms. This is done by looking at the co-occurrence of both terms using TF-IDF.
@@ -118,8 +118,11 @@ class ElasticsearchClient(elasticsearch.Elasticsearch):
             similar_terms: json
                 The possible expansion terms.
 
-            threshold: float = 0.01
+            threshold: float
                 The threshold to include a term based on TF-IDF. 
+
+            measure: func
+                A function that exhibits some measure to calculate similarity of terms.
 
             Returns
             -------
@@ -146,10 +149,15 @@ class ElasticsearchClient(elasticsearch.Elasticsearch):
                             if f"{synonym}&{term}" in co_occurrences.keys():
                                 joint_freq = co_occurrences[f"{synonym}&{term}"]
 
-                                beta = pmi(total_word_count, term_freq, synonym_freq, joint_freq)
-                                # joint occurrence often, good expansion
-                                if beta >= threshold:
-                                    expansion_terms.append(synonym)
+                            elif f"{term}&{synonym}" in co_occurrences.keys():
+                                joint_freq = co_occurrences[f"{term}&{synonym}"]
+
+                            else:
+                                continue
+
+                            beta = measure(total_word_count, term_freq, synonym_freq, joint_freq)
+                            if beta >= threshold:
+                                expansion_terms.append(synonym)
                         else:
                             continue
 
