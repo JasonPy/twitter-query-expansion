@@ -6,17 +6,14 @@ Modify an initial user query by enriching it with suitable expansion terms. Diff
 [[_TOC_]]
 
 # Structure
-- **Pipeline**
-The Pipeline itself is in the `pipeline` module folder, which contains the three main components e.g. [text_processor.py](), [embedding.py]() and [elasticsearch.py](). Custom tokenizer and matcher for SpaCy's text processing are listed under `pipeline/tokenizer` and `pipeline/matcher` respectively. 
+- **Pipeline** - The Pipeline itself is in the `pipeline` module folder, which contains the three main components e.g. [text_processor.py](), [embedding.py]() and [elasticsearch.py](). Custom tokenizer and matcher for SpaCy's text processing are listed under `pipeline/tokenizer` and `pipeline/matcher` respectively. 
 The Word Embeddings make use of downloaded models in the `models` directory. Have a look into the `templates` folder to inspect the files for generating an Elastic Search index and queries. 
 <br>
 
-- **Scripts**
-In the `scripts` folder all executable files for working with this package are contained. The [model_loader.py]() downloads a specified *Word2Vec* or *Fasttext* model and converts it into the expected format. For parsing Tweets from a PostgreSQL database into an ElasticSearch index, the [tweet_feeder.py]() is utilized. It allows to filter Tweets to have some minimum number of words. The script [pipeline.py]() handles the invocation of the full pipeline. 
+- **Scripts** - In the `scripts` folder all executable files for working with this package are contained. The [model_loader.py]() downloads a specified *Word2Vec* or *Fasttext* model and converts it into the expected format. For parsing Tweets from a PostgreSQL database into an ElasticSearch index, the [tweet_feeder.py]() is utilized. It allows to filter Tweets to have some minimum number of words. The script [pipeline.py]() handles the invocation of the full pipeline. 
 <br>
 
-- **Demo** 
-In the root directory a [demo.ipynb]() file is provided which demonstrates the use of the Pipeline. This includes downloading the embedding models as well as executing the Pipeline and describing different parameters. It is referred to this file for detailed information.  
+- **Demo** - In the root directory a [demo.ipynb]() file is provided which demonstrates the use of the Pipeline. This includes downloading the embedding models as well as executing the Pipeline and describing different parameters. It is referred to this file for detailed information.  
 
 
 # Setup
@@ -32,7 +29,6 @@ pipenv install
 ```
 The required python version and installed packages are listed within the [Pipfile]().
 
----
 
 # 1. Introduction
 [^1]
@@ -44,7 +40,6 @@ The required python version and installed packages are listed within the [Pipfil
 - Implement a Pipeline to expand a query with suitable expansion terms
 - ...
 
----
 
 # 2. Data
 The Pipeline requires a collection of Tweets and a Word Embedding model. The employed Twitter data and Word Embeddings are stated below and described briefly.
@@ -128,7 +123,6 @@ This Fasttext model is trained on Common Crawl and Wikipedia data. The dimension
 
 To reduce memory consumption the models are post-processed (see [model_loader.py]()). Each models vectors are compressed by using the L2-norm, reducing the size significantly. However, the drawbacks are that the model can not be used for training anymore, out of vocabulary words are no longer available and the overall performance is slightly reduced.
 
----
 
 # 3. Pipeline
 In order to find relevant Tweets within a large collection, it is useful to expand the initial user query with suitable terms. Therefore, a structural approach is provided - a configurable pipeline. This pipeline handles the expansion of the user query by firstly processing the initial query terms by the component [Text Processor](#31-text-processing). It outputs a list of tokens with specific information. Based on this, tokens are identified for finding similar terms. 
@@ -164,11 +158,11 @@ In order to determine the $`n`$ most similar terms based on some input, the vect
 ```math
 SIM_{cos}(X,Y) = \frac{X \cdot Y}{\lVert X \rVert \lVert Y \rVert}
 ```
-For each initial term the $`n`$ most similar terms are returned and further investigated using Elastic Search.
+For each term the $`n`$ most similar terms are returned and investigated if they can act as an expansion using Elastic Search.
 
 
 ## 3.3 Elastic Search
-The similar terms - obtained by the Word Embeddings - are ranked based on the Tweet Collection. In order to decide if a found similar term can act as an expansion, the Point-wise Mutual Information (PMI) is applied. Therefore, Elastic Search [Adjacency Matrix Aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-adjacency-matrix-aggregation.html) determine the number of co-occurrences $`N_{x,y}`$ of the initial term $`x`$ and the similar term $`y`$, their separate occurrence across the whole document collection $`N_x`$, $`N_y`$ and the total number of documents $`N`$. Thus, the probabilities can be computed as
+The similar terms - obtained by the Word Embeddings - are ranked based on the Tweet Collection. In order to decide if a found similar term can act as an expansion, the Point-wise Mutual Information[^3] (PMI) is applied. Therefore, Elastic Search [Adjacency Matrix Aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-adjacency-matrix-aggregation.html) determine the number of co-occurrences $`N_{x,y}`$ of the initial term $`x`$ and the similar term $`y`$, their separate occurrence across the whole document collection $`N_x`$, $`N_y`$. The attribute `word_count` for each Tweet comes in handy now and simplifies the calculation of the total number of words $`N`$. Thus, the probabilities can be computed as
 ```math
 P(x,y) = \frac{N_{x,y}}{N},
 P(x) = \frac{N_x}{N},
@@ -229,6 +223,8 @@ How do the results differ for the initial and the expanded user query? To get an
 
 *Number of overlaps*
 
+# 4.4 Comparison of Fasttext and Word2Vec
+
 # 5. Conclusion
 ## 5.1 Limitations
 - model vectors, no OOV
@@ -241,3 +237,4 @@ How do the results differ for the initial and the expanded user query? To get an
 # References
 [^1]: P. Bojanowski, E. Grave, A. Joulin, and T. Mikolov, “Enriching Word Vectors with Subword Information,” 2016, doi: 10.48550/ARXIV.1607.04606.
 [^2]: T. Mikolov, K. Chen, G. Corrado, and J. Dean, “Efficient Estimation of Word Representations in Vector Space,” 2013, doi: 10.48550/ARXIV.1301.3781.
+[^3]: D. Jurafsky and C. Manning, “Natural language processing,” Instructor, vol. 212, no. 998, p. 3482, 2012.
