@@ -3,12 +3,6 @@
 *.crt
 *credentials.ini
 
-# Datasets
-data
-
-# Models
-models
-
 # Output
 !./out/.gitkeep
 
