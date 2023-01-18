@@ -1,4 +1,4 @@
-# _Twitter Query Expansion_ 
+# Twitter Query Expansion
 {: .no_toc}
 
 Modify an initial user query by enriching it with suitable expansion terms. At first, pre-process the user's query with [SpaCy](https://spacy.io/) and look for similar words by applying different word embedding models such as _FastText_[^1] and _Word2Vec_[^2]. Possible expansion terms are then investigated and consequently combined with the initial query. Finally, [Elastic Search](https://www.elastic.co/elasticsearch/) (ES) is  utilized to find relevant tweets given the reformulated user query.
