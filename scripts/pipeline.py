@@ -112,7 +112,7 @@ def run(queries: list, embedding_params: json, elastic_params:json) -> json:
 
     # ------------------ LOG RESULTS ------------------
     now = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
-    out_path = os.path.join("out", embedding_params["type"], now)
+    out_path = os.path.join("output", embedding_params["type"], now)
     
     print(f'Writing results to {out_path}')
 

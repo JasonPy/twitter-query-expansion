@@ -1,18 +1,28 @@
-# Twitter Query Expansion
-{: .no_toc}
+**_Twitter Query Expansion_**
 
-Modify an initial user query by enriching it with suitable expansion terms. At first, pre-process the user's query with [SpaCy](https://spacy.io/) and look for similar words by applying different word embedding models such as _FastText_[^1] and _Word2Vec_[^2]. Possible expansion terms are then investigated and consequently combined with the initial query. Finally, [Elastic Search](https://www.elastic.co/elasticsearch/) (ES) is  utilized to find relevant tweets given the reformulated user query.
+Modify an initial user query by enriching it with suitable expansion terms. At first, pre-process the user's query with [SpaCy](https://spacy.io/) and look for similar words by applying different word embedding models such as _FastText_ [^1] and _Word2Vec_ [^2]. Possible expansion terms are then investigated and consequently combined with the initial query. Finally, [Elastic Search](https://www.elastic.co/elasticsearch/) (ES) is  utilized to find relevant tweets given the reformulated user query.
 
-**Outline**
+**_Outline_**
 
 [[_TOC_]]
 
 # Structure
-- **Pipeline** - The Pipeline itself is in the `pipeline` module folder, which contains the three main components e.g. [text_processor.py](), [embedding.py]() and [elasticsearch.py](). Custom tokenizer and matcher for SpaCy's text processing are listed under `pipeline/tokenizer` and `pipeline/matcher` respectively. 
-The Word Embeddings make use of downloaded models in the `models` directory. Have a look into the `templates` folder to inspect the files for generating an Elastic Search index and queries. 
+- **Pipeline** - The Pipeline is located in the `pipeline` module folder, which contains the three main components i.e. [text_processor.py](), [embedding.py]() and [elasticsearch.py](). Custom tokenizer and matcher for SpaCy's text processing are listed under `pipeline/tokenizer` and `pipeline/matcher` respectively. 
 <br>
 
-- **Scripts** - In the `scripts` folder all executable files for working with this package are contained. The [model_loader.py]() downloads a specified *Word2Vec* or *Fasttext* model and converts it into the expected format. For parsing Tweets from a PostgreSQL database into an ElasticSearch index, the [tweet_feeder.py]() is utilized. It allows to filter Tweets to have some minimum number of words. The script [pipeline.py]() handles the invocation of the full pipeline. 
+- **Authentication** - Running the Pipeline requires access to a PostgreSQL database and an Elastic Search index. Specify the respective credentials in the files under `auth/pg-credentials.ini`and `auth/es-credentials.ini`.
+<br>
+
+- **Models** - The Word Embeddings are listed in the `models` directory. Downloaded embeddings must be listed here.
+ <br>
+ 
+- **Templates** - Have a look into the `templates` folder to inspect the files for generating an Elastic Search index and search queries. 
+<br>
+
+- **Output** - Within the `output` folder all results are collected. When running the Pipeline, parameters and retrieved Tweets are stored in a folder with the name of the embedding and the subfolder with the execution date.
+<br> 
+
+- **Scripts** - In the `scripts` folder all executable files for working with this package are contained. The [model_loader.py]() downloads a specified *Word2Vec* or *Fasttext* model and converts it into the expected format. For parsing Tweets from a PostgreSQL database into an ElasticSearch index, the [tweet_feeder.py]() is utilized. The script [pipeline.py]() handles the invocation of the full pipeline. 
 <br>
 
 - **Demo** - In the root directory a [demo.ipynb]() file is provided which demonstrates the use of the Pipeline. This includes downloading the embedding models as well as executing the Pipeline and describing different parameters. It is referred to this file for detailed information.  
@@ -24,12 +34,11 @@ First of all clone the present repository to your local machine.
 git clone https://git-dbs.ifi.uni-heidelberg.de/practicals/2022-jason-pyanowski
 ```
 
-This project uses [pipenv](https://pipenv.pypa.io/en/latest/#install-pipenv-today). Make sure it is installed and run the following command in the root of this project to collect all dependencies.
+This project uses [pipenv](https://pipenv.pypa.io/en/latest/#install-pipenv-today). The required python version and packages are listed within the [Pipfile](). Make sure it is installed and run the following command in the root of this project to collect all dependencies.
 
 ```sh
 pipenv install
 ```
-The required python version and installed packages are listed within the [Pipfile]().
 
 
 # 1. Introduction
@@ -126,11 +135,11 @@ To reduce memory consumption the models are post-processed (see [model_loader.py
 
 
 # 3. Pipeline
-In order to find relevant Tweets within a large collection, it is useful to expand the initial user query with suitable terms. Therefore, a structural approach is provided - a configurable pipeline. This pipeline handles the expansion of the user query by firstly processing the initial query terms by the component [Text Processor](#31-text-processing). It outputs a list of tokens with specific information. Based on this, tokens are identified for finding similar terms. 
+In order to find relevant Tweets within a large collection, it is useful to expand the initial user query with suitable terms. Therefore, a structural approach is provided - a configurable pipeline. This pipeline handles the expansion of the user query by firstly processing the initial query terms by the component [Text Processor](#31-text-processing). It outputs a list of tokens with specific properties. Based on these information and the underlying configuration it is determined which tokens are used to find similar terms. 
 
 The selected terms are feed into the Word Embedding models. The component [Word Embedding](#32-word-embedding) handles the process of retrieving $`n`$ possible expansion terms for each selected term. The pipeline allows to download and process arbitrary pre-trained Word Embeddings. 
 
-To determine, if a possible expansion term is suitable, the component [Elastic Search](#33-elastic-search) receives the previously computed terms. By looking at the co-occurrences of the initial term and the expansion term, the most appropriate expansions are chosen. Finally, the query is executed and the Top K Tweets returned.
+To determine, if a possible expansion term is suitable, the component [Elastic Search](#33-elastic-search) receives the previously computed terms. By looking at the co-occurrences of the initial term and the expansion term, the most appropriate expansions are chosen. Finally, the query is executed and the Top $`k`$ Tweets returned.
 
 Depending on the objective, it is possible to configure the terms that should be replaced based on Natural Language properties and is further described in the following subsections and explicitly shown in the [demo.ipynb](). The overall structure of the Pipeline is displayed below.
 <p align="center">
@@ -142,30 +151,46 @@ Depending on the objective, it is possible to configure the terms that should be
 ## 3.1 Text Processing
 The initial query is processed using [SpaCy](https://spacy.io/). This first part of the pipeline includes the following steps:
 - **Tokenize text**
+- **Split compound hashtags**
 - **Remove stop-words**
 - **Detect entities**
 - **Determine Part-of-Speech (POS) tags**
 - **Mark hashtags**
 - **Mark Twitter users**
 
-The output of this processing step is a _SpaCy_ document which consist of tokens. Based on the 
+The output of this processing step is a _SpaCy_ document which consist of tokens. Based on the configurations in Table X, only certain tokens are parsed to the subsequent embedding models in order to detect similar terms. It can be decided which _POS tags_ or _entities_ are used to find synonyms. Please refer to [URL]() for further information concerning tags and entities. Since _hashtags_ and _user_ mentions are a crucial information in Tweets, it can be chosen if they are expanded as well.
+
+| Parameter | Possible Values | Datatype |
+|---|---|---|
+|POS Tags|`['ADJ', 'ADP', 'ADV', 'AUX', 'CCONJ', 'CONJ', 'DET', 'EOL', 'IDS', 'INTJ', 'NAMES', 'NOUN', 'NO_TAG', 'NUM', 'PART', 'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'SPACE', 'SYM', 'VERB', 'X']`| `list[str]`|
+|Entities|`['LOC', 'MISC', 'ORG', 'PER']`|`list[str]`|
+|Hashtag|`True, False`|`bool`|
+|User|`True, False`|`bool`|
+<div align="center"><i>X. Configuration of the Pipeline</i></div>
+</br>
 
 ## 3.2 Word Embedding
-For finding suitable expansions, different word embedding models can be applied. In the scope of this project, the following two models were used.
-- FastText
-- Word2Vec
+For finding suitable expansions, different word embedding models can be applied. In the scope of this project, the models described in Section [2.2 Word Embedding Models](#22-word-embedding-models) were used.
 
-In order to determine the $`n`$ most similar terms based on some input, the vector representation of terms within Word Embeddings is utilized. The similarity between the initial term $`x`$ and the possible expansion term $`y`$ is determined using the cosine similarity of their vector representation $`X, Y \in \mathbb{R}^N`$ respectively. The similarity can then be computed as
+In order to determine the $`n`$ most similar terms based on some input, the vector representation of terms within Word Embeddings is utilized. The similarity between the initial term $`x`$ and the possible expansion term $`y`$ is determined using the cosine similarity [^3] of their vector representation $`X, Y \in \mathbb{R}^N`$ respectively. The similarity can then be computed as
 ```math
 SIM_{cos}(X,Y) = \frac{X \cdot Y}{\lVert X \rVert \lVert Y \rVert}
 ```
-For each term the $`n`$ most similar terms are returned and investigated if they can act as an expansion using Elastic Search.
+For each term the $`n`$ most similar terms are returned and investigated if they can act as an expansion using Elastic Search. The configuration of the component is stated in Table Y. 
+| Parameter | Possible Values | Datatype |
+|---|---|---|
+|Model|`'word2vec', 'fasttext'`|`str`|
+|Model Path| `'path to model'`|`str`|
+|Number of Similar Terms|`1...N`|`int`|
+<div align="center"><i>X. Configuration of the Pipeline</i></div>
+</br>
+
 
 todo: maximum n of Y are new y
-word count genauer sagen
+
 
 ## 3.3 Elastic Search
-The similar terms - obtained by the Word Embeddings - are ranked based on the Tweet Collection. In order to decide if a found similar term can act as an expansion, the Point-wise Mutual Information[^3] (PMI) is applied. Therefore, Elastic Search [Adjacency Matrix Aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-adjacency-matrix-aggregation.html) determine the number of co-occurrences $`N_{x,y}`$ of the initial term $`x`$ and the similar term $`y`$ and their separate occurrence across the whole document collection $`N_x`$, $`N_y`$. The total number of words $`N`$ is collected by aggregating the `word_count` attribute of each Tweet. Thus, the probabilities can be computed as
+The similar terms - obtained by the Word Embeddings - are ranked based on the Tweet Collection. In order to decide if a found similar term can act as an expansion, the Point-wise Mutual Information[^4] (PMI) is applied. Therefore, Elastic Search [Adjacency Matrix Aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-adjacency-matrix-aggregation.html) determine the number of co-occurrences $`N_{x,y}`$ of the initial term $`x`$ and the similar term $`y`$ and their separate occurrence across the whole document collection $`N_x`$, $`N_y`$. The total number of words $`N`$ is collected by aggregating the `word_count` attribute of each Tweet. Thus, the probabilities can be computed as
 ```math
 P(x,y) = \frac{N_{x,y}}{N},
 P(x) = \frac{N_x}{N},
@@ -196,6 +221,8 @@ The whole pipeline is configurable - this means that it can be adjusted which pa
 |`[@bundestag Bundestagswahl 2021 Ergebnisse]`|`[Endergebnis, Ergebniss, Gesamtergebnis, Zwischenergebnis]`| | | | | | | |
 |`[Gesetzliche Rentenversicherung Rente Mit 67]`| | | | | | | | |
 |`[Bundeswehr Afghanistan Krieg stoppen]`|`[bundeswehr, Bundeswehrverwaltung, Kriegs]`| | |`[Pakistan, Hindukusch]` |`[Pakistan, Hindukusch]` | `[bundeswehr, Bundeswehrverwaltung]`| | 
+<div align="center"><i>X. Configuration of the Pipeline</i></div>
+</br>
 
 Describe...
 
@@ -207,8 +234,10 @@ How do the results differ for the initial and the expanded user query? To get an
 |POS Tags|`['ADJ', 'NOUN', 'PROPN', 'VERB']`|
 |Entity Types|`['LOC', 'ORG']`|
 |Hashtag|`True`|
-|User|`True`|
+|User|`False`|
 |Number most similar terms|`5`|
+<div align="center"><i>X. Parameters used to run Pipeline.</i></div>
+</br>
 
 
 | Rank | Tweets from Initial Query | Tweets from Expanded Query | 
@@ -222,15 +251,15 @@ How do the results differ for the initial and the expanded user query? To get an
 
 
 ## 4.3 Comparison of Fasttext and Word2Vec
-For each query, the respective tokens (after Text Processing) are displayed in the table below. In the right column the _possible_ expansion terms from the Word2Vec Embedding are stated. A total of the 5 most similar terms was obtained using the configuration of the pipeline stated in table .
+For each query, the respective tokens (after Text Processing) are displayed in the table below. In the left outer column the _possible_ expansion terms from the Word2Vec Embedding and in the right outer column of Fasttext are stated. A total of the 3 most similar terms was obtained using the configuration of the pipeline stated in table .
 
 |Word2Vec Expansions|Query Token|Fasttext Expansions|
 |---:|:---:|:---|
-a|`groß` <br> `Koalition`<br> `scheitern`<br> `Merkel`<br> `Groko`<br> `SPD`<br> `CDU`|`[riesengroß,gross,klein,große,riesig]` <br>`[Regierungskoalition,Koalitionsrunde,Koalitionspartei,Koalitionen,Koalitionskrise]` <br> `[scheitert,gescheitert,scheiterten,scheitern, scheiterte]`<br> `[Kanzlerin,Merkels,Bundeskanzlerin,Steinmeier,Schäuble]`<br> `[GROKO,Groko,SPD,CDU-CSU,AFD]` <br> `[CDU,FDP,CDU,Linkspartei,Sozialdemokraten]` <br> `[SPD,FDP,CSU,CSU-MdB,SPD-MdB]`
-<|`Lauterbach` <br> `Deutschland`<br> `Impfung`|`[Lauterbachs,Lauterbach-Schlitz,Reichenbach,Stickendorf,Lauterbrunn]` <br> `[Österreich,Europa,Bundesrepublik,Schweiz,Frankreich]` <br> `[Impfungen,impfung,Schutzimpfung,B-Impfung,FSME-Impfung]` 
-a|`Bundestagswahl` <br> `Ergebnis` | `[Bundestagswahlen,Landtagswahl,Bundestagwahl,Bundestagswahljahr,Landtagswahlen]` <br> `[Resultat,Endergebnis,Ergebniss,Gesamtergebnis,Zwischenergebnis]`
-a|`Gesetzliche` <br> `Rentenversicherung` <br> `Rente`| `[gesetzliche,Rechtliche,Vertragliche,gesetzlichen,Vertragsrechtliche]` <br> `[Rentenversicherungen,Rentenversicherer,Rentenversicherungsanstalt,Rentenversorgung,Rentenversicherungsträger]` <br> `[Altersrente,Renten,Rentenbeiträge,Rentenleistung,Rentenalter]`
-a|CandidatesCandidates`Bundeswehr`<br> `Afghanistan` <br> `Krieg`<br> `stoppen`| `[Bundeswehreinheiten,bundeswehr,Bundeswehr-Kasernen,Bundeswehrverwaltung,Bundeswehrführung]` <br> `[Irak,Pakistan,Afghanistans,Syrien,Hindukusch]` <br> `[Kriege,Krieges,Bürgerkrieg,Kriegen,Kriegs]` <br> `[unterbinden,verhindern,aufzuhalten,stoppen,beenden]` |
+`[]` <br> `[Grosse_Koalition,Grossen_Koalition,Regierungskoalition]` <br> `[gescheitert,scheitert,platzen]` <br> `[Kanzlerin_Merkel,Merkel_CDU,Bundeskanzlerin]` <br> `[]` <br> `[CDU,FDP,Gruenen]` <br> `[SPD,FDP,FWG]`|`groß` <br> `Koalition`<br> `scheitern`<br> `Merkel`<br> `Groko`<br> `SPD`<br> `CDU`|`[riesengroß,gross,klein]` <br>`[Regierungskoalition,Koalitionsrunde,Koalitionspartei]` <br> `[scheitert,gescheitert,scheiterten]`<br> `[Kanzlerin,Merkels,Bundeskanzlerin]`<br> `[GROKO,Groko,SPD]` <br> `[CDU,FDP,CDU]` <br> `[SPD,FDP,CSU]`
+`[Alsfeld,Buedingen,Hardt]`<br>`[Europa,Oesterreich,hierzulande]`<br>`[Masernimpfung,Impfschutz,Schutzimpfung]`|`Lauterbach` <br> `Deutschland`<br> `Impfung`|`[Lauterbachs,Lauterbach-Schlitz,Reichenbach]` <br> `[Österreich,Europa,Bundesrepublik]` <br> `[Impfungen,impfung,Schutzimpfung]` 
+`[Bundestagswahlen,Bundestagwahl,Landtagswahl]`<br>`[Resultat,Zwischenergebnis,Ergebnissen]`|`Bundestagswahl` <br> `Ergebnis` | `[Bundestagswahlen,Landtagswahl,Bundestagwahl]` <br> `[Resultat,Endergebnis,Ergebniss]`
+`[gesetzliche,gesetzlichen,tarifvertraglichen]`<br>`[Pflegeversicherung,Krankenversicherung,gesetzliche_Krankenversicherung}`<br> `[Renten,gesetzliche_Rente,gesetzliche_Rentenversicherung]`|`Gesetzliche` <br> `Rentenversicherung` <br> `Rente`| `[gesetzliche,Rechtliche,Vertragliche]` <br> `[Rentenversicherungen,Rentenversicherer,Rentenversicherungsanstalt]` <br> `[Altersrente,Renten,Rentenbeiträge]`
+`[Bundeswehr_Afghanistan,Auslandseinsaetze,Bundeswehrsoldaten]`<br>`[Hindukusch,Somalia,Irak]`<br>`[Buergerkrieg,Kriege,Kriegs]`<br>`[bremsen,aufzuhalten,gestoppt]`|`Bundeswehr`<br> `Afghanistan` <br> `Krieg`<br> `stoppen`| `[Bundeswehreinheiten,bundeswehr,Bundeswehr-Kasernen]` <br> `[Irak,Pakistan,Afghanistans]` <br> `[Kriege,Krieges,Bürgerkrieg]` <br> `[unterbinden,verhindern,aufzuhalten]` |
 
 
 
@@ -246,4 +275,6 @@ a|CandidatesCandidates`Bundeswehr`<br> `Afghanistan` <br> `Krieg`<br> `stoppen`|
 # References
 [^1]: P. Bojanowski, E. Grave, A. Joulin, and T. Mikolov, “Enriching Word Vectors with Subword Information,” 2016, doi: 10.48550/ARXIV.1607.04606.
 [^2]: T. Mikolov, K. Chen, G. Corrado, and J. Dean, “Efficient Estimation of Word Representations in Vector Space,” 2013, doi: 10.48550/ARXIV.1301.3781.
-[^3]: D. Jurafsky and C. Manning, “Natural language processing,” Instructor, vol. 212, no. 998, p. 3482, 2012.
+[^3]: A. Singhal and others, “Modern information retrieval: A brief overview,” IEEE Data Eng. Bull., vol. 24, no. 4, pp. 35–43, 2001.
+[^4]: D. Jurafsky and C. Manning, “Natural language processing,” Instructor, vol. 212, no. 998, p. 3482, 2012.
+
