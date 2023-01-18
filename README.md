@@ -1,5 +1,5 @@
-# _Twitter Query Expansion_
-Modify an initial user query by enriching it with suitable expansion terms. Different word embedding models are applied such as FastText and Word2Vec to find expansions. Elastic Search is used to find relevant tweets by using the reformulated user query.
+<font size="7">**_Twitter Query Expansion_**</font>
+Modify an initial user query by enriching it with suitable expansion terms. At first, pre-process the user's query with [SpaCy](https://spacy.io/) and look for similar words by applying different word embedding models such as _FastText_[^1] and _Word2Vec_[^2]. Possible expansion terms are then investigated and consequently combined with the initial query. Finally, [Elastic Search](https://www.elastic.co/elasticsearch/) (ES) is  utilized to find relevant tweets given the reformulated user query.
 
 **Outline**
 
@@ -118,7 +118,7 @@ For the purpose of finding similar terms, word embeddings are utilized. These mo
 - **Word2Vec:** [German Word2Vec Model](https://devmount.github.io/GermanWordEmbeddings/) 
 - **Fasttext:** [German Fasttext Model](https://fasttext.cc/docs/en/crawl-vectors.html) 
 
-This Fasttext[^1] model is trained on Common Crawl and Wikipedia data. The dimension of the vector space is 300 which results in a fairly large model of about 4.5 GB. The Word2Vec[^2] model is small in comparison since it only provides the word vectors. It is trained on german wikipedia data and news articles.
+This Fasttext model is trained on Common Crawl and Wikipedia data. The dimension of the vector space is 300 which results in a fairly large model of about 4.5 GB. The Word2Vec model is small in comparison since it only provides the word vectors. It is trained on german wikipedia data and news articles.
 
 To reduce memory consumption the models are post-processed (see [model_loader.py]()). Each models vectors are compressed by using the L2-norm, reducing the size significantly. However, the drawbacks are that the model can not be used for training anymore, out of vocabulary words are no longer available and the overall performance is slightly reduced.
 
@@ -163,18 +163,21 @@ todo: maximum n of Y are new y
 word count genauer sagen
 
 ## 3.3 Elastic Search
-The similar terms - obtained by the Word Embeddings - are ranked based on the Tweet Collection. In order to decide if a found similar term can act as an expansion, the Point-wise Mutual Information[^3] (PMI) is applied. Therefore, Elastic Search [Adjacency Matrix Aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-adjacency-matrix-aggregation.html) determine the number of co-occurrences $`N_{x,y}`$ of the initial term $`x`$ and the similar term $`y`$, their separate occurrence across the whole document collection $`N_x`$, $`N_y`$. The attribute `word_count` for each Tweet comes in handy now and simplifies the calculation of the total number of words $`N`$. Thus, the probabilities can be computed as
+The similar terms - obtained by the Word Embeddings - are ranked based on the Tweet Collection. In order to decide if a found similar term can act as an expansion, the Point-wise Mutual Information[^3] (PMI) is applied. Therefore, Elastic Search [Adjacency Matrix Aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-adjacency-matrix-aggregation.html) determine the number of co-occurrences $`N_{x,y}`$ of the initial term $`x`$ and the similar term $`y`$ and their separate occurrence across the whole document collection $`N_x`$, $`N_y`$. The total number of words $`N`$ is collected by aggregating the `word_count` attribute of each Tweet. Thus, the probabilities can be computed as
 ```math
 P(x,y) = \frac{N_{x,y}}{N},
 P(x) = \frac{N_x}{N},
 P(y) = \frac{N_y}{N},
 ```
-and consequently inserted into the formula 
+and inserted into the formula for 
 ```math
-PMI(x,y) = log \left( \frac{P(x,y)}{P(x)P(y)} \right).
+PMI(x,y) = log_2 \left( \frac{P(x,y)}{P(x)P(y)} \right).
 ```
-If a similar term's $`PMI`$ exceeds some threshold $`\tau \in \mathbb{R}`$ it is added as expansion term. These terms are then combined with the terms of the initial user query. The provided template [es-query.tpl]() is filled with the extracted data and the corresponding Elastic Search index is scanned. Finally, the Top $`k`$ Tweets are returned. 
-
+The PMI is then normalized by the factor $`-log_2(P(x,y))`$ to scale the values between zero and one which results in
+```math
+PMI_{norm}(x,y) = \frac{PMI(x,y)}{-log_2(P(x,y))}.
+```
+If a similar term's $`PMI_{norm}`$ exceeds some threshold $`\tau \in \mathbb{R}`$ it is added as expansion term. These terms are then combined with the terms of the initial user query. Finally, the Top $`k`$ Tweets are retrieved. The provided template [es-query.tpl]() to search ES is filled with the extracted data and the corresponding index is scanned. 
 
 ---
 
@@ -225,7 +228,7 @@ a|`groß` <br> `Koalition`<br> `scheitern`<br> `Merkel`<br> `Groko`<br> `SPD`<br
 <|`Lauterbach` <br> `Deutschland`<br> `Impfung`|`[Lauterbachs,Lauterbach-Schlitz,Reichenbach,Stickendorf,Lauterbrunn]` <br> `[Österreich,Europa,Bundesrepublik,Schweiz,Frankreich]` <br> `[Impfungen,impfung,Schutzimpfung,B-Impfung,FSME-Impfung]` 
 a|`Bundestagswahl` <br> `Ergebnis` | `[Bundestagswahlen,Landtagswahl,Bundestagwahl,Bundestagswahljahr,Landtagswahlen]` <br> `[Resultat,Endergebnis,Ergebniss,Gesamtergebnis,Zwischenergebnis]`
 a|`Gesetzliche` <br> `Rentenversicherung` <br> `Rente`| `[gesetzliche,Rechtliche,Vertragliche,gesetzlichen,Vertragsrechtliche]` <br> `[Rentenversicherungen,Rentenversicherer,Rentenversicherungsanstalt,Rentenversorgung,Rentenversicherungsträger]` <br> `[Altersrente,Renten,Rentenbeiträge,Rentenleistung,Rentenalter]`
-a|`Bundeswehr`<br> `Afghanistan` <br> `Krieg`<br> `stoppen`| `[Bundeswehreinheiten,bundeswehr,Bundeswehr-Kasernen,Bundeswehrverwaltung,Bundeswehrführung]` <br> `[Irak,Pakistan,Afghanistans,Syrien,Hindukusch]` <br> `[Kriege,Krieges,Bürgerkrieg,Kriegen,Kriegs]` <br> `[unterbinden,verhindern,aufzuhalten,stoppen,beenden]` |
+a|CandidatesCandidates`Bundeswehr`<br> `Afghanistan` <br> `Krieg`<br> `stoppen`| `[Bundeswehreinheiten,bundeswehr,Bundeswehr-Kasernen,Bundeswehrverwaltung,Bundeswehrführung]` <br> `[Irak,Pakistan,Afghanistans,Syrien,Hindukusch]` <br> `[Kriege,Krieges,Bürgerkrieg,Kriegen,Kriegs]` <br> `[unterbinden,verhindern,aufzuhalten,stoppen,beenden]` |
 
 
 
