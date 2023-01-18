@@ -209,25 +209,7 @@ If a similar term's $`PMI_{norm}`$ exceeds some threshold $`\tau \in \mathbb{R}`
 ---
 
 # 4. Results
-In order to get some intuition on how the selection of expansion terms affect the 
-
-## 4.1 Effects of Structural Procedure
-The whole pipeline is configurable - this means that it can be adjusted which part of the query is expanded. The following table shows which parts of the query lead to which expansion terms.
-
-| Initial Query | Noun | Verb | Adjective | Proper Noun | Location | Organization | Hashtag | 
-|:---|---|---|---|---|---|---|---|
-|`[große Koalition gescheitert unter Merkel? #Groko #SPD #CDU]`||||`[Kanzlerin, Bundeskanzlerin]`| | |`[GroKo, SPD, AFD, CDU, FDP, CSU, Linkspartei]`|
-|`[Lauterbach Deutschland Corona-Maßnahmen #Impfung}`|| | |`[Bundesrepublik]`|`[Bundesrepublik]`| |`[impfung, Schutzimpfung]`|
-|`[@bundestag Bundestagswahl 2021 Ergebnisse]`|`[Endergebnis, Ergebniss, Gesamtergebnis, Zwischenergebnis]`| | | | | | | |
-|`[Gesetzliche Rentenversicherung Rente Mit 67]`| | | | | | | | |
-|`[Bundeswehr Afghanistan Krieg stoppen]`|`[bundeswehr, Bundeswehrverwaltung, Kriegs]`| | |`[Pakistan, Hindukusch]` |`[Pakistan, Hindukusch]` | `[bundeswehr, Bundeswehrverwaltung]`| | 
-<div align="center"><i>X. Configuration of the Pipeline</i></div>
-</br>
-
-Describe...
-
-## 4.2 Resulting Tweets
-How do the results differ for the initial and the expanded user query? To get an intuition, the Top 3 Tweets obtained for each of the two queries are listed. 
+Since the intention of the user's query is not known it is hard to judge, which expansions actually match its intention. Since no benchmark data set is available, a quantified evaluation is not possible. For the following investigations, the parameters listed in table X are applied. They state, that terms that are either an adjective, noun, proper noun or verb are used to find expansions. Locations, organizations and hashtags are included as well. Expanding on users is not supported yet. A total of five similar terms per candidate are obtained during the pipeline execution.
 
 | Parameter | Value |
 |---|---|
@@ -239,6 +221,38 @@ How do the results differ for the initial and the expanded user query? To get an
 <div align="center"><i>X. Parameters used to run Pipeline.</i></div>
 </br>
 
+## 4.1 Investigate Expansion Terms
+Below, five different initial user queries and the corresponding expansion terms for Fasttext and Word2Vec embeddings are displayed. The particular Fasttext model gives overall more expansions for the given queries. However, the expansions proposed from Word2Vec mostly cover them as well.
+
+|| Initial User Quey | Fasttext Expansions | Word2Vec Expansions |
+|---|---|---|---|
+1|_"große Koalition gescheitert unter Merkel? #Groko #SPD #CDU"_ | `[Kanzlerin, Bundeskanzlerin, GroKo, SPD, AFD, CDU, FDP, CSU, Linkspartei]` | `[Bundeskanzlerin, CDU, FDP, SPD]`
+2|_"Lauterbach Deutschland Corona-Maßnahmen #Impfung"_ | `[Bundesrepublik, impfung, Schutzimpfung]` | `[Impfschutz, Schutzimpfung]`
+3|_"@bundestag Bundestagswahl 2021 Ergebnisse"_ | `[Endergebnis, Ergebniss, Gesamtergebnis, Zwischenergebnis]` | `[Zwichshenergebnis]`
+4|_"Gesetzliche Rentenversicherung Rente Mit 67"_ | `[]` | `[Pflegeversicherung]`
+5|_"Bundeswehr Afghanistan Krieg stoppen"_ | `[bundeswehr, Bundeswehrverwaltung, Kriegs, Pakistan, Hindukusch]` | `[Hindukusch]`
+
+In order to get some insight on which expansion terms originate from which terms of the initial user query, it is investigated how the structural approach affects the resulting expansions.
+
+
+## 4.2 Effects of Structural Procedure
+The whole pipeline is configurable - this means that it can be adjusted which part of the query is expanded. The following table shows which parts of the query lead to which expansion terms.
+
+| Query Terms | Noun | Verb | Adjective | Proper Noun | Location | Organization | Hashtag | 
+|:---|---|---|---|---|---|---|---|
+|`[große, Koalition, gescheitert, Merkel, #Groko, #SPD, #CDU]`||||`[Kanzlerin, Bundeskanzlerin]`| | |`[GroKo, SPD, AFD, CDU, FDP, CSU, Linkspartei]`|
+|`[Lauterbach, Deutschland, Corona-Maßnahmen, #Impfung}`|| | |`[Bundesrepublik]`|`[Bundesrepublik]`| |`[impfung, Schutzimpfung]`|
+|`[Bundestagswahl, Ergebnisse]`|`[Endergebnis, Ergebniss, Gesamtergebnis, Zwischenergebnis]`| | | | | | | |
+|`[Gesetzliche, Rentenversicherung, Rente]`| | | | | | | | |
+|`[Bundeswehr, Afghanistan, Krieg, stoppen]`|`[bundeswehr, Bundeswehrverwaltung, Kriegs]`| | |`[Pakistan, Hindukusch]` |`[Pakistan, Hindukusch]` | `[bundeswehr, Bundeswehrverwaltung]`| | 
+<div align="center"><i>X. Configuration of the Pipeline</i></div>
+</br>
+
+It can be seen, that for verbs and adjectives no expansions were found. This can be explained by the fact, that ...
+
+## 4.3 Resulting Tweets
+How do the resulting Tweets differ for the initial and the expanded user query? To get an intuition, the Top 3 Tweets obtained for the first query of table X are listed. 
+
 
 | Rank | Tweets from Initial Query | Tweets from Expanded Query | 
 |:---:|---|---|
@@ -246,11 +260,12 @@ How do the results differ for the initial and the expanded user query? To get an
 |2|#SPD und #CDU sind sich bis zur Unkenntlichkeit ähnlich geworden und natürlich wäre eine Neuauflage der #GroKo die bequemste Koa von allen. Kann man nur zuverlässig verhindern, wenn #CSU + + #SPD + #CDU keine eigene Mehrheit bekommen. #triell|6. Als @GrueneBundestag haben wir die Aufklärung im Untersuchungsausschuss #Breitscheidplatz gegen massive Widerstände der #Bundesregierung und #GroKo #CDU #CSU #SPD maßgeblich vorangetrieben. Hier eine Bilanz: https://t.co/Y8fb7v6oa8|
 |3|Wenn die Partei des Versagens beim Glasfaserausbau #CDU auf #Digitalisierung macht, und die #Kohlepartei #SPD plötzlich vorgibt,  #KlimaSchutz betreiben zu wollen, weißt Du, die #GroKo erzählt 3 Wochen vor der #btw21 alles mögliche, um an der Macht zu bleiben.|Aber…. Ach so, das wollten ja #SPD #CDU und #CSU explizit nicht. Obwohl Grüne, FDP und Linke das beantragt hatten. Die #GroKo nimmt es schlicht billigend in Kauf, dass bis zu 300 Abgeordnete mehr in den Bundestag kommen. Es wäre schlicht verheerend.|
 
-*Number of overlaps*
+TODO:
+*Number of equal tweets of top 30?*
 *Eventull sortieren nach likes, RT?*
 
 
-## 4.3 Comparison of Fasttext and Word2Vec
+## 4.4 Comparison of Fasttext and Word2Vec
 For each query, the respective tokens (after Text Processing) are displayed in the table below. In the left outer column the _possible_ expansion terms from the Word2Vec Embedding and in the right outer column of Fasttext are stated. A total of the 3 most similar terms was obtained using the configuration of the pipeline stated in table .
 
 |Word2Vec Expansions|Query Token|Fasttext Expansions|
