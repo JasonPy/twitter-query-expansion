@@ -8,22 +8,16 @@ Modify an initial user query by enriching it with suitable expansion terms. At f
 
 # Structure
 - **Pipeline** - The Pipeline is located in the `pipeline` module folder, which contains the three main components i.e. [text_processor.py](), [embedding.py]() and [elasticsearch.py](). Custom tokenizer and matcher for SpaCy's text processing are listed under `pipeline/tokenizer` and `pipeline/matcher` respectively. 
-<br>
 
-- **Authentication** - Running the Pipeline requires access to a PostgreSQL database and an Elastic Search index. Specify the respective credentials in the files under `auth/pg-credentials.ini`and `auth/es-credentials.ini`.
-<br>
+- **Authentication** - Running the Pipeline requires access to a PostgreSQL database and an Elastic Search Index. Specify the respective credentials in the files under `auth/pg-credentials.ini`and `auth/es-credentials.ini`.
 
 - **Models** - The Word Embeddings are listed in the `models` directory. Downloaded embeddings must be listed here.
- <br>
  
-- **Templates** - Have a look into the `templates` folder to inspect the files for generating an Elastic Search index and search queries. 
-<br>
+- **Templates** - Have a look into the `templates` folder to inspect the files for generating an Elastic Search Index and search queries. 
 
 - **Output** - Within the `output` folder all results are collected. When running the Pipeline, parameters and retrieved Tweets are stored in a folder with the name of the embedding and the subfolder with the execution date.
-<br> 
 
-- **Scripts** - In the `scripts` folder all executable files for working with this package are contained. The [model_loader.py]() downloads a specified *Word2Vec* or *Fasttext* model and converts it into the expected format. For parsing Tweets from a PostgreSQL database into an ElasticSearch index, the [tweet_feeder.py]() is utilized. The script [pipeline.py]() handles the invocation of the full pipeline. 
-<br>
+- **Scripts** - In the `scripts` folder all executable files for working with this package are contained. The [model_loader.py]() downloads a specified *Word2Vec* or *Fasttext* model and converts it into the expected format. For parsing Tweets from a PostgreSQL database into an ElasticSearch Index, the [tweet_feeder.py]() is utilized. The script [pipeline.py]() handles the invocation of the full pipeline. 
 
 - **Demo** - In the root directory a [demo.ipynb]() file is provided which demonstrates the use of the Pipeline. This includes downloading the embedding models as well as executing the Pipeline and describing different parameters. It is referred to this file for detailed information.  
 
@@ -62,7 +56,7 @@ The Twitter data collection was provided by the [Database Systems Research Group
 |<img src="img/twitterdb-er-diagram.png" align="left" /> | <img src="img/tweet-words.png" align="right" />
 
 
-To search Tweets performantly, an [Elastic Search](https://www.elastic.co/elasticsearch/) index is fed with data from the PostgreSQL database. The indexing is configured by the [es-config.tpl]() template. Tokenization is applied and each token is split at `[ -.,;:!?/#]`. Consequently the following filters are applied to the obtained tokens:
+To search Tweets performantly, an [Elastic Search](https://www.elastic.co/elasticsearch/) Index is fed with data from the PostgreSQL database. The Indexing is configured by the [es-config.tpl]() template. Tokenization is applied and each token is split at `[ -.,;:!?/#]`. Consequently the following filters are applied to the obtained tokens:
 - **Tweet syntax marker**
 To identify Twitter-specific symbols like `#`, `@` and Retweets
 - **Length Filter**
@@ -81,7 +75,7 @@ Use only the root form of a term
 - **Unique**
 Keep only unique tokens 
 
-To stream Tweets from PostgreSQL to an Elastic Search index, use the provided script [tweet_feeder.py](). The credentials must be specified within the `auth` folder. You can also specify the minimum number of words for Tweets to include. Make sure to have access to a database and a running Elastic Search Cluster and execute
+To stream Tweets from PostgreSQL to an Elastic Search Index, use the provided script [tweet_feeder.py](). The credentials must be specified within the `auth` folder. You can also specify the minimum number of words for Tweets to include. This directly affects the number of parsed Tweets and can be investigated in Figure 2.2. Make sure to have access to a database and a running Elastic Search Cluster and execute
 ```sh
 python3 scripts/tweet_feeder.py
 ```
@@ -94,8 +88,8 @@ Feed Postgres data into Elastic Search Index
 
 options:
   -h, --help            show this help message and exit
-  -i INDEX, --index INDEX
-                        Name of Elastic Search index
+  -i INDEX, --Index INDEX
+                        Name of Elastic Search Index
   -t TABLE, --table TABLE
                         Name of Postgres table
   -ec ELASTIC_CREDENTIALS, --elastic_credentials ELASTIC_CREDENTIALS
@@ -204,7 +198,7 @@ The PMI is then normalized by the factor $`-log_2(P(x,y))`$ to scale the values 
 ```math
 PMI_{norm}(x,y) = \frac{PMI(x,y)}{-log_2(P(x,y))}.
 ```
-If a similar term's $`PMI_{norm}`$ exceeds some threshold $`\tau \in \mathbb{R}`$ it is added as expansion term. These terms are then combined with the terms of the initial user query. Finally, the Top $`k`$ Tweets are retrieved. The provided template [es-query.tpl]() to search ES is filled with the extracted data and the corresponding index is scanned. 
+If a similar term's $`PMI_{norm}`$ exceeds some threshold $`\tau \in \mathbb{R}`$ it is added as expansion term. These terms are then combined with the terms of the initial user query. Finally, the Top $`k`$ Tweets are retrieved. The provided template [es-query.tpl]() to search ES is filled with the extracted data and the corresponding Index is scanned. 
 
 ---
 
