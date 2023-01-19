@@ -182,7 +182,7 @@ SIM_{cos}(\mathbf{x},\mathbf{y}) = \frac{\mathbf{x} \cdot \mathbf{y}}{\lVert \ma
 For each term $`\mathbf{x}`$ the $`n`$ most similar terms $`Y_{c} : \{\mathbf{y_0}, \dots, \mathbf{y_{n-1}}\} \in Y`$ are returned - so called _candidate terms_. For each of them it must hold
 
 ```math
-Y_c = \{ {\mathbf{y_i} \mid SIM(\mathbf{x},\mathbf{y_i}) \text{ is among the top $n$ highest values} \}}
+Y_c = \{ {\mathbf{y_i} \in Y \mid SIM_{cos}(\mathbf{x},\mathbf{y_i}) \text{ is among the top $n$ highest values} \}}
 ```
 
 Now, these candidates can be investigated further if they can act as an expansion. The next pipeline component Elastic Search handles this crucial task. The overall configuration of the component is stated in Table Y. 
@@ -227,6 +227,7 @@ It is examined how the initial user query differs from the expanded query in Sec
 |Hashtag|`True`|
 |User|`False`|
 |Number most similar terms|`5`|
+
 _Table 4.1 Parameters used to run Query Expansion Pipeline_
 
 ## 4.1 Investigate Expansion Terms
@@ -255,7 +256,7 @@ In order to get some insight on which expansion terms originate from which terms
 |`[Gesetzliche, Rentenversicherung, Rente]`| | | | | | | | |
 |`[Bundeswehr, Afghanistan, Krieg, stoppen]`|`[bundeswehr, Bundeswehrverwaltung, Kriegs]`| | |`[Pakistan, Hindukusch]` |`[Pakistan, Hindukusch]` | `[bundeswehr, Bundeswehrverwaltung]`| | 
 
-_4.3. Overview on how different parts of the initial query affect the expansion term generation_
+_Table 4.3. Overview on how different parts of the initial query affect the expansion term generation_
 
 It can be seen, that for verbs and adjectives no expansions were found. This might be explained by the fact, that their co-occurrences are not signifikant enough within the (rather short) Tweets. However, especially nouns and proper nouns (proper names) are expanded on. Hashtags allow to obtain expansions as well. Their usefulness however, can be debated on. Locations and organizations result in expansions as well. How useful these expansion terms are overall is still hard to tell. 
 
