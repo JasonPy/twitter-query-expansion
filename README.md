@@ -174,7 +174,7 @@ _Table 3.1 Configuration of the Pipeline_
 ## 3.2 Word Embedding
 For finding suitable expansions, different word embedding models can be applied. In the scope of this project, the models described in Section [2.2 Word Embedding Models](#22-word-embedding-models) were used.
 
-In order to determine the $`n \in \mathbb{N}`$ most similar terms based on some input, the vector representation of terms within the word embeddings is utilized. The similarity between the initial query term $`x \in X`$ and another term within the embedding model $`y \in Y`$ is determined using the cosine similarity[^3] of their vector representation $`\mathbf{x}, \mathbf{y} \in \mathbb{R}^N`$ respectively. The similarity can then be computed as
+In order to determine the $`n \in \mathbb{N}`$ most similar terms based on some query $`X : \{x_0, \dots, x_{l-1}\}`$ with length $`l`$, the vector representation of terms within the word embeddings is utilized. The similarity between the initial query term $`x \in X`$ and another term within the embedding model $`y \in Y`$ (where $`Y`$ contains all available terms of the model) is determined using the cosine similarity[^3] of their vector representation $`\mathbf{x}, \mathbf{y} \in \mathbb{R}^N`$ respectively. The similarity can then be computed as
 
 ```math
 SIM_{cos}(\mathbf{x},\mathbf{y}) = \frac{\mathbf{x} \cdot \mathbf{y}}{\lVert \mathbf{x} \rVert \lVert \mathbf{y} \rVert}
@@ -183,7 +183,7 @@ SIM_{cos}(\mathbf{x},\mathbf{y}) = \frac{\mathbf{x} \cdot \mathbf{y}}{\lVert \ma
 For each term $`\mathbf{x}`$ the $`n`$ most similar terms $`Y_{c} : \{\mathbf{y_0}, \dots, \mathbf{y_{n-1}}\} \in Y`$ are returned - so called _candidate terms_. For each of them it must hold
 
 ```math
-Y_c = \{ {\mathbf{y_i} \in Y \mid SIM_{cos}(\mathbf{x},\mathbf{y_i}) \text{ is among the top $n$ highest values} \}}
+Y_c = \{ {\mathbf{y_i} \in Y \mid SIM_{cos}(\mathbf{x},\mathbf{y_i}) \text{ is among the top $n$ highest values} \}}.
 ```
 
 Now, these candidates can be investigated further if they can act as an expansion. The next pipeline component Elastic Search handles this crucial task. The overall configuration of the component is stated in Table Y. 
@@ -192,13 +192,13 @@ Now, these candidates can be investigated further if they can act as an expansio
 |---|---|---|
 |Model|`'word2vec', 'fasttext'`|`str`|
 |Model Path| `'path to model'`|`str`|
-|Number of Similar Terms|`1...N`|`int`|
+|Number of Similar Terms|`1...n`|`int`|
 
 _Table 3.2 Configuration for Word Embeddings_
 
 
 ## 3.3 Elastic Search
-The candidate terms $`Y_{c}`$ - obtained by the word embeddings - are ranked based on the Tweet Collection. In order to decide if a found candidate can act as an expansion, the Point-wise Mutual Information[^4] (PMI) measure is applied. Therefore, Elastic Search [Adjacency Matrix Aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-adjacency-matrix-aggregation.html) determine the number of co-occurrences $`N_{x,y}`$ of the initial term $`x`$ and the candidate term $`y \in Y_{c}`$ and their separate occurrence across the whole document collection $`N_x`$, $`N_y`$. The total number of words $`N`$ is collected by aggregating the `word_count` attribute of each Tweet. Thus, the probabilities can be computed as
+The candidate terms $`Y_{c}`$ - obtained by the word embeddings - are ranked based on the Tweet Collection. In order to decide if a found candidate can act as an expansion, the Point-wise Mutual Information[^4] (PMI) measure is applied. Therefore, Elastic Search [Adjacency Matrix Aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-adjacency-matrix-aggregation.html) determine the number of co-occurrences $`N_{x,y}`$ of the initial term $`x \in X`$ and the candidate term $`y \in Y_{c}`$ and their separate occurrence across the whole document collection $`N_x`$, $`N_y`$. The total number of words $`N`$ is collected by aggregating the `word_count` attribute of each Tweet. Thus, the probabilities can be computed as
 ```math
 P(x,y) = \frac{N_{x,y}}{N},
 P(x) = \frac{N_x}{N},
@@ -217,9 +217,9 @@ If a similar term's $`PMI_{norm}`$ exceeds some threshold $`\tau \in \mathbb{R}`
 ---
 
 # 4. Results
-Since the intention of the user is not known, it is difficult to judge which expansion terms are appropriate. For the following investigations, the parameters listed in Table 4.1 are applied. They state, that terms that are either an adjective, noun, proper noun or verb are used to find expansions. Locations, organizations and hashtags are included as well. Expanding on users is not supported yet. A total of five candidate terms per query term are obtained during the pipeline execution.
+Since the intention of the user is not known, it is difficult to judge which expansion terms are appropriate. For the following investigations, the parameters listed in Table 4.1 are applied. They state, that terms that are either an adjective, noun, proper noun or verb are used to find expansions. Locations, organizations and hashtags are included as well. Expanding on users is not supported yet. A total of $`n = 5`$ candidate terms per query term are obtained during the pipeline execution.
 
-It is examined how the initial user query differs from the expanded query in Section 4.1. In the following section 4.2 it is further investigated where these expansion terms originate from. In particular, how certain parts of the user query (entities, verbs, nouns, ...) affect the expansion generation. Then, Top 3 Tweets for an example query are shown and analyzed in Section 4.3. Finally, in Section 4.4, the two embedding models _Fasttext_ and _Word2Vec_ are compared  based on their ability to generate useful candidate terms.
+It is examined how the initial user query differs from the expanded query in Section 4.1. In the following Section 4.2 it is further investigated where these expansion terms originate from. In particular, how certain parts of the user query (entities, verbs, nouns, ...) affect the expansion generation. Then, Top 3 Tweets for an example query are shown and analyzed in Section 4.3. Finally, in Section 4.4, the two embedding models _Fasttext_ and _Word2Vec_ are compared  based on their ability to generate useful candidate terms.
 
 | Parameter | Value |
 |---|---|
@@ -247,7 +247,7 @@ _Table 4.2 Several initial user queries with resulting expansion terms from Fast
 
 
 ## 4.2 Effects of Structural Procedure
-In order to get some insight on which expansion terms originate from which terms of the initial user query, it is investigated how the structural approach affects the resulting expansions. The whole pipeline is configurable - this means that it can be adjusted which part of the query is expanded. The following Table shows which parts of the query lead to which expansion terms.
+In order to get some insight on which expansion terms originate from which terms of the initial user query, it is investigated how the structural approach affects the resulting expansions. The whole pipeline is configurable - this means that it can be adjusted which part of the query is expanded. The following Table 4.3 shows the corresponding impact.
 
 | Query Terms | Noun | Verb | Adjective | Proper Noun | Location | Organization | Hashtag | 
 |:---|---|---|---|---|---|---|---|
@@ -273,11 +273,11 @@ How do the resulting Tweets differ for the initial and the expanded user query? 
 
 _Table 4.4 Comparison of retrieved Tweets with respect to the initial and the expanded query_
 
-
+It is obvious that they indeed differ. When investigating the Top 20 Tweets however, the initial and the expanded query share a big amount of equal tweets. Their order is what differs in the end. This statement does not generalize and only holds on this specific configuration. Getting a deeper insight requires more data analysis.
 
 
 ## 4.4 Comparison of Fasttext and Word2Vec
-Eventually, it is interesting which terms the two embeddings propose before the measure of PMI is applied to filter suitable expansions. For each query in Table 4.2, the respective tokens (after Text Processing) are displayed in the Table 4.5. In the left outer column the _possible_ expansion terms (candidate terms) from the Word2Vec and in the right outer column of the Fasttext embedding are stated. A total of the 3 most similar terms were obtained using the configuration of the pipeline stated in Table 4.1.
+Eventually, it is interesting which terms the two embeddings propose before the measure of PMI is applied to filter suitable expansions. For each query in Table 4.2, the respective tokens (after Text Processing) are displayed in Table 4.5. In the left outer column the _possible_ expansion terms (candidate terms) from the Word2Vec and in the right outer column of the Fasttext embedding are stated. A total of the $`n=3`$ most similar terms were obtained using the configuration of the pipeline stated in Table 4.1.
 
 
 |Word2Vec Candidates|Query Token|Fasttext Candidates|
