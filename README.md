@@ -167,6 +167,7 @@ The output of this processing step is a _SpaCy_ document which consist of tokens
 |Entities|`['LOC', 'MISC', 'ORG', 'PER']`|`list[str]`|
 |Hashtag|`True, False`|`bool`|
 |User|`True, False`|`bool`|
+
 _Table 3.1 Configuration of the Pipeline_
 
 
@@ -192,8 +193,8 @@ Now, these candidates can be investigated further if they can act as an expansio
 |Model|`'word2vec', 'fasttext'`|`str`|
 |Model Path| `'path to model'`|`str`|
 |Number of Similar Terms|`1...N`|`int`|
-<div><i>Table 3.2 Configuration of the Pipeline</i></div>
-</br>
+
+_Table 3.2 Configuration for Word Embeddings_
 
 
 ## 3.3 Elastic Search
@@ -290,13 +291,22 @@ Eventually, it is interesting which terms the two embeddings propose before the 
 _Table 4.5 Comparison of candidate terms (before term selection) from Word2Vec and Fasttext embedding_
 
 # 5. Conclusion
+The presented Twitter Query Expansion pipeline handles the task of enriching an intial user query with suitable terms. Thereby, the query is processed using SpaCy in order to reveal different linguistic information for each term. Upon this information, it can be configured, which terms are eventually used to expand the query. Finding expansions is handled by word embeddings. They output a number of possible expansions that are evaluated by the Pointwise Mutual Information (PMI) measure. Based on that, suitable terms are selected and an Elastic Search Cluster retrieves relevant Tweets. 
+
+
 ## 5.1 Limitations
-- model vectors, no OOV
-- no synonyms
+One limitation of the project is that the Fasttext embeddings do not support out-of-vocabulary terms. This means, that words that do not occur within the trained model are not handled. This stems from the compression process that only keeps the word vectors itself and not the whole model. The design choice was made due to excessive memory consumption. 
+
+The Pipeline uses the PMI measure to determine if a term can act as an expansion. This does not resemble if a term is a good synonym - e.g `stoppen` to `aufhalten` since both terms do not co-occurr often. Additional approaches like ontologies could handle this issue but are not in the scope of this project.  
+
+The resulting expansion terms highly depend on which data is utilized. It is therefore important to notice, that all parts of this pipeline vary depending on the input data - e.g. different SpaCy model, training data of embeddings, variety of Twitter data.
 
 ## 5.2 Outlook
-- include named entities
-- news articles
+The next steps of this project might be the handling of Twitter users if the initial query includes terms like `@bundestag` in order to find related users and rank the resulting tweets. 
+
+Adding news articles as a data source instead of Twitter data is interesting as well regarding future projects. It is expeted that the current architecture allows this extension.
+
+The presented pipeline can act as a basis for further - more sophisticated - approaches of expanding an initial user query. It can be expected that combining multiple approaches eventually leads to a representative list of expansion terms and comes closer to the goal of representing the user's intention. 
 
 # References
 [^1]: P. Bojanowski, E. Grave, A. Joulin, and T. Mikolov, “Enriching Word Vectors with Subword Information,” 2016, doi: 10.48550/ARXIV.1607.04606.
