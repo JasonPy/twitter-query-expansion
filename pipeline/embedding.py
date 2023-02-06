@@ -15,6 +15,20 @@ class WordEmbedding:
     
     def get_similar_terms(self, terms: list[str], n: int) -> json:
         """
+        Obtain similar terms from Word Embedding model given
+        a list of words (or a single term).
+        
+        Parameters
+        ----------
+        terms : list[str]
+            The list of terms to find similar terms for.
+        n : int
+            The number of similar terms returned.
+
+        Returns
+        -------
+        similar_terms : json
+            The terms with corresponding similar terms.
         """
         if not terms:
             return {}
