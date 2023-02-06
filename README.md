@@ -36,15 +36,15 @@ pipenv install
 
 
 # 1. Project Description
-Between the users' intention and the action to achieve its goal lays a big gap. This is especially problematic if a user wants to obtain information which requires to formulate a query. One can imagine, that different people describe the same thing differently - so called _Vocabulary Mismatch problem_. Although users state what they are searching for, the initial query is mostly insufficient due to the short length and the lack of relevant keywords. Additionally, the query might contain synonyms, acronyms and homonyms or even emoticons, slang and spelling errors. Understanding the actual meaning of the terms in order to find suitable expansions is therefore a big challenge. 
+Between the users' intention and the action to achieve its goal lays a big gap. This is especially problematic if a user wants to obtain information which requires to formulate a query. One can imagine, that different people describe the same thing differently - so called _Vocabulary Mismatch problem_[^1]. Although users state what they are searching for, the initial query is mostly insufficient due to the short length and the lack of relevant keywords. Additionally, the query might contain synonyms, acronyms and homonyms or even emoticons, slang and spelling errors. Understanding the actual meaning of the terms in order to find suitable expansions is therefore a big challenge. 
 
-In the context of micro-blogs like Twitter, a certain amount of special problems occur. First of all, Tweets are often short (limited to 280 characters) and thus matching the present terms is difficult. In the internet itself, many different abbreviations and uncommon language is used which changes at a rapid pace making it an even bigger challenge. However, one can make use of special syntax like hashtags, verified users, Retweets, likes and followers to optimize the Tweet retrieval. 
+In the context of micro-blogs like Twitter, a certain amount of special problems occur[^2]. First of all, Tweets are often short (limited to 280 characters) and thus matching the present terms is difficult. In the internet itself, many different abbreviations and uncommon language is used which changes at a rapid pace making it an even bigger challenge. However, one can make use of special syntax like hashtags, verified users, Retweets, likes and followers to optimize the Tweet retrieval. 
 
 Selecting the right parts of the initial user query in order to find suitable expansions highly depends on understanding the context and the overall structure of the query. Identifying entities, part of speech and Twitter syntax are a good starting point. Based on this information, Word Embeddings can be applied to find terms that might occur often together with the initial query. It can be expected that these terms increase the overall precision and recall when retrieving Tweets.
 
 
 ## 1.1 Objectives
-The overall goal is to implement Query Expansion to enrich a user's initial query with additional terms in order to find relevant tweets that represent the user's intent. The focus is thereby laid on different word embedding models such as Fasttext[^1] and Word2Vec[^2]. To obtain Tweets, an Elastic Search Index is used and specific search patterns are specified.
+The overall goal is to implement Query Expansion to enrich a user's initial query with additional terms in order to find relevant tweets that represent the user's intent. The focus is thereby laid on different word embedding models such as Fasttext[^3] and Word2Vec[^4]. To obtain Tweets, an Elastic Search Index is used and specific search patterns are specified.
 
 The underlying approach aims at providing a structural and extensible pipeline. Extensible in terms of allowing different word embedding models to be plugged in. Structural in the sense of configuring the pipeline to use different parts of a query for query expansion. 
 
@@ -174,7 +174,7 @@ _Table 3.1 Configuration of the Pipeline_
 ## 3.2 Word Embedding
 To find suitable expansions different word embedding models can be applied. In the scope of this project, the models described in Section [2.2 Word Embedding Models](#22-word-embedding-models) were used.
 
-In order to determine the $`n \in \mathbb{N}`$ most similar terms based on some query $`\mathbb{Q} : \{q_0, \dots, q_{l-1}\}`$ with length $`l`$, the vector representation of terms within the word embeddings is utilized. The similarity between the initial query term $`q \in \mathbb{Q}`$ and another term within the embedding model $`e \in \mathbb{E}`$ (where $`\mathbb{E}`$ contains all available terms of the model) is determined using the cosine similarity[^3] of their vector representation $`\mathbf{q}, \mathbf{e} \in \mathbb{R}^N`$. The similarity can then be computed as
+In order to determine the $`n \in \mathbb{N}`$ most similar terms based on some query $`\mathbb{Q} : \{q_0, \dots, q_{l-1}\}`$ with length $`l`$, the vector representation of terms within the word embeddings is utilized. The similarity between the initial query term $`q \in \mathbb{Q}`$ and another term within the embedding model $`e \in \mathbb{E}`$ (where $`\mathbb{E}`$ contains all available terms of the model) is determined using the cosine similarity[^5] of their vector representation $`\mathbf{q}, \mathbf{e} \in \mathbb{R}^N`$. The similarity can then be computed as
 
 ```math
 SIM_{cos}(\mathbf{q},\mathbf{e}) = \frac{\mathbf{q} \cdot \mathbf{e}}{\lVert \mathbf{q} \rVert \lVert \mathbf{e} \rVert}.
@@ -198,7 +198,7 @@ _Table 3.2 Configuration for Word Embeddings_
 
 
 ## 3.3 Elastic Search
-The candidate terms $`\mathbb{E}_{c}`$ - obtained by the word embeddings - are ranked based on the Tweet Collection. In order to decide if a candidate can act as an expansion, the Point-wise Mutual Information[^4] (PMI) measure is applied. Therefore, Elastic Search [Adjacency Matrix Aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-adjacency-matrix-aggregation.html) determine the number of co-occurrences $`N_{q,e}`$ of the initial term $`q \in \mathbb{Q}`$ and the candidate term $`e \in \mathbb{E}_{c}`$ and their separate occurrence across the whole document collection $`N_q`$, $`N_e`$. The total number of words $`N`$ is collected by aggregating the `word_count` attribute of each Tweet. The query is constructed according to  [es-adjacency-matrix.tpl](https://git-dbs.ifi.uni-heidelberg.de/practicals/2022-jason-pyanowski/-/blob/main/templates/es-adjacency-matrix.tpl). Based on the obtained co-occurrences, the probabilities can be computed as
+The candidate terms $`\mathbb{E}_{c}`$ - obtained by the word embeddings - are ranked based on the Tweet Collection. In order to decide if a candidate can act as an expansion, the Point-wise Mutual Information[^6] (PMI) measure is applied. Therefore, Elastic Search [Adjacency Matrix Aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-adjacency-matrix-aggregation.html) determine the number of co-occurrences $`N_{q,e}`$ of the initial term $`q \in \mathbb{Q}`$ and the candidate term $`e \in \mathbb{E}_{c}`$ and their separate occurrence across the whole document collection $`N_q`$, $`N_e`$. The total number of words $`N`$ is collected by aggregating the `word_count` attribute of each Tweet. The query is constructed according to  [es-adjacency-matrix.tpl](https://git-dbs.ifi.uni-heidelberg.de/practicals/2022-jason-pyanowski/-/blob/main/templates/es-adjacency-matrix.tpl). Based on the obtained co-occurrences, the probabilities can be computed as
 ```math
 P(q,e) = \frac{N_{q,e}}{N},
 P(q) = \frac{N_q}{N},
@@ -307,8 +307,10 @@ The next steps of this project might be the handling of Twitter users if the ini
 The presented pipeline can act as a basis for further - more sophisticated - approaches of expanding an initial user query. It can be expected that combining multiple approaches eventually leads to a representative list of expansion terms and comes closer to the goal of representing the user's intention. 
 
 # References
-[^1]: P. Bojanowski, E. Grave, A. Joulin, and T. Mikolov, “Enriching Word Vectors with Subword Information,” 2016, doi: 10.48550/ARXIV.1607.04606.
-[^2]: T. Mikolov, K. Chen, G. Corrado, and J. Dean, “Efficient Estimation of Word Representations in Vector Space,” 2013, doi: 10.48550/ARXIV.1301.3781.
-[^3]: A. Singhal and others, “Modern information retrieval: A brief overview,” IEEE Data Eng. Bull., vol. 24, no. 4, pp. 35–43, 2001.
-[^4]: D. Jurafsky and C. Manning, “Natural language processing,” Instructor, vol. 212, no. 998, p. 3482, 2012.
+[^1]: A. N. Chy, M. Z. Ullah, and M. Aono, “Query Expansion for Microblog Retrieval Focusing on an Ensemble of Features,” Journal of Information Processing, vol. 27, no. 0, pp. 61–76, 2019, doi: 10.2197/ipsjjip.27.61.
+[^2]: S. Ahmed, A. N. Chy, and M. Z. Ullah, “Exploiting Various Word Embedding Models for Query Expansion in Microblog,” in 2020 IEEE 8th R10 Humanitarian Technology Conference (R10-HTC), Kuching, Malaysia, Dec. 2020, pp. 1–6. doi: 10.1109/R10-HTC49770.2020.9357016.
+[^3]: P. Bojanowski, E. Grave, A. Joulin, and T. Mikolov, “Enriching Word Vectors with Subword Information,” 2016, doi: 10.48550/ARXIV.1607.04606.
+[^4]: T. Mikolov, K. Chen, G. Corrado, and J. Dean, “Efficient Estimation of Word Representations in Vector Space,” 2013, doi: 10.48550/ARXIV.1301.3781.
+[^5]: A. Singhal and others, “Modern information retrieval: A brief overview,” IEEE Data Eng. Bull., vol. 24, no. 4, pp. 35–43, 2001.
+[^6]: D. Jurafsky and C. Manning, “Natural language processing,” Instructor, vol. 212, no. 998, p. 3482, 2012.
 
