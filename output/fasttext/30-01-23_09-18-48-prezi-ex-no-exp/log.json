@@ -1,0 +1,37 @@
+{
+    "timestamp": "30-01-23_09:18:40",
+    "queries": [
+        "@bundestag #Merkel in Deutschland noch beliebt?"
+    ],
+    "embedding_params": {
+        "type": "fasttext",
+        "model": "models/fasttext/cc.de.300.model",
+        "pos_list": [],
+        "entity_list": [],
+        "hashtag": false,
+        "user": false,
+        "num_nearest_terms": 3
+    },
+    "elastic_params": {
+        "index": "tweets_all",
+        "num_of_tweets": 20,
+        "retweet": false,
+        "hashtag_boost": 1.0,
+        "tweet_range": [
+            "2020-01-01",
+            "2023-01-01"
+        ]
+    },
+    "docs": [
+        "@bundestag #Merkel in Deutschland noch beliebt?"
+    ],
+    "query_tokens": [
+        []
+    ],
+    "similar_terms": [
+        {}
+    ],
+    "expansion_terms": [
+        []
+    ]
+}

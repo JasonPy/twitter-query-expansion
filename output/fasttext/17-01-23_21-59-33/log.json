@@ -1,0 +1,254 @@
+{
+    "timestamp": "17-01-23_21:59:20",
+    "queries": [
+        "große Koalition gescheitert unter Merkel? #Groko #SPD #CDU",
+        "Lauterbach Deutschland Corona-Maßnahmen #Impfung",
+        "@bundestag Bundestagswahl 2021 Ergebnisse",
+        "Gesetzliche Rentenversicherung Rente Mit 67",
+        "Bundeswehr Afghanistan Krieg stoppen"
+    ],
+    "embedding_params": {
+        "type": "fasttext",
+        "model": "models/fasttext/cc.de.300.model",
+        "pos_list": [
+            "NOUN",
+            "ADJ",
+            "VERB",
+            "PROPN"
+        ],
+        "entity_list": [
+            "LOC",
+            "ORG"
+        ],
+        "hashtag": true,
+        "user": false,
+        "num_nearest_terms": 5
+    },
+    "elastic_params": {
+        "index": "tweets_all",
+        "num_of_tweets": 20,
+        "retweet": false,
+        "hashtag_boost": 1.0,
+        "tweet_range": [
+            "2020-01-01",
+            "2023-01-01"
+        ]
+    },
+    "docs": [
+        "große Koalition gescheitert unter Merkel? #Groko #SPD #CDU",
+        "Lauterbach Deutschland Corona-Maßnahmen #Impfung",
+        "@bundestag Bundestagswahl 2021 Ergebnisse",
+        "Gesetzliche Rentenversicherung Rente Mit 67",
+        "Bundeswehr Afghanistan Krieg stoppen"
+    ],
+    "query_tokens": [
+        [
+            "große",
+            "Koalition",
+            "gescheitert",
+            "Merkel",
+            "#Groko",
+            "#SPD",
+            "#CDU"
+        ],
+        [
+            "Lauterbach",
+            "Deutschland",
+            "Corona-Maßnahmen",
+            "#Impfung"
+        ],
+        [
+            "Bundestagswahl",
+            "Ergebnisse"
+        ],
+        [
+            "Gesetzliche",
+            "Rentenversicherung",
+            "Rente"
+        ],
+        [
+            "Bundeswehr",
+            "Afghanistan",
+            "Krieg",
+            "stoppen"
+        ]
+    ],
+    "similar_terms": [
+        {
+            "groß": [
+                "riesengroß",
+                "gross",
+                "klein",
+                "groß.",
+                "riesig"
+            ],
+            "Koalition": [
+                "Regierungskoalition",
+                "Koalitionsrunde",
+                "Koalitionspartei",
+                "Koalitionen",
+                "Koalitionskrise"
+            ],
+            "scheitern": [
+                "scheitert",
+                "gescheitert",
+                "scheiterten",
+                "scheitern.",
+                "scheiterte"
+            ],
+            "Merkel": [
+                "Kanzlerin",
+                "Merkels",
+                "Bundeskanzlerin",
+                "Steinmeier",
+                "Schäuble"
+            ],
+            "Groko": [
+                "GROKO",
+                "GroKo",
+                "sPD",
+                "CDU-CSU",
+                "AFD"
+            ],
+            "SPD": [
+                "CDU",
+                "FDP",
+                "CSU",
+                "Linkspartei",
+                "Sozialdemokraten"
+            ],
+            "CDU": [
+                "SPD",
+                "FDP",
+                "CSU",
+                "CDU-MdB",
+                "SPD-MdB"
+            ]
+        },
+        {
+            "Lauterbach": [
+                "Lauterbachs",
+                "Lauterbach-Schlitz",
+                "Reichenbach",
+                "Sickendorf",
+                "Lauterbrunn"
+            ],
+            "Deutschland": [
+                "Österreich",
+                "Europa",
+                "Bundesrepublik",
+                "Schweiz",
+                "Frankreich"
+            ],
+            "Impfung": [
+                "Impfungen",
+                "impfung",
+                "Schutzimpfung",
+                "B-Impfung",
+                "FSME-Impfung"
+            ]
+        },
+        {
+            "Bundestagswahl": [
+                "Bundestagswahlen",
+                "Landtagswahl",
+                "Bundestagwahl",
+                "Bundestagswahljahr",
+                "Landtagswahlen"
+            ],
+            "Ergebnis": [
+                "Resultat",
+                "Endergebnis",
+                "Ergebniss",
+                "Gesamtergebnis",
+                "Zwischenergebnis"
+            ]
+        },
+        {
+            "Gesetzliche": [
+                "gesetzliche",
+                "Rechtliche",
+                "Vertragliche",
+                "gesetzlichen",
+                "Vertragsrechtliche"
+            ],
+            "Rentenversicherung": [
+                "Rentenversicherungen",
+                "Rentenversicherer",
+                "Rentenversicherungsanstalt",
+                "Rentenversorgung",
+                "Rentenversicherungsträger"
+            ],
+            "Rente": [
+                "Altersrente",
+                "Renten",
+                "Rentenbeiträge",
+                "Rentenleistung",
+                "Rentenalter"
+            ]
+        },
+        {
+            "Bundeswehr": [
+                "Bundeswehreinheiten",
+                "bundeswehr",
+                "Bundeswehr-Kasernen",
+                "Bundeswehrverwaltung",
+                "Bundeswehrführung"
+            ],
+            "Afghanistan": [
+                "Irak",
+                "Pakistan",
+                "Afghanistans",
+                "Syrien",
+                "Hindukusch"
+            ],
+            "Krieg": [
+                "Kriege",
+                "Krieges",
+                "Bürgerkrieg",
+                "Kriegen",
+                "Kriegs"
+            ],
+            "stoppen": [
+                "unterbinden",
+                "verhindern",
+                "aufzuhalten",
+                "stoppen.",
+                "beenden"
+            ]
+        }
+    ],
+    "expansion_terms": [
+        [
+            "Kanzlerin",
+            "Bundeskanzlerin",
+            "GROKO",
+            "GroKo",
+            "CDU",
+            "FDP",
+            "CSU",
+            "SPD",
+            "FDP",
+            "CSU"
+        ],
+        [
+            "Bundesrepublik",
+            "impfung",
+            "Schutzimpfung"
+        ],
+        [
+            "Endergebnis",
+            "Ergebniss",
+            "Gesamtergebnis",
+            "Zwischenergebnis"
+        ],
+        [],
+        [
+            "bundeswehr",
+            "Bundeswehrverwaltung",
+            "Pakistan",
+            "Hindukusch",
+            "Kriegs"
+        ]
+    ]
+}

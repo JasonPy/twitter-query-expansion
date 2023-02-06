@@ -1,0 +1,366 @@
+[
+    {
+        "hits": 608,
+        "took": 222,
+        "tweets": [
+            {
+                "_index": "tweets_all",
+                "_id": "1435154475988275200",
+                "_score": 19.987425,
+                "_source": {
+                    "retweet_count": 4,
+                    "reply_count": 1,
+                    "like_count": 25,
+                    "created_at": "2021-09-07T10:14:25+02:00",
+                    "txt": "Stark. Richtig Stark. @OlafScholz heute 🔥🔥🔥 im #Bundestag. Während #Merkel zweifelhafte Wahlempfehlungen für #Laschet ausgibt, zeigt #Scholz wo es in #Zukunft mit unserem Land hingeht. #Kanzlerformat",
+                    "hashtags": [
+                        "laschet",
+                        "zukunft",
+                        "scholz",
+                        "merkel",
+                        "bundestag",
+                        "kanzlerformat"
+                    ],
+                    "word_count": 26
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1430512378496659458",
+                "_score": 19.975157,
+                "_source": {
+                    "retweet_count": 26,
+                    "reply_count": 37,
+                    "like_count": 81,
+                    "created_at": "2021-08-25T14:48:23+02:00",
+                    "txt": "Das Ende der Luftbrücke in einigen Tagen darf nicht das Ende der Bemühungen bedeuten, afghanische Ortskräfte zu schützen und den Afghanen zu helfen - Kanzlerin #Merkel im #Bundestag zum Umgang mit Ortskräften: https://t.co/0eoz4cDBhI",
+                    "hashtags": [
+                        "merkel",
+                        "bundestag"
+                    ],
+                    "word_count": 33
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1425118263529312257",
+                "_score": 19.967667,
+                "_source": {
+                    "retweet_count": 2,
+                    "reply_count": 1,
+                    "like_count": 10,
+                    "created_at": "2021-08-10T17:34:06+02:00",
+                    "txt": "Jetzt live: Ministerpräsidentin Malu #Dreyer informiert über die Ergebnisse der Bund-Länder-Konferenz mit Kanzlerin #Merkel. Auf der Tagesordnung: #Flutkatastrophe und #Corona. Livestream: https://t.co/XixMrsh9ih https://t.co/OI4rOILjKU",
+                    "hashtags": [
+                        "corona",
+                        "flutkatastrophe",
+                        "merkel",
+                        "dreyer"
+                    ],
+                    "word_count": 23
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1446035567867744257",
+                "_score": 19.940422,
+                "_source": {
+                    "retweet_count": 159,
+                    "reply_count": 20,
+                    "like_count": 333,
+                    "created_at": "2021-10-07T10:52:00+02:00",
+                    "txt": "Die #Bundesregierung verkommt zum Selbstbedienungsladen. Unter #Merkel entstanden 4600 neue und größtenteils hoch dotierte Stellen im Kernbereich um die #Kanzlerin. Davon profitierten vor allem #Parteifreunde. Es wird Zeit, dass man dieses schamlose Vorgehen stoppt. #REPORT #AfD https://t.co/fAfoYgLXqA",
+                    "hashtags": [
+                        "afd",
+                        "merkel",
+                        "bundesregierung",
+                        "kanzlerin",
+                        "parteifreunde",
+                        "report"
+                    ],
+                    "word_count": 37
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1454508689977712645",
+                "_score": 19.903797,
+                "_source": {
+                    "retweet_count": 55,
+                    "reply_count": 22,
+                    "like_count": 245,
+                    "created_at": "2021-10-30T20:01:09+02:00",
+                    "txt": "\"Es war ein ausgefüllter Arbeitstag, sehr gut organisiert von der italienischen Präsidentschaft und mit guten Ergebnissen.“ -  Kanzlerin #Merkel nach dem ersten  #G20-Gipfeltag in Rom. Im Mittelpunkt: globale Gesundheit, Weltwirtschaft, Iran und Afrika. #G20RomeSummit https://t.co/Nd8J50Hp72",
+                    "hashtags": [
+                        "merkel",
+                        "g20",
+                        "g20romesummit"
+                    ],
+                    "word_count": 37
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1430461884319346690",
+                "_score": 19.892757,
+                "_source": {
+                    "retweet_count": 16,
+                    "reply_count": 16,
+                    "like_count": 39,
+                    "created_at": "2021-08-25T11:27:44+02:00",
+                    "txt": "Kanzlerin #Merkel gibt zur Lage in #Afghanistan heute ab 12 Uhr im Deutschen Bundestag eine #Regierungserklärung ab. @hib_nachrichten \nLive u.a. hier: https://t.co/WVQFB1LTmt",
+                    "hashtags": [
+                        "afghanistan",
+                        "merkel",
+                        "regierungserklärung"
+                    ],
+                    "word_count": 22
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1452955805196689411",
+                "_score": 19.88218,
+                "_source": {
+                    "retweet_count": 64,
+                    "reply_count": 43,
+                    "like_count": 726,
+                    "created_at": "2021-10-26T13:10:33+02:00",
+                    "txt": "Kanzlerin #Merkel nimmt an der konstituierenden Sitzung des 20. Deutschen Bundestages von der Ehrentribüne aus teil. Mehr Informationen zu den Regelungen beim Übergang zur neuen Regierung unter: https://t.co/Y3D9vjG6LL https://t.co/0OqKsPRVDR",
+                    "hashtags": [
+                        "merkel"
+                    ],
+                    "word_count": 29
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1435154625108316162",
+                "_score": 19.82621,
+                "_source": {
+                    "retweet_count": 5,
+                    "reply_count": 0,
+                    "like_count": 25,
+                    "created_at": "2021-09-07T10:15:01+02:00",
+                    "txt": "Starke Rede von Angela #Merkel! „Die #btw21 ist eine besondere Wahl, weil es in schwierigsten Zeiten eine Richtungsentscheidung für unser Land ist. Es ist nicht egal, wer dieses Land regiert. Der beste Weg für unser Land ist eine Regierung mit @ArminLaschet als Bundeskanzler.“",
+                    "hashtags": [
+                        "btw21",
+                        "merkel"
+                    ],
+                    "word_count": 43
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1453080340734660608",
+                "_score": 19.82379,
+                "_source": {
+                    "retweet_count": 5,
+                    "reply_count": 10,
+                    "like_count": 75,
+                    "created_at": "2021-10-26T21:25:24+02:00",
+                    "txt": "Eine bemerkenswerte Persönlichkeit. Ich habe bei mehreren Wahlen mit vielen anderen dafür gekämpft, dass sie als Kanzlerin abgelöst wird. Aber dennoch, sie hat unser Land geprägt wie wenige. Respekt. #Merkel #Bundestag https://t.co/vttAjUf868",
+                    "hashtags": [
+                        "merkel",
+                        "bundestag"
+                    ],
+                    "word_count": 32
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1435154478177603585",
+                "_score": 19.809292,
+                "_source": {
+                    "retweet_count": 63,
+                    "reply_count": 384,
+                    "like_count": 276,
+                    "created_at": "2021-09-07T10:14:26+02:00",
+                    "txt": "„Der beste Weg für unser Land ist eine CDU/CSU-geführte Bundesregierung mit @ArminLaschet als Bundeskanzler, denn seine Regierung wird für Stabilität , Verlässlichkeit, Maß und Mitte stehen. Das ist genau das, was Deutschland braucht.“ - Angela #Merkel https://t.co/NvFUb2DsJ4",
+                    "hashtags": [
+                        "merkel"
+                    ],
+                    "word_count": 37
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1446088027609108488",
+                "_score": 19.807236,
+                "_source": {
+                    "retweet_count": 8,
+                    "reply_count": 2,
+                    "like_count": 48,
+                    "created_at": "2021-10-07T14:20:27+02:00",
+                    "txt": "Die Wahrheit muss ans Licht kommen und das Thema Kindesmissbrauch muss aufgearbeitet werden - das wollte ich mit meinem Besuch beim Anthropologischen Institut deutlich machen. - Kanzlerin #Merkel im Vatikan.",
+                    "hashtags": [
+                        "merkel"
+                    ],
+                    "word_count": 30
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1435131825052082177",
+                "_score": 19.8051,
+                "_source": {
+                    "retweet_count": 5,
+                    "reply_count": 18,
+                    "like_count": 19,
+                    "created_at": "2021-09-07T08:44:25+02:00",
+                    "txt": "Kanzlerin #Merkel spricht heute zur vereinbarten Debatte zur „Situation in Deutschland“ im Bundestag. @hib_nachrichten. Ab 9 Uhr live unter: https://t.co/yGtYWYuHeJ",
+                    "hashtags": [
+                        "merkel"
+                    ],
+                    "word_count": 20
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1441431930663149572",
+                "_score": 19.800632,
+                "_source": {
+                    "retweet_count": 58,
+                    "reply_count": 199,
+                    "like_count": 257,
+                    "created_at": "2021-09-24T17:58:47+02:00",
+                    "txt": "Leidenschaftlicher Appell von Angela #Merkel:\n\n\"Damit Deutschland stabil bleibt, muss @ArminLaschet Bundeskanzler und die #eineUnion stärkste Kraft werden!\" 💯 \n\n#wegenmorgen https://t.co/eWRhPTOC1X",
+                    "hashtags": [
+                        "merkel",
+                        "wegenmorgen",
+                        "eineunion"
+                    ],
+                    "word_count": 20
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1428709119708499968",
+                "_score": 19.799181,
+                "_source": {
+                    "retweet_count": 35,
+                    "reply_count": 15,
+                    "like_count": 189,
+                    "created_at": "2021-08-20T15:22:52+02:00",
+                    "txt": "Kanzlerin #Merkel legt zu Beginn ihres heutigen Besuchs in #Moskau einen Kranz am Grab des Unbekannten Soldaten im Alexandergarten des Kreml nieder - im Gedenken an den 80. Jahrestag des Überfalls der Deutschen Wehrmacht auf die Sowjetunion am 22. Juni 1941. https://t.co/XK5GM4scSL",
+                    "hashtags": [
+                        "merkel",
+                        "moskau"
+                    ],
+                    "word_count": 42
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1435148807617097728",
+                "_score": 19.791428,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 2,
+                    "like_count": 20,
+                    "created_at": "2021-09-07T09:51:54+02:00",
+                    "txt": "Letzte Rede als #Kanzlerin im #Bundestag ausgerechnet für #Laschet hergeben. \nSchwanke zwischen Mitleid und Unverständnis. #Merkel",
+                    "hashtags": [
+                        "laschet",
+                        "merkel",
+                        "bundestag",
+                        "kanzlerin"
+                    ],
+                    "word_count": 16
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1428631877984923650",
+                "_score": 19.78074,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 4,
+                    "created_at": "2021-08-20T10:15:57+02:00",
+                    "txt": "Am heutigen Jahrestag der Vergiftung von @navalny reist Kanzlerin #Merkel nach 🇷🇺, konkrete Ergebnisse sind nicht zu erwarten. Sie kann und muss aber die desolate Situation der #Menschenrechte in #Russland ansprechen.\nMein Pressestatement 👉https://t.co/grGiJE4Q41",
+                    "hashtags": [
+                        "merkel",
+                        "menschenrechte",
+                        "russland"
+                    ],
+                    "word_count": 33
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1430485697014738944",
+                "_score": 19.774315,
+                "_source": {
+                    "retweet_count": 18,
+                    "reply_count": 8,
+                    "like_count": 170,
+                    "created_at": "2021-08-25T13:02:21+02:00",
+                    "txt": "In dieser Bundesregierung ist offensichtlich wirklich niemand bereit, Verantwortung für das Versagen beim Umgang mit #Ortskräften zu übernehmen - Schuld ist immer jemand anders oder etwas anderes. Auch bei Angela #Merkel keine Selbstkritik, keine Einsicht. #Afghanistan",
+                    "hashtags": [
+                        "afghanistan",
+                        "merkel",
+                        "ortskräften"
+                    ],
+                    "word_count": 36
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1435652683441090567",
+                "_score": 19.77121,
+                "_source": {
+                    "retweet_count": 10,
+                    "reply_count": 30,
+                    "like_count": 80,
+                    "created_at": "2021-09-08T19:14:07+02:00",
+                    "txt": "Bundeskanzlerin Angela #Merkel war heute in meiner Heimatstadt Iserlohn, um sich ein Bild über die Herstellung von Medikamenten „made in Germany“ zu machen. Mit Medice haben wir in meinem Wahlkreis einen Hersteller, der in Deutschland für die Welt Medikamente aller Art herstellt. https://t.co/1S9YmiXcuy",
+                    "hashtags": [
+                        "merkel"
+                    ],
+                    "word_count": 43
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1433389587267735554",
+                "_score": 19.771076,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 0,
+                    "created_at": "2021-09-02T13:21:23+02:00",
+                    "txt": "Wen wählen wir bei der #Bundestagswahl? \"Dieser Wahlkampf und die ihn begleitende Musik sind auf den Kampf ums Kanzleramt zugeschnitten\", schreibt @jotrum im @WDR-Landtagsblog - aber: \"Wir entscheiden nicht nur über die Nachfolge von Angela #Merkel.\"\n\n⤵️ https://t.co/dvatsMSQ74",
+                    "hashtags": [
+                        "bundestagswahl",
+                        "merkel"
+                    ],
+                    "word_count": 37
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1430501916858015744",
+                "_score": 19.7701,
+                "_source": {
+                    "retweet_count": 159,
+                    "reply_count": 42,
+                    "like_count": 1246,
+                    "created_at": "2021-08-25T14:06:49+02:00",
+                    "txt": ".@ABaerbock bringt es im #Bundestag auf den Punkt: Die #Bundesregierung #Merkel #Scholz #Maas #Seehofer haben aus innenpolitischen Erwägungen die Menschen, die #Deutschland und den Westen jahrelang in #Afghanistan unterstützt haben, im Stich gelassen.",
+                    "hashtags": [
+                        "deutschland",
+                        "afghanistan",
+                        "scholz",
+                        "merkel",
+                        "bundestag",
+                        "bundesregierung",
+                        "seehofer",
+                        "maas"
+                    ],
+                    "word_count": 33
+                }
+            }
+        ]
+    }
+]

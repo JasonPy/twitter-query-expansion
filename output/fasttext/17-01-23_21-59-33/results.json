@@ -1,0 +1,1833 @@
+[
+    {
+        "hits": 4748,
+        "took": 233,
+        "tweets": [
+            {
+                "_index": "tweets_all",
+                "_id": "1444762594192076807",
+                "_score": 49.38355,
+                "_source": {
+                    "retweet_count": 1,
+                    "reply_count": 1,
+                    "like_count": 2,
+                    "created_at": "2021-10-03T22:33:39+02:00",
+                    "txt": "Die erste #GroKo in Deutschland vereinte 1966 noch 86,9% der Wähler:innen hinter sich. Das lässt sich heute nicht mal mit einer Mosambik-Koalition erreichen. Aber wenn man #CDU und #FDP einerseits und #SPD und #Grüne anderseits beobachtet, könnte man das glatt als Lösung sehen.",
+                    "hashtags": [
+                        "spd",
+                        "cdu",
+                        "fdp",
+                        "grüne",
+                        "groko"
+                    ],
+                    "word_count": 43
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1438805349302214656",
+                "_score": 48.03311,
+                "_source": {
+                    "retweet_count": 6,
+                    "reply_count": 1,
+                    "like_count": 57,
+                    "created_at": "2021-09-17T12:01:41+02:00",
+                    "txt": "6. Als @GrueneBundestag haben wir die Aufklärung im Untersuchungsausschuss #Breitscheidplatz gegen massive Widerstände der #Bundesregierung und #GroKo #CDU #CSU #SPD maßgeblich vorangetrieben. Hier eine Bilanz: https://t.co/Y8fb7v6oa8",
+                    "hashtags": [
+                        "spd",
+                        "cdu",
+                        "csu",
+                        "bundesregierung",
+                        "groko",
+                        "breitscheidplatz"
+                    ],
+                    "word_count": 26
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1439504732851163137",
+                "_score": 47.931488,
+                "_source": {
+                    "retweet_count": 38,
+                    "reply_count": 11,
+                    "like_count": 388,
+                    "created_at": "2021-09-19T10:20:47+02:00",
+                    "txt": "Aber…. Ach so, das wollten ja #SPD #CDU und #CSU explizit nicht. Obwohl Grüne, FDP und Linke das beantragt hatten. Die #GroKo nimmt es schlicht billigend in Kauf, dass bis zu 300 Abgeordnete mehr in den Bundestag kommen. Es wäre schlicht verheerend.",
+                    "hashtags": [
+                        "spd",
+                        "cdu",
+                        "csu",
+                        "groko"
+                    ],
+                    "word_count": 42
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1424732244116217871",
+                "_score": 47.57483,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 0,
+                    "created_at": "2021-08-09T16:00:11+02:00",
+                    "txt": "Bis zu 1000 Abgeordnete könnte der neue #Bundestag nach der Wahl bekommen! Die #FDP hatte mit anderen Oppositionsparteien eine effektive #Wahlrechtsreform auf den Weg gebracht. Stattdessen hat sich die #GroKo aus #CDUCSU und #SPD für dieses Reförmchen ohne Wirkung gefeiert. @fdp https://t.co/VZJ1k0dbyW",
+                    "hashtags": [
+                        "spd",
+                        "fdp",
+                        "wahlrechtsreform",
+                        "bundestag",
+                        "groko",
+                        "cducsu"
+                    ],
+                    "word_count": 42
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1431971187438010369",
+                "_score": 46.792194,
+                "_source": {
+                    "retweet_count": 27,
+                    "reply_count": 29,
+                    "like_count": 318,
+                    "created_at": "2021-08-29T15:25:10+02:00",
+                    "txt": "#SPD und #CDU sind sich bis zur Unkenntlichkeit ähnlich geworden und natürlich wäre eine Neuauflage der #GroKo die bequemste Koa von allen. Kann man nur zuverlässig verhindern, wenn #CSU + + #SPD + #CDU keine eigene Mehrheit bekommen. #triell",
+                    "hashtags": [
+                        "spd",
+                        "spd",
+                        "cdu",
+                        "cdu",
+                        "csu",
+                        "groko",
+                        "triell"
+                    ],
+                    "word_count": 39
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1433678644149465097",
+                "_score": 46.706856,
+                "_source": {
+                    "retweet_count": 218,
+                    "reply_count": 54,
+                    "like_count": 1542,
+                    "created_at": "2021-09-03T08:29:59+02:00",
+                    "txt": "Der Moment am Abend des 26. September, wenn Medien und die deutsche Öffentlichkeit realisieren, dass die Dreistigkeit und Selbstbedienungsmentalität  der #GroKo #CDU #SPD #CSU beim #Wahlrecht zu einem 20. Deutschen Bundestag mit 750 bis 950 Abgeordneten geführt hat…. #btw2021",
+                    "hashtags": [
+                        "spd",
+                        "cdu",
+                        "btw2021",
+                        "csu",
+                        "wahlrecht",
+                        "groko"
+                    ],
+                    "word_count": 40
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1426817892742488066",
+                "_score": 46.48506,
+                "_source": {
+                    "retweet_count": 11,
+                    "reply_count": 22,
+                    "like_count": 115,
+                    "created_at": "2021-08-15T10:07:49+02:00",
+                    "txt": "#Söder, #CSU unterstellt #Laschet, #CDU, „im Schlafwagen ins Kanzleramt fahren zu wollen.“ \nLaschet wirft #Scholz, #SPD vor, einen „Schlafwagenwahlkampf“ zu führen. 🍿\n👉🏻8 Jahre #Groko und CDU und SPD können nur noch „Schlafwagen“...🙄\n#vielzutun \nhttps://t.co/vYczo6iQmD",
+                    "hashtags": [
+                        "spd",
+                        "laschet",
+                        "cdu",
+                        "söder",
+                        "csu",
+                        "vielzutun",
+                        "scholz",
+                        "groko"
+                    ],
+                    "word_count": 33
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1440230331798278150",
+                "_score": 44.46973,
+                "_source": {
+                    "retweet_count": 47,
+                    "reply_count": 5,
+                    "like_count": 130,
+                    "created_at": "2021-09-21T10:24:03+02:00",
+                    "txt": "Die Bilanz der #GroKo ist mies. In der #Wohnungspolitik sieht es nach 8 Jahren mit #SPD und #CDU in der Bundesregierung düster aus. \nFür eine soziale Wohnungspolitik: Sonntag @dieLinke wählen! https://t.co/k1Shk7TkE1",
+                    "hashtags": [
+                        "spd",
+                        "cdu",
+                        "wohnungspolitik",
+                        "groko"
+                    ],
+                    "word_count": 31
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1445687048615071752",
+                "_score": 44.46535,
+                "_source": {
+                    "retweet_count": 1,
+                    "reply_count": 0,
+                    "like_count": 6,
+                    "created_at": "2021-10-06T11:47:06+02:00",
+                    "txt": "Mit @Anne_Kura beim Städte- und Gemeindebund Niedersachsen in Bodenwerder, der die #Groko #SPD #CDU gerade für das „Kommunen in die Tasche Greif-Gesetz“ kritisiert. #Grüne wollen bessere Kommunalfinanzierung und Investitionen in #Klimaschutz und #Bildung @GrueneLtNds https://t.co/PK6zkUM6Ja",
+                    "hashtags": [
+                        "spd",
+                        "klimaschutz",
+                        "cdu",
+                        "grüne",
+                        "bildung",
+                        "groko"
+                    ],
+                    "word_count": 35
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1430784922097176576",
+                "_score": 44.230217,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 1,
+                    "like_count": 8,
+                    "created_at": "2021-08-26T08:51:22+02:00",
+                    "txt": "Auch wenn der @KSTA lieber #SPD statt #FDP schreibt (🤦🏻‍♂️), es gilt: die „epidemische Notlage von nationaler Tragweite“ besteht nicht mehr, und die gesetzliche Sonderregelungen müssen beendet werden. Die #groko (SPD +CDU!) hält trotzdem daran fest. #covid https://t.co/BgnCPhcmPS",
+                    "hashtags": [
+                        "spd",
+                        "fdp",
+                        "covid",
+                        "groko"
+                    ],
+                    "word_count": 38
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1427154178208587779",
+                "_score": 44.22351,
+                "_source": {
+                    "retweet_count": 2,
+                    "reply_count": 2,
+                    "like_count": 7,
+                    "created_at": "2021-08-16T08:24:05+02:00",
+                    "txt": "#Afghanistan Katastrophe mit Ansage. 20 Jahre die Dienste der Menschen dort in Anspruch genommen. Außenpolitik der #Bundesregierung =0. Holt alle Menschen in Not raus aus Afghanistan.  #Groko #SPD #CDU wiederholt nicht die Fehler aus Juni 21! @GrueneBundestag @JTrittin @KatjaKeul https://t.co/cG6XYpDYQR",
+                    "hashtags": [
+                        "spd",
+                        "cdu",
+                        "afghanistan",
+                        "bundesregierung",
+                        "groko"
+                    ],
+                    "word_count": 41
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1428932552727965696",
+                "_score": 44.220974,
+                "_source": {
+                    "retweet_count": 69,
+                    "reply_count": 266,
+                    "like_count": 821,
+                    "created_at": "2021-08-21T06:10:43+02:00",
+                    "txt": "Ich verlange, dass #CDU #CSU und #SPD eine weitere #GroKo glaubhaft ausschließen! Der einzige Weg, dass zu tun?: die drei Parteien dürfen zusammen nicht eine Mehrheit im 20. Deutschen Bundestag haben!",
+                    "hashtags": [
+                        "spd",
+                        "cdu",
+                        "csu",
+                        "groko"
+                    ],
+                    "word_count": 31
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1430500045850386432",
+                "_score": 44.173813,
+                "_source": {
+                    "retweet_count": 175,
+                    "reply_count": 31,
+                    "like_count": 873,
+                    "created_at": "2021-08-25T13:59:22+02:00",
+                    "txt": "Die #GroKo #SPD #CDU #CSU will kein #Löschmoratorium zur Sicherung von Akten, sie will keinen Untersuchungsausschuss, sondern eine Enquete zum Desaster in #Afghanistan -  niemand übernimmt Verantwortung und parlamentarische Aufklärung wird blockiert. Das ist die Lage.",
+                    "hashtags": [
+                        "spd",
+                        "cdu",
+                        "csu",
+                        "afghanistan",
+                        "groko",
+                        "löschmoratorium"
+                    ],
+                    "word_count": 37
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1431971185521217542",
+                "_score": 43.827682,
+                "_source": {
+                    "retweet_count": 42,
+                    "reply_count": 17,
+                    "like_count": 350,
+                    "created_at": "2021-08-29T15:25:10+02:00",
+                    "txt": "Von den letzten 16 Jahren hat die #SPD 12 Jahre mit der #CDU regiert. Die #SPD hat Scholz mit großem Getöse nicht zum Parteivorsitzenden gewählt,mit dem Argument,er stünde für die #GroKo Jetzt ist er Kanzlerkandidat und kokettiert offen damit merkellike zu sein.Die Wahrheit ist:",
+                    "hashtags": [
+                        "spd",
+                        "spd",
+                        "cdu",
+                        "groko"
+                    ],
+                    "word_count": 44
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1448948967191023616",
+                "_score": 43.77545,
+                "_source": {
+                    "retweet_count": 2,
+                    "reply_count": 0,
+                    "like_count": 7,
+                    "created_at": "2021-10-15T11:48:48+02:00",
+                    "txt": "Millionen Fördergelder in den Wind geschossen: An diesem unglaublichen Vorgang sieht man, welchen geringen Stellenwert der ländliche Raum für die Niedersachen-#GroKo aus #SPD und #CDU hat. https://t.co/LsFfmDqvNA",
+                    "hashtags": [
+                        "spd",
+                        "cdu",
+                        "groko"
+                    ],
+                    "word_count": 27
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1426075707097108480",
+                "_score": 43.65413,
+                "_source": {
+                    "retweet_count": 2,
+                    "reply_count": 0,
+                    "like_count": 7,
+                    "created_at": "2021-08-13T08:58:38+02:00",
+                    "txt": "#GROKO #SPD #CDU mauert! Aufklärung zum #Lehrergate - #Transparenz und Offenheit sucht man vergebens!  Vertuschungs-Mails von ganz oben sollten Ministerin @BettinaMartin4 `s Versagen kaschieren.\n👉Nicht mit UNS @AfDFraktion_MV \n\n#nurnochAfD #MV #ltw21\nhttps://t.co/n5uE7c1hQW",
+                    "hashtags": [
+                        "mv",
+                        "spd",
+                        "cdu",
+                        "groko",
+                        "nurnochafd",
+                        "transparenz",
+                        "ltw21",
+                        "lehrergate"
+                    ],
+                    "word_count": 31
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1433397668215234562",
+                "_score": 43.573833,
+                "_source": {
+                    "retweet_count": 2,
+                    "reply_count": 1,
+                    "like_count": 9,
+                    "created_at": "2021-09-02T13:53:30+02:00",
+                    "txt": "Neue Umfragen ergeben Desaster für #CDU #CSU. #Laschet verursacht historisches Tief. #Grüne und #SPD legen beide zu. RGR hat mit 51 % absolute Mehrheit, aber auch SPD geführte Groko!\nJetzt #GRÜNE stark machen, damit SPD nicht #Groko  mit #Merz #Maassen #Laschet macht. https://t.co/hnCox5n5QT",
+                    "hashtags": [
+                        "spd",
+                        "laschet",
+                        "laschet",
+                        "cdu",
+                        "csu",
+                        "grüne",
+                        "grüne",
+                        "maassen",
+                        "groko",
+                        "merz"
+                    ],
+                    "word_count": 43
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1431193049581883395",
+                "_score": 42.531883,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 1,
+                    "like_count": 1,
+                    "created_at": "2021-08-27T11:53:07+02:00",
+                    "txt": "@HuebschenH Ja. Das ist wichtig:\nEs gab eine ganz große Koalition aus #CDU, #FDP &amp; #SPD.\nUnd eine SPD, die ab 2012 vor Kraft nicht laufen konnte, hat uns Grünen in der Koalition diesen Quatsch abgenötigt.\nWas lernen wir daraus:\n#Grüne stärker machen - mit 20% wäre das nicht passiert!",
+                    "hashtags": [
+                        "spd",
+                        "cdu",
+                        "fdp",
+                        "grüne"
+                    ],
+                    "word_count": 46
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1448667371116318720",
+                "_score": 42.14929,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 2,
+                    "created_at": "2021-10-14T17:09:50+02:00",
+                    "txt": "#SPD angeführte Landesregierung lässt mit #CDU Agrarministerin mal eben 10 Mio. Euro Bundesgeld für den Ländlichen Raum „verfallen“ #Schlimm #Groko @MLNiedersachsen https://t.co/bZjScV9fQw",
+                    "hashtags": [
+                        "spd",
+                        "cdu",
+                        "groko",
+                        "schlimm"
+                    ],
+                    "word_count": 22
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1434541667151929348",
+                "_score": 42.107216,
+                "_source": {
+                    "retweet_count": 49,
+                    "reply_count": 41,
+                    "like_count": 435,
+                    "created_at": "2021-09-05T17:39:20+02:00",
+                    "txt": "Da Herr #Söder vor einem Linksrutsch warnt, der größte Linksrutsch fand unter den #Groko-Regierungen unter Angela #Merkel statt. ☝️🤔\n👉Sie war die beste #CDU-Kanzlerin, welche die #SPD je hatte.🤷‍♂️ https://t.co/UwrxHT8yDu",
+                    "hashtags": [
+                        "spd",
+                        "cdu",
+                        "söder",
+                        "merkel",
+                        "groko"
+                    ],
+                    "word_count": 29
+                }
+            }
+        ]
+    },
+    {
+        "hits": 402,
+        "took": 211,
+        "tweets": [
+            {
+                "_index": "tweets_all",
+                "_id": "1441260884655947777",
+                "_score": 23.640934,
+                "_source": {
+                    "retweet_count": 8,
+                    "reply_count": 0,
+                    "like_count": 8,
+                    "created_at": "2021-09-24T06:39:06+02:00",
+                    "txt": "Netzfund!\n\"Sag doch mal die Wahrheit, Karl!\"\n#Lauterbach #Lanz #Corona #Pandemie #Bundestagswahl \n#Impfung #Impfpflicht #Impfdurchbruch #Impfpass https://t.co/EnYaCCuq2D",
+                    "hashtags": [
+                        "impfung",
+                        "corona",
+                        "bundestagswahl",
+                        "impfpflicht",
+                        "pandemie",
+                        "lauterbach",
+                        "lanz",
+                        "impfpass",
+                        "impfdurchbruch"
+                    ],
+                    "word_count": 15
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1423061567751561219",
+                "_score": 23.358053,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 0,
+                    "created_at": "2021-08-05T01:21:31+02:00",
+                    "txt": "Entgegen dem Sachverstand der #STIKO und der Kritik des Deutschen Hausärzteverbandes wollen Politiker Kindern einen Impfstoff mit nur bedingter Zulassung zumuten. \n\nhttps://t.co/heZ1KJeFHS\n\n#Spahn #Corona #Impfung #Kinderimpfung https://t.co/s40NAA4uKi",
+                    "hashtags": [
+                        "impfung",
+                        "corona",
+                        "spahn",
+                        "stiko",
+                        "kinderimpfung"
+                    ],
+                    "word_count": 26
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1447804223891116034",
+                "_score": 23.317074,
+                "_source": {
+                    "retweet_count": 1,
+                    "reply_count": 0,
+                    "like_count": 1,
+                    "created_at": "2021-10-12T08:00:00+02:00",
+                    "txt": "Besonders für Menschen, die zu einer Risikogruppe gemäß der STIKO-Empfehlung gehören, ist die Grippeimpfung wichtig.\nEine gute Gelegenheit, die Corona-Auffrischungsimpfung zeitgleich vornehmen zu lassen.\nDr. Wolfgang Krombholz (KVB) ermutigt zur #Impfung.\nhttps://t.co/HFE9qjwnYD https://t.co/mNlr7LFeCU",
+                    "hashtags": [
+                        "impfung"
+                    ],
+                    "word_count": 30
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1423934157307121674",
+                "_score": 23.25763,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 3,
+                    "created_at": "2021-08-07T11:08:53+02:00",
+                    "txt": "Fällt eine #Bratwurst-#Corona-#Impfung eigentlich in die Kategorie der Mehrfach-Schutz-Impfung?\n#Antibiotika #Schweinefleisch #Massentierhaltung",
+                    "hashtags": [
+                        "bratwurst",
+                        "impfung",
+                        "corona",
+                        "antibiotika",
+                        "massentierhaltung",
+                        "schweinefleisch"
+                    ],
+                    "word_count": 11
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1425119774527430659",
+                "_score": 23.206936,
+                "_source": {
+                    "retweet_count": 8,
+                    "reply_count": 16,
+                    "like_count": 38,
+                    "created_at": "2021-08-10T17:40:06+02:00",
+                    "txt": "3-G bleibt – kostenlose #Corona Tests fallen ab 11.10. weg (Ausnahme: #Impfung nicht möglich / keine Impfempfehlung). Malu #Dreyer: #Impfquote entscheidend für Herbst &amp; Winter und zur Verhinderung weiteren #Lockdown. #RLP hat alles darangesetzt, #Impfen zu erleichtern. https://t.co/V7FjssslkB",
+                    "hashtags": [
+                        "impfung",
+                        "corona",
+                        "impfen",
+                        "lockdown",
+                        "rlp",
+                        "impfquote",
+                        "dreyer"
+                    ],
+                    "word_count": 38
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1423592873837174786",
+                "_score": 23.189762,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 2,
+                    "created_at": "2021-08-06T12:32:44+02:00",
+                    "txt": "Druck auf ungeimpfte Erwachsene &amp; Kinder nicht zu rechtfertigen. Jeder hat das Recht, frei entscheiden zu können, ob er sich einer medizinischen Behandlung mit bedingter Zulassung unterzieht. \n\nhttps://t.co/NlnbkJDSi2\n\n#Corona #Impfung #Kinder #Inzidenz #Spahn #Bundesregierung https://t.co/XToqepo4ry",
+                    "hashtags": [
+                        "impfung",
+                        "corona",
+                        "spahn",
+                        "kinder",
+                        "inzidenz",
+                        "bundesregierung"
+                    ],
+                    "word_count": 34
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1436295441478529027",
+                "_score": 23.127735,
+                "_source": {
+                    "retweet_count": 5,
+                    "reply_count": 2,
+                    "like_count": 7,
+                    "created_at": "2021-09-10T13:48:12+02:00",
+                    "txt": "Auffrischungsimpfungen – Gemeinsame Empfehlung mit der Bayerischen Landesärztekammer, der Kassenärztlichen Vereinigung Bayerns, dem Bayerischen Hausärzteverband und dem Berufsverband der Kinder- und Jugendärzte.\n\nhttps://t.co/YdCkaTKUac\n\n#bayerngemeinsam #coronavirus #impfung",
+                    "hashtags": [
+                        "impfung",
+                        "coronavirus",
+                        "bayerngemeinsam"
+                    ],
+                    "word_count": 24
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1434418816054931457",
+                "_score": 23.027979,
+                "_source": {
+                    "retweet_count": 1,
+                    "reply_count": 0,
+                    "like_count": 11,
+                    "created_at": "2021-09-05T09:31:10+02:00",
+                    "txt": "Die #Impfung ist sicher, schützt vor Corona &amp; schweren Verläufen! Um gut durch Herbst/Winter zu kommen, braucht’s noch rd. 5 Mio. Impfungen.\n\nDarum: Impfen lassen - schützt den Einzelnen &amp; Andere, ist gelebte Solidarität! Impfstrategie für Schüler*innen, Azubis &amp; Studis stärken!",
+                    "hashtags": [
+                        "impfung"
+                    ],
+                    "word_count": 40
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1428736182226145283",
+                "_score": 22.990648,
+                "_source": {
+                    "retweet_count": 32,
+                    "reply_count": 49,
+                    "like_count": 106,
+                    "created_at": "2021-08-20T17:10:25+02:00",
+                    "txt": "Es gibt keine Hinweise darauf, dass die #CoronaSchutzimpfung unfruchtbar macht. Vielmehr kann eine #Impfung vor Schwangerschaftseintritt die Infektionsgefahr während der Schwangerschaft und die damit verbundenen Risiken minimieren. https://t.co/38gU2NcTfX",
+                    "hashtags": [
+                        "impfung",
+                        "coronaschutzimpfung"
+                    ],
+                    "word_count": 28
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1447532569201979397",
+                "_score": 22.987629,
+                "_source": {
+                    "retweet_count": 8,
+                    "reply_count": 51,
+                    "like_count": 34,
+                    "created_at": "2021-10-11T14:00:33+02:00",
+                    "txt": "Die #CoronaSchutzimpfung ist wirksam und sicher. Es ist falsch, dass die #Impfung die #Fruchtbarkeit von Frauen oder Männern beeinträchtigt! Mehr Information zum #Impfen bei Kinderwunsch unter https://t.co/yjsnXZgnnc. https://t.co/7pYe3SOo1z",
+                    "hashtags": [
+                        "impfung",
+                        "impfen",
+                        "coronaschutzimpfung",
+                        "fruchtbarkeit"
+                    ],
+                    "word_count": 28
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1437418311927619591",
+                "_score": 22.887768,
+                "_source": {
+                    "retweet_count": 14,
+                    "reply_count": 8,
+                    "like_count": 26,
+                    "created_at": "2021-09-13T16:10:06+02:00",
+                    "txt": "Auch in Ihrer Nähe wird geimpft. Holen Sie sich Ihre #CoronaSchutzimpfung. Egal, ob Sie mit dem Taxi, dem Share-Auto oder dem E-Scooter in der Stadt unterwegs sind. Jede #Impfung zählt! Mehr unter #HierWirdGeimpft + #Musterstadt oder https://t.co/XU0ds7wA4c. https://t.co/B4DJAZjMk6",
+                    "hashtags": [
+                        "impfung",
+                        "coronaschutzimpfung",
+                        "hierwirdgeimpft",
+                        "musterstadt"
+                    ],
+                    "word_count": 38
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1425120716740042761",
+                "_score": 22.869106,
+                "_source": {
+                    "retweet_count": 3,
+                    "reply_count": 10,
+                    "like_count": 17,
+                    "created_at": "2021-08-10T17:43:50+02:00",
+                    "txt": "Jetzt #impfen für vollständigen Impfschutz im Herbst. Malu #Dreyer: Wir werden nicht nachlassen und #Impfquote weiter steigern. Wir müssen den Schutz von Kindern und Jugendlichen sowie gefährdeten Menschen erhöhen. #Corona #Impfung https://t.co/11sdtKnu19",
+                    "hashtags": [
+                        "impfung",
+                        "corona",
+                        "impfen",
+                        "impfquote",
+                        "dreyer"
+                    ],
+                    "word_count": 32
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1443561504083783686",
+                "_score": 22.822372,
+                "_source": {
+                    "retweet_count": 7,
+                    "reply_count": 51,
+                    "like_count": 27,
+                    "created_at": "2021-09-30T15:00:57+02:00",
+                    "txt": "Es gibt keine Hinweise darauf, dass die Pille die Wirkung der #CoronaSchutzimpfung beeinträchtigt, erklärt Frauenärztin und Mitglied der #STIKO Dr. Röbl-Mathieu. Das Video zum Thema #Impfung in der #Schwangerschaft in voller Länge finden Sie unter: https://t.co/a1E8o9MvOD https://t.co/ECEn6ucbJN",
+                    "hashtags": [
+                        "impfung",
+                        "stiko",
+                        "coronaschutzimpfung",
+                        "schwangerschaft"
+                    ],
+                    "word_count": 37
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1428364370539470856",
+                "_score": 22.777046,
+                "_source": {
+                    "retweet_count": 7,
+                    "reply_count": 7,
+                    "like_count": 22,
+                    "created_at": "2021-08-19T16:32:58+02:00",
+                    "txt": "891 Personen liegen in NRW mit einer #Coronainfektion im Krankenhaus. 87% von ihnen sind nicht geimpft (Stand: 17.08.). Gesundheitsminister Laumann versteht nicht, warum Menschen, die sich impfen lassen könnten, immer noch sich selbst und auch andere gefährden. #Impfung https://t.co/WJOUBT9a21",
+                    "hashtags": [
+                        "impfung",
+                        "coronainfektion"
+                    ],
+                    "word_count": 39
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1427211564600414209",
+                "_score": 22.76015,
+                "_source": {
+                    "retweet_count": 3,
+                    "reply_count": 0,
+                    "like_count": 7,
+                    "created_at": "2021-08-16T12:12:07+02:00",
+                    "txt": "Gut, dass es jetzt auch die #Stiko Empfehlung gibt zur Corona Schutzimpfung 12 bis 17jähriger. Damit haben Eltern eine klare Orientierung. Vorteil der #Impfung überwiegt.  #ImpfenSchuetzt \n\nhttps://t.co/2mEZQVF2JJ",
+                    "hashtags": [
+                        "impfung",
+                        "stiko",
+                        "impfenschuetzt"
+                    ],
+                    "word_count": 28
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1423554282650017792",
+                "_score": 22.691513,
+                "_source": {
+                    "retweet_count": 3,
+                    "reply_count": 1,
+                    "like_count": 22,
+                    "created_at": "2021-08-06T09:59:24+02:00",
+                    "txt": "Gibt gute Gründe sich jetzt schnell impfen zu lassen. Viele offene Angebote machen es leicht. Mit der Impfung schützt man sich selbst und andere. #Corona #Impfung https://t.co/hOYnz1lVG8",
+                    "hashtags": [
+                        "impfung",
+                        "corona"
+                    ],
+                    "word_count": 27
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1425061516643082240",
+                "_score": 22.634455,
+                "_source": {
+                    "retweet_count": 33,
+                    "reply_count": 12,
+                    "like_count": 72,
+                    "created_at": "2021-08-10T13:48:36+02:00",
+                    "txt": "#Israel: Verwunderung, dass sogar dreifach Geimpfte an Corona erkranken. Die Frage stellt sich: Wie wirksam ist diese #Impfung? Klar scheint, dass Geimpfte nur sich selbst vor einer Erkrankung schützen, aber die Krankheit durchaus übertragen können.\n► https://t.co/WTmEJ8tSMN https://t.co/tjJRemsIxY",
+                    "hashtags": [
+                        "impfung",
+                        "israel"
+                    ],
+                    "word_count": 37
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1447879222052143112",
+                "_score": 22.563444,
+                "_source": {
+                    "retweet_count": 48,
+                    "reply_count": 31,
+                    "like_count": 286,
+                    "created_at": "2021-10-12T12:58:01+02:00",
+                    "txt": "Das schmutzige Geschäft mit den #Corona Tests. Gesunde Menschen müssen bezahlen um nachzuweisen,  dass sie gesund sind. Und die Pharmaindustrie kassiert kräftig ab.\n\n#Spahn #COVID19 #Impfschaeden #sarahleeheinrich #Impfung https://t.co/eUAOdAc8AJ",
+                    "hashtags": [
+                        "impfung",
+                        "corona",
+                        "spahn",
+                        "covid19",
+                        "sarahleeheinrich",
+                        "impfschaeden"
+                    ],
+                    "word_count": 29
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1454326488254271493",
+                "_score": 22.558859,
+                "_source": {
+                    "retweet_count": 45,
+                    "reply_count": 4,
+                    "like_count": 140,
+                    "created_at": "2021-10-30T07:57:09+02:00",
+                    "txt": "Deutschland verhindert, dass die Patente für #Corona-Impfstoffe freigegeben werden. Jetzt legen Hersteller ihr Veto ein, dass überzählige Dosen an ärmere Staaten weitergegeben werden. Die Pharmakonzerne, die das tun, sind Verbrecher, nicht weniger 😠 #Impfung #COVID19 https://t.co/YMUOooNgSo",
+                    "hashtags": [
+                        "impfung",
+                        "corona",
+                        "covid19"
+                    ],
+                    "word_count": 36
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1422239952323104772",
+                "_score": 22.51259,
+                "_source": {
+                    "retweet_count": 3,
+                    "reply_count": 0,
+                    "like_count": 9,
+                    "created_at": "2021-08-02T18:56:43+02:00",
+                    "txt": "„Basierend auf den Ergebnissen der ersten 345 Teilnehmenden kann geschätzt werden, dass im Frühling ca. 73% (95% Konfidenzintervall: 67% bis 79%) der Freiburger Einwohner_innen ab 20 Jahren Antikörper gegen das COVID-19 Coronavirus hatten.“ Da bedarf es wohl keiner #Impfung mehr! https://t.co/fKb6DpKdPe",
+                    "hashtags": [
+                        "impfung"
+                    ],
+                    "word_count": 41
+                }
+            }
+        ]
+    },
+    {
+        "hits": 10000,
+        "took": 284,
+        "tweets": [
+            {
+                "_index": "tweets_all",
+                "_id": "1444239969019744256",
+                "_score": 12.811395,
+                "_source": {
+                    "retweet_count": 3,
+                    "reply_count": 1,
+                    "like_count": 45,
+                    "created_at": "2021-10-02T11:56:55+02:00",
+                    "txt": "Unser unendlicher Dank als gesamte Partei gilt Gesine Lötzsch, Gregor Gysi und Sören Pellmann. Durch ihre fulminanten Ergebnisse sind wir weiterhin als Fraktion im Bundestag vertreten. Daran müssen wir uns in den nächsten vier Jahren immer wieder erinnern. (4/9)",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 39
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1437139162222764035",
+                "_score": 12.746878,
+                "_source": {
+                    "retweet_count": 2,
+                    "reply_count": 0,
+                    "like_count": 13,
+                    "created_at": "2021-09-12T21:40:51+02:00",
+                    "txt": "Die bisherigen Ergebnisse bei der #Kommunalwahl2021 in der Fläche in #Niedersachsen stimmen uns optimistisch. Trotz schwieriger Gesamtlage blicken wir auf sehr respektable Ergebnisse 💪🏻#cdunds #gemeinsamstark",
+                    "hashtags": [
+                        "niedersachsen",
+                        "gemeinsamstark",
+                        "cdunds",
+                        "kommunalwahl2021"
+                    ],
+                    "word_count": 25
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1444601750539878407",
+                "_score": 12.698692,
+                "_source": {
+                    "retweet_count": 2,
+                    "reply_count": 4,
+                    "like_count": 42,
+                    "created_at": "2021-10-03T11:54:31+02:00",
+                    "txt": "Die Wahlergebnisse des vergangenen Wochenendes stimmen mich heute sehr nachdenklich. Wer auch immer zukünftig regiert: Die Aufbruchsgeschichte muss eine gesamtdeutsche werden. Sie muss Glaubwürdigkeit &amp; Vertrauen in allen Teilen der Bevölkerung zurückgewinnen. #TagderEinheit",
+                    "hashtags": [
+                        "tagdereinheit"
+                    ],
+                    "word_count": 33
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1448963281935347713",
+                "_score": 12.594822,
+                "_source": {
+                    "retweet_count": 15,
+                    "reply_count": 48,
+                    "like_count": 708,
+                    "created_at": "2021-10-15T12:45:41+02:00",
+                    "txt": "Jetzt ist es tatsächlich passiert. Ich bin leider nur ein dreiwöchiges vorläufiges Mitglied im 20. Deutschen Bundestag gewesen; das amtliche Endergebnis der Wahl verschiebt den 118. Sitz von Bündnis 90 / Die Grünen aus NRW nach Bayern.",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 37
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1443234678463418369",
+                "_score": 12.591897,
+                "_source": {
+                    "retweet_count": 2,
+                    "reply_count": 0,
+                    "like_count": 6,
+                    "created_at": "2021-09-29T17:22:16+02:00",
+                    "txt": "Rekordbeteiligung von Thüringer #Schulen bei der @Juniorwahl zur #Bundestagswahl2021. 👏 \nAn dem Projekt für Schülerinnen und Schüler ab der 7. Klasse zur Simulation der Bundestagswahl nahmen insgesamt 158 Thüringer Schulen teil. \n👉 Alle Ergebnisse auf: https://t.co/yE7R48KCTn https://t.co/RkyJZUwCBE",
+                    "hashtags": [
+                        "bundestagswahl2021",
+                        "schulen"
+                    ],
+                    "word_count": 37
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1441081090559680513",
+                "_score": 12.561153,
+                "_source": {
+                    "retweet_count": 15,
+                    "reply_count": 1,
+                    "like_count": 60,
+                    "created_at": "2021-09-23T18:44:40+02:00",
+                    "txt": "Am Sonntag ist für @VoltEuropa Superwahltag! In insgesamt drei Ländern treten wir zu Wahlen an. Wenn ihr euch für die Ergebnisse interessiert und mit uns feiern wollt, dann schaut doch ab 20:00 Uhr auf dem @TwitchDE-Kanal von Volt Europa vorbei 💜 #btw21 #agh21 https://t.co/Yl2i0Zh131",
+                    "hashtags": [
+                        "btw21",
+                        "agh21"
+                    ],
+                    "word_count": 44
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1451532800503472129",
+                "_score": 12.532145,
+                "_source": {
+                    "retweet_count": 6,
+                    "reply_count": 4,
+                    "like_count": 30,
+                    "created_at": "2021-10-22T14:56:02+02:00",
+                    "txt": "Michael Sacher saß drei Wochen im Bundestag, nahm an Fraktionssitzungen teil und vernetzte sich. Dann kam das amtliche Endergebnis der Bundestagswahl - und er verlor das Mandat. Der @Tagesspiegel hat mit ihm gesprochen:\nhttps://t.co/i99VXR9R0u",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 33
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1447892431396118551",
+                "_score": 12.517666,
+                "_source": {
+                    "retweet_count": 49,
+                    "reply_count": 12,
+                    "like_count": 134,
+                    "created_at": "2021-10-12T13:50:30+02:00",
+                    "txt": "Der Berliner Landeswahlausschuss hat das Zweitstimmenergebnis der Bundestagswahl 2021 festgestellt, obwohl die Landeswahlleiterin Bedenken gegen die Ordnungsgemäßheit der Wahl vorgetragen hatte. @Th_Seitz_AfD: \"Ergebnisse der #Berlin Wahl fragwürdig!\" #AfD https://t.co/6w8tqxADfk",
+                    "hashtags": [
+                        "afd",
+                        "berlin"
+                    ],
+                    "word_count": 29
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1442386283557425152",
+                "_score": 12.517495,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 1,
+                    "like_count": 0,
+                    "created_at": "2021-09-27T09:11:02+02:00",
+                    "txt": "@tomiloza Lieber User, die Daten Ihres Kindes werden in anonymisierter Form wissenschaftlichen Zwecken zugeführt. Die Daten dienen der Bewertung der Qualität des Testverfahrens und der Testergebnisse. Mehr dazu finden Sie hier: https://t.co/M7Pq9mpQWL Viele Grüße, das Social Media Team",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 38
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1442361724519153666",
+                "_score": 12.498676,
+                "_source": {
+                    "retweet_count": 8,
+                    "reply_count": 32,
+                    "like_count": 464,
+                    "created_at": "2021-09-27T07:33:27+02:00",
+                    "txt": "Das vorläufige Endergebnis ist seit wenigen Minuten da. Ich bin Mitglied des Deutschen Bundestages. 🤩 Ich freue mich die Interessen von Augsburg &amp; Nordschwaben in Berlin vertreten zu dürfen und hab richtig Bock die Zukunft unseres Landes mitzugestalten 💪 #btw21",
+                    "hashtags": [
+                        "btw21"
+                    ],
+                    "word_count": 40
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1454563133943652360",
+                "_score": 12.476906,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 1,
+                    "like_count": 0,
+                    "created_at": "2021-10-30T23:37:30+02:00",
+                    "txt": "@AlexAmtmann @Velofisch @DS_Stiftung @hwieduwilt @ntvde_Politik @coronawarnapp Die Installation/Nutzung der App und die Übermittlung eines Testergebnisses in die App sind freiwillig, nur die Folge anonyme Teilung wäre dann auf gesetzlicher Grundlage. Man könnte aber sogar noch aktive Widerspruchsregelung integrieren",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 38
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1442089414558208000",
+                "_score": 12.468869,
+                "_source": {
+                    "retweet_count": 15,
+                    "reply_count": 0,
+                    "like_count": 45,
+                    "created_at": "2021-09-26T13:31:23+02:00",
+                    "txt": "Seit Jahren wird behauptet, eine Analyse von 2011 anhand des Benfordschen Gesetzes belege, dass es bei #Bundestagswahlen zu „systematischem Wahlbetrug“ gekommen sei. Das stimmt nicht, die Ergebnisse der Arbeit werden falsch interpretiert. #btw21 https://t.co/n3BMPIfC3r",
+                    "hashtags": [
+                        "btw21",
+                        "bundestagswahlen"
+                    ],
+                    "word_count": 34
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1425723220381118465",
+                "_score": 12.451852,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 1,
+                    "like_count": 0,
+                    "created_at": "2021-08-12T09:37:59+02:00",
+                    "txt": "@AstraVioletta Ich würde mir eine Art Ampelsystem nach einheitlichen Indikatoren wünschen (Inzidenz, Testquote, Hospitalisierungen, Situation in den Gesundheitsämtern). Vor allem wären klare und gemeinsame Ergebnisse wichtig gewesen.",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 27
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1448998337240260610",
+                "_score": 12.430947,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 1,
+                    "like_count": 2,
+                    "created_at": "2021-10-15T15:04:59+02:00",
+                    "txt": "Interview mit @SWRAktuellBW. FDP-Landtagsabgeordneter Christian Jung (Wahlkreis Bretten) begrüßt die Ergebnisse der Ampel-Sondierungen. Vertrauensvolle Zusammenarbeit könnte zu einer Fortschrittskoalition in einer sozial-ökologischen Marktwirtschaft führen. (1/2) @fdpdvpfraktion https://t.co/25q3CbYEgE",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 27
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1446361615813783558",
+                "_score": 12.42931,
+                "_source": {
+                    "retweet_count": 2,
+                    "reply_count": 1,
+                    "like_count": 8,
+                    "created_at": "2021-10-08T08:27:35+02:00",
+                    "txt": "Das Land Berlin schätzt Bundestags-Wahlergebnisse, das RKI schätzt Impfquoten - so kann es nicht weitergehen, schätze ich … #bloßkeinweiterso",
+                    "hashtags": [
+                        "bloßkeinweiterso"
+                    ],
+                    "word_count": 19
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1454507178652585987",
+                "_score": 12.42107,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 1,
+                    "like_count": 1,
+                    "created_at": "2021-10-30T19:55:09+02:00",
+                    "txt": "@AlexAmtmann @Velofisch @DS_Stiftung @hwieduwilt @ntvde_Politik @coronawarnapp Klar ist sie ausreichend. Aber sie muss in der App noch einmal explizit erteilt werden. Folge: Nur ca. 70% Testergebnisse werden geteilt, auch wegen Schock nach Ergebnis. Bei gesetzlicher Grundlage -&gt;100%",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 37
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1442350934047084546",
+                "_score": 12.393383,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 3,
+                    "created_at": "2021-09-27T06:50:34+02:00",
+                    "txt": "Jetzt ist das vörläufige amtliche Endergebnis da. Es ist ein klarer Regierungsauftrag für die @spdde. Die Union ist der klare Verlierer der Wahl. Die AfD ist geschwächt, auch das ist ein gutes Signal.\n\nhttps://t.co/cugyLY0ZlQ",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 33
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1430077633061081103",
+                "_score": 12.3893175,
+                "_source": {
+                    "retweet_count": 3,
+                    "reply_count": 1,
+                    "like_count": 2,
+                    "created_at": "2021-08-24T10:00:51+02:00",
+                    "txt": ".@destatis hat die Ergebnisse der amtlichen Statistik zu den #Anerkennungsgesetze.n des Bundes &amp; der Länder veröffentlicht. Dazu sagt BM Anja #Karliczek: „Anerkennung ausländischer #Berufsqualifikationen bleibt trotz Coronakrise auf hohem Niveau.“  PM: 👉 https://t.co/uwJ3vYe5tg https://t.co/Zg9js3UBC5",
+                    "hashtags": [
+                        "karliczek",
+                        "anerkennungsgesetze",
+                        "berufsqualifikationen"
+                    ],
+                    "word_count": 35
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1442376811019571200",
+                "_score": 12.388115,
+                "_source": {
+                    "retweet_count": 6,
+                    "reply_count": 14,
+                    "like_count": 87,
+                    "created_at": "2021-09-27T08:33:24+02:00",
+                    "txt": "Der Wahlsieger ist eindeutig die so oft und so lange totgesagte, abgeschriebene und mit Häme der Konkurrenz verspottete Sozialdemokratie.\nDer Regierungsauftrag für @OlafScholz ist eindeutig - das sagen die Wahlergebnisse und ALLE Umfragen zur Kanzlerpräferenz.",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 34
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1424627777400152064",
+                "_score": 12.38114,
+                "_source": {
+                    "retweet_count": 11,
+                    "reply_count": 2,
+                    "like_count": 23,
+                    "created_at": "2021-08-09T09:05:05+02:00",
+                    "txt": "Zum 6. #IPCC-(Intergovernmental Panel on #Climate Change) – Sachstandsbericht (AR6) berichten BM Anja #Karliczek und BM Svenja #Schulze über die Ergebnisse der Forschenden in einer gemeinsamen Pressekonferenz. Im Livestream auf dem Twitterkanal des @bmu  #Klimaforschung #Klima https://t.co/83uKyh2EiN",
+                    "hashtags": [
+                        "karliczek",
+                        "klima",
+                        "ipcc",
+                        "schulze",
+                        "klimaforschung",
+                        "climate"
+                    ],
+                    "word_count": 38
+                }
+            }
+        ]
+    },
+    {
+        "hits": 10000,
+        "took": 243,
+        "tweets": [
+            {
+                "_index": "tweets_all",
+                "_id": "1429752829741240320",
+                "_score": 3.6162012,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 2,
+                    "created_at": "2021-08-23T12:30:12+02:00",
+                    "txt": "@wodgachef @DietmarBartsch Sind wir. Ich zahle 880 Euro in die gesetzliche Krankenversicherung und auch in die gesetzliche Rente ein. Beides allerdings freiwillig. Es sollte verpflichtend werden.",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 26
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1438063008375349252",
+                "_score": 3.6032205,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 5,
+                    "like_count": 4,
+                    "created_at": "2021-09-15T10:51:53+02:00",
+                    "txt": "@endliche @thilohardt @DietmarBartsch @superillu Nicht unser Ansatz. U.E. ist es ein Widerspruch Alterssicherung durch Kapitalmarktspekulation für alle gewährleisten zu wollen. Wir sagen gesetzliche Rente stärken (alle zahlen ein, Wegfall Beitragsbemessungsgrenze, Abflachung Ansprüche) &amp; wer zusätzlich spekulieren will, kann ja",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 39
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1435895794280845312",
+                "_score": 3.5899458,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 0,
+                    "created_at": "2021-09-09T11:20:09+02:00",
+                    "txt": "#LTSH #GRUENE Lasse Petersdotter zur pauschalen Beihilfe für gesetzlich versicherte Beamt*innen  https://t.co/k98Cstj1en",
+                    "hashtags": [
+                        "gruene",
+                        "ltsh"
+                    ],
+                    "word_count": 13
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1449340934777458691",
+                "_score": 3.585054,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 1,
+                    "like_count": 0,
+                    "created_at": "2021-10-16T13:46:20+02:00",
+                    "txt": "@ChaWiBiker Doch. Aber leider steht dazu u.a. „Die gesetzliche und die private Kranken- und Pflegeversicherung bleiben erhalten.“",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 17
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1448988791436423168",
+                "_score": 3.583641,
+                "_source": {
+                    "retweet_count": 10,
+                    "reply_count": 26,
+                    "like_count": 53,
+                    "created_at": "2021-10-15T14:27:03+02:00",
+                    "txt": "Offensive für mehr Pflegepersonal\ngut ausgebildet\ngute Arbeitsbedingungen\nangemessene Löhne \nmehr ausländische Pflegekräfte\nmehr Zeit für Patient:innen durch  Entbürokratisierung, Digitalisierung,  Personalbemessung\n- gesetzliche &amp; private Versicherungen  bleiben #PflegeStärken",
+                    "hashtags": [
+                        "pflegestärken"
+                    ],
+                    "word_count": 26
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1438400521379930113",
+                "_score": 3.5831804,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 0,
+                    "created_at": "2021-09-16T09:13:03+02:00",
+                    "txt": "@FreMe1704 @beckeherm_david Und weil nicht jede:r am Ende des Monats sparen kann, das stimmt, brauchen wir die gesetzliche #Aktienrente. Dann profitiert nämlich jede:r in der gesetzlichen Rentenversicherung von den Chancen des Kapitalmarkts.",
+                    "hashtags": [
+                        "aktienrente"
+                    ],
+                    "word_count": 32
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1437316742162919424",
+                "_score": 3.5818424,
+                "_source": {
+                    "retweet_count": 2,
+                    "reply_count": 1,
+                    "like_count": 67,
+                    "created_at": "2021-09-13T09:26:30+02:00",
+                    "txt": "Wir müssen also Rente neu denken. Dafür müssen wir alle drei Säulen unserer Rentenversicherung stärken. Die gesetzliche Rente müssen wir generationengerecht gestalten und heute nicht auf Kosten unserer Zukunft leben. Plus: flexibles Renteneintrittsalter (8/10)",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 34
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1449002101049278486",
+                "_score": 3.5795522,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 2,
+                    "like_count": 2,
+                    "created_at": "2021-10-15T15:19:56+02:00",
+                    "txt": "@AF_Will @Philipp__K @db11fs @PhiKuro Gesetzliche Krankenversicherung ist ein Markt! 🤡🤡🤡",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 10
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1429715631373537285",
+                "_score": 3.5760498,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 2,
+                    "like_count": 2,
+                    "created_at": "2021-08-23T10:02:24+02:00",
+                    "txt": "@official_lm68 @dieLinke Wir wollen eine starke gesetzliche Rente, in die alle einzahlen. Aktien sind höchst unsicher, das hat uns die Finanzmarktkrise gezeigt. Deshalb sollte die Absicherung des Lebensabends nicht darauf basieren.",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 31
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1450484426077523969",
+                "_score": 3.5687366,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 0,
+                    "created_at": "2021-10-19T17:30:10+02:00",
+                    "txt": "@princeparadoxon Deshalb: solidarische gesetzliche Krankenversicherung für alle, 2-Bett-Zimmer als Standard und leckeres Essen für jeden! Den Chefarzt denen, die ihn besonders brauchen und weg mit dem Teppichboden auf der Privatstation!",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 30
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1436292414617096194",
+                "_score": 3.5673292,
+                "_source": {
+                    "retweet_count": 1,
+                    "reply_count": 2,
+                    "like_count": 2,
+                    "created_at": "2021-09-10T13:36:11+02:00",
+                    "txt": "Die Beiträge zur gesetzlichen Krankenversicherung werden massiv steigen müssen, um die Folgen der verheerenden Politik durch die Altparteien aufzufangen. Schuld ist vor allem der katastrophale Umgang mit der Corona-Pandemie. #Corona #Covid_19 #Krankenkasse #klartext #AfD #btw2021 https://t.co/pBJYDRWC7Q",
+                    "hashtags": [
+                        "corona",
+                        "btw2021",
+                        "afd",
+                        "covid_19",
+                        "klartext",
+                        "krankenkasse"
+                    ],
+                    "word_count": 36
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1427534971271589889",
+                "_score": 3.565455,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 1,
+                    "like_count": 1,
+                    "created_at": "2021-08-17T09:37:14+02:00",
+                    "txt": "@StefGermany @Linksfraktion Das hat historische Gründe. Wir wollen aber, dass künftig alle in die gesetzliche Rentenversicherung einzahlen. Für Bundestagsabgeordnete haben wir das in einem ersten Schritt auch beantragt.",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 28
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1448998889755918346",
+                "_score": 3.564992,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 2,
+                    "like_count": 11,
+                    "created_at": "2021-10-15T15:07:11+02:00",
+                    "txt": "Was mich besonders freut, der Zukunftsfonds soll gestärkt werden. Hierzu habe ich bereits ein Konzept vorgelegt, welches sich ebenfalls mit der gesetzlichen Rentenversicherung kombinieren lässt: (4/4) ⬇️\nhttps://t.co/jVSz9WT3nO",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 27
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1434618962734616578",
+                "_score": 3.5648434,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 1,
+                    "like_count": 3,
+                    "created_at": "2021-09-05T22:46:29+02:00",
+                    "txt": "@NicNoCoProHepa Da bin ich sofort dabei. Deshalb bin auch freiwillig in der gesetzlichen Krankenversicherung versichert. Wir brauchen auch eine Rentenversicherung, in die alle einzahlen - auch Politikerinnen und Politiker.",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 29
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1449017487501189120",
+                "_score": 3.564346,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 2,
+                    "like_count": 2,
+                    "created_at": "2021-10-15T16:21:05+02:00",
+                    "txt": "-   Keine Rentenkürzungen\n-   Keine Anhebung des Renteneintrittsalters\n-   Einstieg in teilweise Kapitaldeckung der Gesetzlichen Rentenversicherung.\n-   Abschaffung von Hartz IV! Stattdessen Einführung von Bürgergeld.\n-   Erhalt der privaten Kranken- und Pflegeversicherung.\n(4/7)",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 38
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1435158927168135169",
+                "_score": 3.563524,
+                "_source": {
+                    "retweet_count": 3,
+                    "reply_count": 4,
+                    "like_count": 53,
+                    "created_at": "2021-09-07T10:32:06+02:00",
+                    "txt": "SPD-Kanzlerkandidat @OlafScholz meint, dass bei der Rente alles läuft. Falsch! Wir steuern auf ein großes Defizit zu. Deswegen 👉 jetzt die gesetzliche #Aktienrente nach 🇸🇪 Vorbild zur Sicherung der Rente und öffentlichen Finanzen! #Bundestag",
+                    "hashtags": [
+                        "bundestag",
+                        "aktienrente"
+                    ],
+                    "word_count": 34
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1422189909692063745",
+                "_score": 3.5631263,
+                "_source": {
+                    "retweet_count": 25,
+                    "reply_count": 20,
+                    "like_count": 94,
+                    "created_at": "2021-08-02T15:37:52+02:00",
+                    "txt": "Die kapitalbasierte #Altersvorsorge ist ein Irrweg. Sie birgt ein großes Risiko für die öffentliche Hand. Die Alternative ist eine lebensstandardsichernde gesetzliche Rentenversicherung, in die alle Erwerbstätigen einzahlen. @b_riexinger in der @FRonline https://t.co/jxcA1FprMy",
+                    "hashtags": [
+                        "altersvorsorge"
+                    ],
+                    "word_count": 32
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1438185854539681793",
+                "_score": 3.5629058,
+                "_source": {
+                    "retweet_count": 223,
+                    "reply_count": 92,
+                    "like_count": 1087,
+                    "created_at": "2021-09-15T19:00:02+02:00",
+                    "txt": "3 Reformschritte &amp; wir hätten keine Sorgen mehr mit #Altersarmut: 1) Alle mit Erwerbseinkommen zahlen in die gesetzliche Rentenversicherung ein. 2) Die Beitragsbemessungsgrenze fällt weg. 3) Der #Rente|nanstieg für Spitzenverdiener wird abgeflacht. @rbb24 https://t.co/kBNuoGpKDU https://t.co/y7KsLHqDrS",
+                    "hashtags": [
+                        "altersarmut",
+                        "rente"
+                    ],
+                    "word_count": 35
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1429355416362831910",
+                "_score": 3.5628648,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 30,
+                    "created_at": "2021-08-22T10:11:02+02:00",
+                    "txt": "@wilke_tobias Die LINKE hat ne klare Position gegen regelmäßige Diätenerhöhungen, spendet seit Jahren Differenzbeträge &amp; fordert politisch die Einbeziehung von Abgeordneten in zb die gesetzliche Rentenversicherung. Zudem haben wir ein klares Umverteilungsprogramm. Also: eigenartiger Anwurf.",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 35
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1437137535638061064",
+                "_score": 3.5628648,
+                "_source": {
+                    "retweet_count": 2,
+                    "reply_count": 2,
+                    "like_count": 26,
+                    "created_at": "2021-09-12T21:34:23+02:00",
+                    "txt": "Die Deutsche Rentenversicherung selbst sagt, dass beim jetzigen Rentensystem die Beiträge von 18,6 auf 22 Prozent in 2030 steigen, lieber Olaf #Scholz! Weshalb nicht von anderen Staaten wie Schweden lernen, die ergänzend auf eine gesetzliche Aktienrente setzen? #Triell #btw21",
+                    "hashtags": [
+                        "btw21",
+                        "scholz",
+                        "triell"
+                    ],
+                    "word_count": 39
+                }
+            }
+        ]
+    },
+    {
+        "hits": 10000,
+        "took": 271,
+        "tweets": [
+            {
+                "_index": "tweets_all",
+                "_id": "1447884231384895491",
+                "_score": 22.891853,
+                "_source": {
+                    "retweet_count": 38,
+                    "reply_count": 20,
+                    "like_count": 202,
+                    "created_at": "2021-10-12T13:17:55+02:00",
+                    "txt": "Je länger der Hungerkrieg des Westens gegen dauert, desto mehr Afghanen werden  über Pakistan und Iran nach Europa fliehen.Die Mehrheit der Afghanen sitzt auf gepackten Koffern. Die westliche Aushungerungspolitik ist nicht nur unmenschllich, sondern auch unbeschreiblich dumm.",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 38
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1435243844728201226",
+                "_score": 22.824303,
+                "_source": {
+                    "retweet_count": 58,
+                    "reply_count": 9,
+                    "like_count": 120,
+                    "created_at": "2021-09-07T16:09:32+02:00",
+                    "txt": "Nix gelernt aus dem #Afghanistan -Desaster: #CDU #CSU, #SPD, #AfD, #FDP und #Gruene wollen weiter Waffen an Taliban-Helfer #Pakistan liefern – den LINKE-Antrag auf #Rüstungsstopp in die Krisenregion hat diese Kriegskoalition XXL gerade gemeinsam abgelehnt. 👎 https://t.co/997kN1DqmK",
+                    "hashtags": [
+                        "spd",
+                        "cdu",
+                        "fdp",
+                        "afd",
+                        "csu",
+                        "afghanistan",
+                        "gruene",
+                        "pakistan",
+                        "rüstungsstopp"
+                    ],
+                    "word_count": 37
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1424475088410263554",
+                "_score": 22.753712,
+                "_source": {
+                    "retweet_count": 6,
+                    "reply_count": 4,
+                    "like_count": 25,
+                    "created_at": "2021-08-08T22:58:21+02:00",
+                    "txt": "#Afghanistan beweist: Westliche Kriegsmissionen, so humanitär sie gemeint sind, scheitern. Jetzt geht es darum, die Realität anzuerkennen: Migration verhindern durch Kooperation mit Pakistan, die Taliban als Realität anerkennen und die eigene Außenpolitik generell überdenken!",
+                    "hashtags": [
+                        "afghanistan"
+                    ],
+                    "word_count": 34
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1435487012476399616",
+                "_score": 22.740671,
+                "_source": {
+                    "retweet_count": 27,
+                    "reply_count": 7,
+                    "like_count": 98,
+                    "created_at": "2021-09-08T08:15:48+02:00",
+                    "txt": "Während in #Afghanistan Menschen gegen die Unterstützung Pakistans für die #Taliban auf die Straße gehen, stattet die #Fregatte #Bayern #Pakistan einen Ehrenbesuch ab. 🤦‍♀️\nSeereise des dt. Kriegsschiffes gestaltet sich immer mehr zu einer außenpolitischen Irrfahrt der #BuReg 👎",
+                    "hashtags": [
+                        "bayern",
+                        "afghanistan",
+                        "fregatte",
+                        "bureg",
+                        "taliban",
+                        "pakistan"
+                    ],
+                    "word_count": 38
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1427255979024990208",
+                "_score": 22.685368,
+                "_source": {
+                    "retweet_count": 1,
+                    "reply_count": 0,
+                    "like_count": 2,
+                    "created_at": "2021-08-16T15:08:37+02:00",
+                    "txt": "@MUC_GuEm @MedientanteMT Das war kein Angriffskrieg, aber trotzdem Teil des Desasters. Die Regierung hatte die UdSSR um militärischen Beistand gebeten gegen die von den USA, Saudi-Arabien und Pakistan unterstützten islamischen Milizen (Mujaheddin).",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 32
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1435511681891848192",
+                "_score": 22.59498,
+                "_source": {
+                    "retweet_count": 4,
+                    "reply_count": 5,
+                    "like_count": 20,
+                    "created_at": "2021-09-08T09:53:50+02:00",
+                    "txt": "„Während in 🇦🇫 Menschen gegen die Unterstützung Pakistans für die Taliban auf die Straße gehen, stattet die Fregatte ,Bayern' 🇵🇰 einen Ehrenbesuch ab. Die Seereise des 🇩🇪 Kriegsschiffes ist eine außenpolitische Irrfahrt der Bundesregierung.\" @SevimDagdelen https://t.co/esGVjYJZu0",
+                    "hashtags": [
+                        null
+                    ],
+                    "word_count": 36
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1445288768865513477",
+                "_score": 22.329075,
+                "_source": {
+                    "retweet_count": 58,
+                    "reply_count": 8,
+                    "like_count": 149,
+                    "created_at": "2021-10-05T09:24:29+02:00",
+                    "txt": ".@derspiegel schrieb unter Bezug auf „eine interne Ankündigung des #BMI“, dass „dem AA voraussichtlich möglich sein werde, in den kommenden 2 Monaten wöchentlich rund 200 Menschen über #Pakistan zu evakuieren“. Hierzu kommentiert @Beatrix_vStorch:  https://t.co/u5ru2cd8M7 #AfD",
+                    "hashtags": [
+                        "afd",
+                        "pakistan",
+                        "bmi"
+                    ],
+                    "word_count": 36
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1435572869778509825",
+                "_score": 22.320686,
+                "_source": {
+                    "retweet_count": 7,
+                    "reply_count": 2,
+                    "like_count": 33,
+                    "created_at": "2021-09-08T13:56:58+02:00",
+                    "txt": "Im #Bundestag haben gestern CDU, CSU, SPD, AfD, FDP &amp; Grüne unseren Antrag abgelehnt, Rüstungsexporte an Taliban-Unterstützer Pakistan sofort einzustellen. Stattdessen übt die Fregatte „Bayern“ mit Pakistan den Krieg. Wir brauchen eine andere Außenpolitik!\nhttps://t.co/meZAvTPmPD https://t.co/RdirxGo5zf",
+                    "hashtags": [
+                        "bundestag"
+                    ],
+                    "word_count": 35
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1431273320238944264",
+                "_score": 21.271917,
+                "_source": {
+                    "retweet_count": 3,
+                    "reply_count": 2,
+                    "like_count": 14,
+                    "created_at": "2021-08-27T17:12:05+02:00",
+                    "txt": "Der erneute Siegeszug der islamistischen Terrormilizen der Taliban nach 20 Jahren Militärpräsenz der NATO in Afghanistan ist ohne Unterstützung durch Pakistan nicht denkbar. Deshalb: #WaffenexportestoppenJETZT Antrag der @Linksfraktion vom 24.08.2021: https://t.co/meZAvTPmPD https://t.co/BZqQvVGdyL",
+                    "hashtags": [
+                        "waffenexportestoppenjetzt"
+                    ],
+                    "word_count": 32
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1432626560226496512",
+                "_score": 21.222286,
+                "_source": {
+                    "retweet_count": 53,
+                    "reply_count": 127,
+                    "like_count": 211,
+                    "created_at": "2021-08-31T10:49:23+02:00",
+                    "txt": "Als Nachbar bekommt #Pakistan die Auswirkungen der Krise in #Afghanistan besonders zu spüren. Deutschland wird die Region nicht alleine lassen. Zusätzlich zu unserem finanziellen Engagement werden wir konkrete Projekte z.B. zum Grenzmanagement fortführen. @HeikoMaas in #Islamabad https://t.co/eLaDe2WaeV",
+                    "hashtags": [
+                        "afghanistan",
+                        "pakistan",
+                        "islamabad"
+                    ],
+                    "word_count": 37
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1427888552336101380",
+                "_score": 21.160984,
+                "_source": {
+                    "retweet_count": 32,
+                    "reply_count": 20,
+                    "like_count": 154,
+                    "created_at": "2021-08-18T09:02:14+02:00",
+                    "txt": "Für eine schnelle Evakuierung aus #Afghanistan sorgt ein Pendelverkehr: Zwei A400M werden mehrmals täglich zwischen Taschkent in Usbekistan und #Kabul hin- und herfliegen. Damit gewährleisten wir, dass so viele zu Schützende wie möglich aus Afghanistan evakuiert werden. https://t.co/lvIoP5xmkM",
+                    "hashtags": [
+                        "afghanistan",
+                        "kabul"
+                    ],
+                    "word_count": 38
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1432626241283166212",
+                "_score": 21.118624,
+                "_source": {
+                    "retweet_count": 43,
+                    "reply_count": 68,
+                    "like_count": 215,
+                    "created_at": "2021-08-31T10:48:07+02:00",
+                    "txt": "Wir lassen #Pakistan und die Länder der Region nicht allein in der #Afghanistan-Krise. Deshalb habe ich meinem 🇵🇰 Kollegen @SMQureshiPTI Unterstützung zugesagt - humanitär, aber auch bei Grenzmanagement und Extremismusprävention. (1/2) https://t.co/4kxAShVNZu",
+                    "hashtags": [
+                        "afghanistan",
+                        "pakistan"
+                    ],
+                    "word_count": 32
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1428383586789515273",
+                "_score": 21.063639,
+                "_source": {
+                    "retweet_count": 84,
+                    "reply_count": 34,
+                    "like_count": 598,
+                    "created_at": "2021-08-19T17:49:19+02:00",
+                    "txt": "Insgesamt über 1000 zu Schützende in Sicherheit! Mit 230 Personen an Bord ist der 8. Flug der Bundeswehr auf dem Weg von #Kabul nach Taschkent. Unsere #A400M pendeln vor Ort zwischen #Afghanistan und Usbekistan. Um die zu Schützenden schnellstmöglich auszufliegen. https://t.co/QU60oUVrxK",
+                    "hashtags": [
+                        "afghanistan",
+                        "kabul",
+                        "a400m"
+                    ],
+                    "word_count": 41
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1433389037176475653",
+                "_score": 21.05809,
+                "_source": {
+                    "retweet_count": 2,
+                    "reply_count": 0,
+                    "like_count": 9,
+                    "created_at": "2021-09-02T13:19:12+02:00",
+                    "txt": "#MikisTheodorakis, mit seiner Musik, seinen Klängen für Frieden und Völkerverständigung bin ich groß geworden... Schmerzhaft, dass er nicht mehr da ist. Seine Musik und sein Engagement bleiben. #RIP https://t.co/aN2cwVBPR3",
+                    "hashtags": [
+                        "rip",
+                        "mikistheodorakis"
+                    ],
+                    "word_count": 29
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1430034557521248259",
+                "_score": 20.786882,
+                "_source": {
+                    "retweet_count": 2,
+                    "reply_count": 1,
+                    "like_count": 53,
+                    "created_at": "2021-08-24T07:09:41+02:00",
+                    "txt": "Was folgte, war ein neun Jahre andauernder blutiger Krieg der Sowjets und ihrer afghanischen Helfer gegen die \"Mudschaheddin\", der zahllose Opfer forderte und Millionen von Afghanen zu Flüchtlingen machte. Sie flohen in die Nachbarländer, vor allem nach Pakistan. #Afghanistan",
+                    "hashtags": [
+                        "afghanistan"
+                    ],
+                    "word_count": 39
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1432327483836227586",
+                "_score": 20.713642,
+                "_source": {
+                    "retweet_count": 38,
+                    "reply_count": 106,
+                    "like_count": 145,
+                    "created_at": "2021-08-30T15:00:58+02:00",
+                    "txt": "Bei meinen Gesprächen in #Tadschikistan haben wir eine enge politische Zusammenarbeit in der #Afghanistan-Krise vereinbart. Wir werden die Länder der Region und die Menschen in Afghanistan unterstützen und stellen dafür 500 Mio. € an Soforthilfe bereit. https://t.co/ATttt7VRtB",
+                    "hashtags": [
+                        "afghanistan",
+                        "tadschikistan"
+                    ],
+                    "word_count": 37
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1451458618176557060",
+                "_score": 20.535358,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 1,
+                    "created_at": "2021-10-22T10:01:16+02:00",
+                    "txt": "Heute beginnt die Wahlbeobachtungsdelegation der #OSZE in #Usbekistan mit verschiedenen Treffen. Darunter ein Briefing der @osce_odihr, ein Gespräch mit Kandidierenden und am Nachmittag mit Medienvertretern. Am Sonntag wird gewählt. https://t.co/yUPUXI3gcU",
+                    "hashtags": [
+                        "usbekistan",
+                        "osze"
+                    ],
+                    "word_count": 30
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1422999353141116933",
+                "_score": 20.328362,
+                "_source": {
+                    "retweet_count": 4,
+                    "reply_count": 2,
+                    "like_count": 20,
+                    "created_at": "2021-08-04T21:14:18+02:00",
+                    "txt": "#Migrationswaffe nun auch innerhalb Europas? #Weißrussland fliegt offenbar gezielt irakische #Migranten ein, um #Destabilisierung zu erreichen. Nicht nur deshalb brauchen wir schon lange die #FestungEuropa! Wir müssen auch #Litauen beim #Grenzschutz stärken!",
+                    "hashtags": [
+                        "migranten",
+                        "grenzschutz",
+                        "litauen",
+                        "festungeuropa",
+                        "weißrussland",
+                        "migrationswaffe",
+                        "destabilisierung"
+                    ],
+                    "word_count": 32
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1426967371231731724",
+                "_score": 20.315472,
+                "_source": {
+                    "retweet_count": 36,
+                    "reply_count": 6,
+                    "like_count": 112,
+                    "created_at": "2021-08-15T20:01:47+02:00",
+                    "txt": "Die Bundesregierung ließ zehntausende Dosen Bier und kistenweise Wein und Sekt zurück nach Deutschland fliegen und läßt gleichzeitig Ortskräfte und deren Familien in #Afghanistan zurück. Was für eine Schande! https://t.co/gQv8DSvDsa",
+                    "hashtags": [
+                        "afghanistan"
+                    ],
+                    "word_count": 30
+                }
+            },
+            {
+                "_index": "tweets_all",
+                "_id": "1427208749157175302",
+                "_score": 20.152689,
+                "_source": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 5,
+                    "created_at": "2021-08-16T12:00:56+02:00",
+                    "txt": "Bei uns im Bundesfinanzministerium wird die #Vereinbarkeit von Beruf und Familie großgeschrieben. Unsere #Kita „Schatzkiste“ fördert familienfreundliche Arbeitsbedingungen. Informationen zum Ministerium als Arbeitgeber auf ➡️ https://t.co/t0Np6OoE2V #Seriensommer https://t.co/h1OzfiRwuP",
+                    "hashtags": [
+                        "kita",
+                        "seriensommer",
+                        "vereinbarkeit"
+                    ],
+                    "word_count": 28
+                }
+            }
+        ]
+    }
+]
