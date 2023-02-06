@@ -1,0 +1,195 @@
+{
+    "timestamp": "18-01-23_15:24:35",
+    "queries": [
+        "große Koalition gescheitert unter Merkel? #Groko #SPD #CDU",
+        "Lauterbach Deutschland Corona-Maßnahmen #Impfung",
+        "@bundestag Bundestagswahl 2021 Ergebnisse",
+        "Gesetzliche Rentenversicherung Rente Mit 67",
+        "Bundeswehr Afghanistan Krieg stoppen"
+    ],
+    "embedding_params": {
+        "type": "word2vec",
+        "model": "models/word2vec/german.model",
+        "pos_list": [
+            "NOUN",
+            "ADJ",
+            "VERB",
+            "PROPN"
+        ],
+        "entity_list": [
+            "LOC",
+            "ORG"
+        ],
+        "hashtag": true,
+        "user": false,
+        "num_nearest_terms": 3
+    },
+    "elastic_params": {
+        "index": "tweets_all",
+        "num_of_tweets": 20,
+        "retweet": false,
+        "hashtag_boost": 1.0,
+        "tweet_range": [
+            "2020-01-01",
+            "2023-01-01"
+        ]
+    },
+    "docs": [
+        "große Koalition gescheitert unter Merkel? #Groko #SPD #CDU",
+        "Lauterbach Deutschland Corona-Maßnahmen #Impfung",
+        "@bundestag Bundestagswahl 2021 Ergebnisse",
+        "Gesetzliche Rentenversicherung Rente Mit 67",
+        "Bundeswehr Afghanistan Krieg stoppen"
+    ],
+    "query_tokens": [
+        [
+            "große",
+            "Koalition",
+            "gescheitert",
+            "Merkel",
+            "#Groko",
+            "#SPD",
+            "#CDU"
+        ],
+        [
+            "Lauterbach",
+            "Deutschland",
+            "Corona-Maßnahmen",
+            "#Impfung"
+        ],
+        [
+            "Bundestagswahl",
+            "Ergebnisse"
+        ],
+        [
+            "Gesetzliche",
+            "Rentenversicherung",
+            "Rente"
+        ],
+        [
+            "Bundeswehr",
+            "Afghanistan",
+            "Krieg",
+            "stoppen"
+        ]
+    ],
+    "similar_terms": [
+        {
+            "Koalition": [
+                "Grosse Koalition",
+                "Grossen Koalition",
+                "Regierungskoalition"
+            ],
+            "scheitern": [
+                "gescheitert",
+                "scheitert",
+                "platzen"
+            ],
+            "Merkel": [
+                "Kanzlerin Merkel",
+                "Merkel CDU",
+                "Bundeskanzlerin"
+            ],
+            "SPD": [
+                "CDU",
+                "FDP",
+                "Gruenen"
+            ],
+            "CDU": [
+                "SPD",
+                "FDP",
+                "FWG"
+            ]
+        },
+        {
+            "Lauterbach": [
+                "Alsfeld",
+                "Buedingen",
+                "Hardt"
+            ],
+            "Deutschland": [
+                "Europa",
+                "Oesterreich",
+                "hierzulande"
+            ],
+            "Impfung": [
+                "Masernimpfung",
+                "Impfschutz",
+                "Schutzimpfung"
+            ]
+        },
+        {
+            "Bundestagswahl": [
+                "Bundestagswahlen",
+                "Bundestagwahl",
+                "Landtagswahl"
+            ],
+            "Ergebnis": [
+                "Resultat",
+                "Zwischenergebnis",
+                "Ergebnissen"
+            ]
+        },
+        {
+            "Gesetzliche": [
+                "gesetzliche",
+                "gesetzlichen",
+                "tarifvertraglichen"
+            ],
+            "Rentenversicherung": [
+                "Pflegeversicherung",
+                "Krankenversicherung",
+                "gesetzliche Rentenversicherung"
+            ],
+            "Rente": [
+                "Renten",
+                "gesetzliche Rente",
+                "Grundsicherung"
+            ]
+        },
+        {
+            "Bundeswehr": [
+                "Bundeswehr Afghanistan",
+                "Auslandseinsaetze",
+                "Bundeswehrsoldaten"
+            ],
+            "Afghanistan": [
+                "Hindukusch",
+                "Somalia",
+                "Irak"
+            ],
+            "Krieg": [
+                "Buergerkrieg",
+                "Kriege",
+                "Krieges"
+            ],
+            "stoppen": [
+                "bremsen",
+                "aufzuhalten",
+                "gestoppt"
+            ]
+        }
+    ],
+    "expansion_terms": [
+        [
+            "Bundeskanzlerin",
+            "CDU",
+            "FDP",
+            "SPD",
+            "FDP"
+        ],
+        [
+            "Impfschutz",
+            "Schutzimpfung"
+        ],
+        [
+            "Zwischenergebnis"
+        ],
+        [
+            "Pflegeversicherung"
+        ],
+        [
+            "Hindukusch"
+        ]
+    ]
+}
