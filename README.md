@@ -2,10 +2,6 @@
 
 Modifying an initial user query by enriching it with suitable expansion terms. At first, the user's query is pre-processed with [SpaCy](https://spacy.io/) and different word embedding models such as _FastText_  and _Word2Vec_ are applied to find similar words. Possible expansion terms are then investigated and consequently combined with the initial query. Finally, [Elastic Search](https://www.elastic.co/elasticsearch/) (ES) is  utilized to obtain relevant tweets given the reformulated user query.
 
-**_Outline_**
-
-[[_TOC_]]
-
 # Structure
 - **Pipeline** - The pipeline is located in the `pipeline` module folder, which contains the three main components i.e. [text_processor.py](https://git-dbs.ifi.uni-heidelberg.de/practicals/2022-jason-pyanowski/-/blob/main/pipeline/text_processor.py), [embedding.py](https://git-dbs.ifi.uni-heidelberg.de/practicals/2022-jason-pyanowski/-/blob/main/pipeline/embedding.py) and [elasticsearch.py](https://git-dbs.ifi.uni-heidelberg.de/practicals/2022-jason-pyanowski/-/blob/main/pipeline/elasticsearch.py). Custom tokenizer and matcher for SpaCy's text processing are listed under `pipeline/tokenizer` and `pipeline/matcher` respectively. 
 
@@ -54,11 +50,6 @@ The pipeline requires a collection of Tweets and an arbitrary word embedding mod
 
 ## 2.1 Twitter Dataset
 The Twitter data collection was provided by the [Database Systems Research Group](https://dbs.ifi.uni-heidelberg.de/). It contains about 300,000 german Tweets over a period of about two years related to politics. Initially, this data set is provided in form of a [PostgresSQL](https://www.postgresql.org/) database. The respective scheme is displayed in Figure 2.1. Of particular interest are the Tweets itself and their respective hashtags, user names and named entities.
-
-2.1 Twitter Database ER-Diagram | 2.2 Word Count statistic
-:---:|:---:
-|<img src="img/twitterdb-er-diagram.png" align="left" /> | <img src="img/tweet-words.png" align="right" />
-
 
 To search Tweets performantly, an [Elastic Search](https://www.elastic.co/elasticsearch/) Index is fed with data from the PostgreSQL database. The Indexing is configured by the [es-config.tpl](https://git-dbs.ifi.uni-heidelberg.de/practicals/2022-jason-pyanowski/-/blob/main/templates/es-config.tpl) template. Tokenization is applied and each token is split at `[ -.,;:!?/#]`. Consequently, the following filters are applied to the obtained tokens:
 
