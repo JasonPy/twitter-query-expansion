@@ -17,20 +17,6 @@ Modifying an initial user query by enriching it with suitable expansion terms. A
 
 - **Demo** - In the root directory a [demo.ipynb](https://git-dbs.ifi.uni-heidelberg.de/practicals/2022-jason-pyanowski/-/blob/main/demo.ipynb) file is provided which demonstrates the use of the pipeline. This includes downloading the embedding models as well as executing the pipeline and describing different parameters. It is referred to this file for detailed information.  
 
-
-# Setup
-First of all clone the present repository to your local machine.
-```sh
-git clone https://git-dbs.ifi.uni-heidelberg.de/practicals/2022-jason-pyanowski
-```
-
-This project uses [pipenv](https://pipenv.pypa.io/en/latest/#install-pipenv-today). The required python version and packages are listed within the [Pipfile](https://git-dbs.ifi.uni-heidelberg.de/practicals/2022-jason-pyanowski/-/blob/main/Pipfile). Make sure it is installed and run the following command in the root of this project to collect all dependencies.
-
-```sh
-pipenv install
-```
-
-
 # 1. Project Description
 Between the users' intention and the action to achieve its goal lays a big gap. This is especially problematic if a user wants to obtain information which requires to formulate a query. One can imagine, that different people describe the same thing differently - so called _Vocabulary Mismatch problem_[^1]. Although users state what they are searching for, the initial query is mostly insufficient due to the short length and the lack of relevant keywords. Additionally, the query might contain synonyms, acronyms and homonyms or even emoticons, slang and spelling errors. Understanding the actual meaning of the terms in order to find suitable expansions is therefore a big challenge. 
 
